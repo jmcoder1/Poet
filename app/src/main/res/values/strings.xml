@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name">Poet</string>
+
+    <!-- Title text for the empty view, which describes the empty dog house image [CHAR LIMIT=50] -->
+    <string name="empty_people_list">It\'s a bit lonely here...</string>
+
+    <!-- Subtitle text for the empty view that prompts the user to add a pet [CHAR LIMIT=50] -->
+    <string name="empty_people_subtitle">Get started by adding a person</string>
+
+    <!-- Label for overflow menu option that inserts fake pet data into the app [CHAR LIMIT=20] -->
+    <string name="action_insert_dummy_data">Insert Dummy Data</string>
+
+    <!-- Label for overflow menu option that deletes all pet data in the app [CHAR LIMIT=20] -->
+    <string name="action_delete_all_entries">Delete All Pets</string>
+
+    <!-- Label for editor menu option to save pet and leave editor [CHAR LIMIT=20] -->
+    <string name="action_save">Save</string>
+
+    <!-- Label for editor overflow menu option that deletes the current pet [CHAR LIMIT=20] -->
+    <string name="action_delete">Delete</string>
+
+    <!-- Category strings -->
+    <string name="overview_label">Overview</string>
+    <string name="number_label">Phone no.</string>
+    <string name="ethinicity_label">Ethnicity</string>
+    <string name="relationship_label">Relationship</string>
+    <string name="gender_label">Gender</string>
+
+    <!-- EditTextView hints [CHAR LIMIT]-->
+    <string name="first_name_hint">First name</string>
+    <string name="last_name_hint">Last name</string>
+    <string name="mobile_num_hint">XXXX-XXXX-XXXX</string>
+    <string name="gender_hint">Gender</string>
+    <string name="relationship_hint">Relationship</string>
+    <string name="ethnicity_hint">Ethnicity</string>
+    <string name="notes_hint">Notes</string>
+
+    <!-- Strings for the multiple genders-->
+    <string name="gender_unknown">Unknown</string>
+    <string name="gender_male">Male</string>
+    <string name="gender_female">Female</string>
+    <string name="gender_androgyne">Androgyne</string>
+    <string name="gender_neutrosis">Neutrosis</string>
+    <string name="gender_agender">Agender</string>
+    <string name="gender_intergender">Intergender</string>
+    <string name="gender_demiboy">Demiboy</string>
+    <string name="gender_demigirl">Demigirl</string>
+    <string name="gender_third_gender">Third Gender</string>
+    <string name="gender_genderqueer">Genderqueer</string>
+    <string name="gender_pangender">Pangender</string>
+    <string name="gender_epicene">Epicene</string>
+    <string name="gender_genderfluid">Genderfluid</string>
+    <string name="gender_transgender">Transgender</string>
+    <string name="gender_bigender">Bigender</string>
+    <string name="gender_demiagender">Demiagender</string>
+    <string name="gender_femme">Femme</string>
+    <string name="gender_butch">Butch</string>
+    <string name="gender_transvesti_nb">Transvesti n-b</string>
+    <string name="gender_aliagender">Aliagender</string>
+
+</resources>

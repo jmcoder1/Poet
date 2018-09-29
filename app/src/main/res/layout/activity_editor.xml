@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_margin"
+    tools:context=".EditorActivity">
+
+    <ImageView
+        android:layout_width="@dimen/img_width"
+        android:layout_height="@dimen/img_height"
+        android:src="@drawable/profile_picture"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/profile_marginTop"
+        android:layout_marginBottom="@dimen/profile_marginBottom"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:text="@string/overview_label"
+                    style="@style/CategoryStyle" />
+
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:paddingLeft="4dp"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/first_name"
+                        android:hint="@string/first_name_hint"
+                        android:inputType="textCapWords"
+                        style="@style/EditorFieldStyle" />
+
+                    <EditText
+                        android:id="@+id/middle_name"
+                        android:inputType="textCapWords"
+                        style="@style/EditorFieldStyle" />
+
+                    <EditText
+                        android:id="@+id/last_name"
+                        android:hint="@string/last_name_hint"
+                        android:inputType="textCapWords"
+                        style="@style/EditorFieldStyle" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:text="@string/number_label"
+                    style="@style/CategoryStyle" />
+
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:paddingLeft="4dp"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/mobile_num"
+                        android:hint="@string/mobile_num_hint"
+                        android:inputType="number"
+                        style="@style/EditorFieldStyle" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/container_gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:text="@string/gender_label"
+                    style="@style/CategoryStyle" />
+
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:orientation="vertical">
+
+                    <!-- Gender drop-down spinner -->
+                    <Spinner
+                        android:id="@+id/spinner_gender"
+                        android:layout_height="48dp"
+                        android:layout_width="wrap_content"
+                        android:paddingRight="16dp"
+                        android:spinnerMode="dropdown"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:text="@string/relationship_label"
+                    style="@style/CategoryStyle" />
+
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:paddingLeft="4dp"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/relationship"
+                        android:hint="@string/relationship_hint"
+                        android:inputType="textCapWords"
+                        style="@style/EditorFieldStyle" />
+
+                    <EditText
+                        android:id="@+id/ethnicity"
+                        android:hint="@string/ethnicity_hint"
+                        android:inputType="textCapWords"
+                        style="@style/EditorFieldStyle" />
+
+                    <EditText
+                        android:id="@+id/notes"
+                        android:hint="@string/notes_hint"
+                        android:inputType="textCapWords"
+                        style="@style/EditorFieldStyle" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

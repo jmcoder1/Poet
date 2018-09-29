@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dimensions for all the FABs -->
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="fab_border_width">0dp</dimen>
+    <dimen name="fab_pressed_translation">12dp</dimen>
+    <dimen name="fab_height">80dp</dimen>
+    <dimen name="fab_width">80dp</dimen>
+    <dimen name="fab_elevation">4dp</dimen>
+
+    <dimen name="activity_margin">16dp</dimen>
+
+
+    <!-- Layout margin/padding for the edit text fields -->
+
+    <!-- Dimensions for the input field images -->
+    <dimen name="img_width">96dp</dimen>
+    <dimen name="img_height">96dp</dimen>
+    <dimen name="profile_marginTop">16dp</dimen>
+    <dimen name="profile_marginBottom">16dp</dimen>
+
+    <!-- Dimensions for the icon field images -->
+        <!-- Sizes for the icon -->
+        <dimen name="icon_width">48dp</dimen>
+        <dimen name="icon_height">48dp</dimen>
+        <dimen name="profile_margin">32dp</dimen>
+
+        <!-- Layout for the icon -->
+        <dimen name="icon_left_margin">8dp</dimen>
+        <dimen name="icon_right_margin">8dp</dimen>
+
+</resources>
