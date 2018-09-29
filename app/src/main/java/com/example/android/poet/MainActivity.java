@@ -65,12 +65,70 @@ public class MainActivity extends AppCompatActivity {
 
         // Perform this raw SQL query "SELECT * FROM pets"
         // to get a Cursor that contains all rows from the pets table.
-        Cursor cursor = db.rawQuery("SELECT * FROM " + ContactEntry.TABLE_NAME, null);
+        //Cursor cursor = db.rawQuery("SELECT * FROM " + ContactEntry.TABLE_NAME, null);
+
+        String[] projection = {
+                ContactEntry._ID,
+                ContactEntry.COLUMN_PERSON_FIRST_NAME,
+                ContactEntry.COLUMN_PERSON_MIDDLE_NAME,
+                ContactEntry.COLUMN_PERSON_LAST_NAME,
+                ContactEntry.COLUMN_PERSON_GENDER,
+                ContactEntry.COLUMN_PERSON_NOTES
+        };
+
+        String selection = null;
+        String[] selectionArgs = null;
+
+        Cursor cursor = db.query(
+                ContactEntry.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null);
         try {
             // Display the number of rows in the Cursor (which reflects the number of rows in the
             // pets table in the database).
             TextView displayView = (TextView) findViewById(R.id.text_view_person);
-            displayView.setText("Number of rows in pets database table: " + cursor.getCount());
+            displayView.setText("Number of people contained in the database: " + cursor.getCount() + "\n\n");
+
+            displayView.append(
+                    ContactEntry._ID + " - " +
+                         ContactEntry.COLUMN_PERSON_FIRST_NAME + " - " +
+                         ContactEntry.COLUMN_PERSON_MIDDLE_NAME + " - " +
+                         ContactEntry.COLUMN_PERSON_LAST_NAME + " - " +
+                         ContactEntry.COLUMN_PERSON_GENDER + " - " +
+                         ContactEntry.COLUMN_PERSON_NOTES +" \n\n");
+
+            // Figure out the index of the columns
+            int idColumnIndex = cursor.getColumnIndex(ContactEntry._ID);
+            int firstNameColumnIndex = cursor.getColumnIndex(ContactEntry.COLUMN_PERSON_FIRST_NAME);
+            int middleNameColumnIndex = cursor.getColumnIndex(ContactEntry.COLUMN_PERSON_MIDDLE_NAME);
+            int lastNameColumnIndex = cursor.getColumnIndex(ContactEntry.COLUMN_PERSON_LAST_NAME);
+            int genderColumnIndex = cursor.getColumnIndex(ContactEntry.COLUMN_PERSON_GENDER);
+            int notesColumnIndex = cursor.getColumnIndex(ContactEntry.COLUMN_PERSON_NOTES);
+
+            // Iterate through all the returned rows in the cursor
+            while (cursor.moveToNext()) {
+                // Use that index to extract the String or Int value of the word
+                // at the current row the cursor is on.
+                int currentID = cursor.getInt(idColumnIndex);
+                String firstName = cursor.getString(firstNameColumnIndex);
+                String middleName = cursor.getString(middleNameColumnIndex);
+                String lastName = cursor.getString(lastNameColumnIndex);
+                String gender = cursor.getString(genderColumnIndex);
+                String notes = cursor.getString(notesColumnIndex);
+
+                // Display the values from each column of the current row in the cursor in the TextView
+                displayView.append((
+                        currentID + " - " +
+                        firstName + "-" +
+                        middleName + "-" +
+                        lastName + "-" +
+                        gender + "-" +
+                        notes));
+            }
         } finally {
             // Always close the cursor when you're done reading from it. This releases all its
             // resources and makes it invalid.
