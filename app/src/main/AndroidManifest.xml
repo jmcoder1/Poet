@@ -20,7 +20,10 @@
         <activity
             android:name=".EditorActivity">
         </activity>
-
+        <provider
+            android:name=".data.PersonProvider"
+            android:authorities="com.example.android.poet"
+            android:exported="false" />
     </application>
 
 </manifest>

@@ -19,6 +19,12 @@
     <!-- Label for editor overflow menu option that deletes the current pet [CHAR LIMIT=20] -->
     <string name="action_delete">Delete</string>
 
+    <!-- Label for failing to insert pet into the db [CHAR LIMIT = 15]-->
+    <string name="editor_insert_partner_failed">Person failed to be added</string>
+
+    <!-- Label for correctly inserting the pet into the db [CHAR LIMIT = 15] -->
+    <string name="editor_insert_partner_successful">Person added!</string>
+    
     <!-- Category strings -->
     <string name="overview_label">Overview</string>
     <string name="number_label">Phone no.</string>

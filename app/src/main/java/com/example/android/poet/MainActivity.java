@@ -1,6 +1,7 @@
 package com.example.android.poet;
 
 import android.content.ContentValues;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.android.poet.EditorActivity;
@@ -23,10 +25,8 @@ public class MainActivity extends AppCompatActivity {
     // The edit text FAB
     private FloatingActionButton addPersonFab;
 
-    //
     private static final String LOG_TAG = "MainActivity";
 
-    private PersonDbHelper mDbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +41,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        mDbHelper = new PersonDbHelper(this);
         displayDbInfo();
     }
 
@@ -60,13 +58,6 @@ public class MainActivity extends AppCompatActivity {
      * the pets database.
      */
     private void displayDbInfo() {
-        // Create and/or open a database to read from it
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
-        // Perform this raw SQL query "SELECT * FROM pets"
-        // to get a Cursor that contains all rows from the pets table.
-        //Cursor cursor = db.rawQuery("SELECT * FROM " + ContactEntry.TABLE_NAME, null);
-
         String[] projection = {
                 ContactEntry._ID,
                 ContactEntry.COLUMN_PERSON_FIRST_NAME,
@@ -79,67 +70,25 @@ public class MainActivity extends AppCompatActivity {
         String selection = null;
         String[] selectionArgs = null;
 
-        Cursor cursor = db.query(
-                ContactEntry.TABLE_NAME,
+        Cursor cursor = getContentResolver().query(
+                ContactEntry.CONTENT_URI,
                 projection,
-                selection,
-                selectionArgs,
                 null,
                 null,
                 null);
-        try {
-            // Display the number of rows in the Cursor (which reflects the number of rows in the
-            // pets table in the database).
-            TextView displayView = (TextView) findViewById(R.id.text_view_person);
-            displayView.setText("Number of people contained in the database: " + cursor.getCount() + "\n\n");
 
-            displayView.append(
-                    ContactEntry._ID + " - " +
-                         ContactEntry.COLUMN_PERSON_FIRST_NAME + " - " +
-                         ContactEntry.COLUMN_PERSON_MIDDLE_NAME + " - " +
-                         ContactEntry.COLUMN_PERSON_LAST_NAME + " - " +
-                         ContactEntry.COLUMN_PERSON_GENDER + " - " +
-                         ContactEntry.COLUMN_PERSON_NOTES +" \n\n");
+        // Find the ListView which will be populated with the pet data
+        ListView personListView = (ListView) findViewById(R.id.list);
 
-            // Figure out the index of the columns
-            int idColumnIndex = cursor.getColumnIndex(ContactEntry._ID);
-            int firstNameColumnIndex = cursor.getColumnIndex(ContactEntry.COLUMN_PERSON_FIRST_NAME);
-            int middleNameColumnIndex = cursor.getColumnIndex(ContactEntry.COLUMN_PERSON_MIDDLE_NAME);
-            int lastNameColumnIndex = cursor.getColumnIndex(ContactEntry.COLUMN_PERSON_LAST_NAME);
-            int genderColumnIndex = cursor.getColumnIndex(ContactEntry.COLUMN_PERSON_GENDER);
-            int notesColumnIndex = cursor.getColumnIndex(ContactEntry.COLUMN_PERSON_NOTES);
+        // Setup an Adapter to create a list item for each row of pet data in the Cursor.
+        PersonCursorAdapter adapter = new PersonCursorAdapter(this, cursor);
 
-            // Iterate through all the returned rows in the cursor
-            while (cursor.moveToNext()) {
-                // Use that index to extract the String or Int value of the word
-                // at the current row the cursor is on.
-                int currentID = cursor.getInt(idColumnIndex);
-                String firstName = cursor.getString(firstNameColumnIndex);
-                String middleName = cursor.getString(middleNameColumnIndex);
-                String lastName = cursor.getString(lastNameColumnIndex);
-                String gender = cursor.getString(genderColumnIndex);
-                String notes = cursor.getString(notesColumnIndex);
-
-                // Display the values from each column of the current row in the cursor in the TextView
-                displayView.append((
-                        currentID + " - " +
-                        firstName + "-" +
-                        middleName + "-" +
-                        lastName + "-" +
-                        gender + "-" +
-                        notes));
-            }
-        } finally {
-            // Always close the cursor when you're done reading from it. This releases all its
-            // resources and makes it invalid.
-            cursor.close();
-        }
+        // Attach the adapter to the ListView.
+        personListView.setAdapter(adapter);
     }
 
-    private void insertPet() {
+    private void insertPerson() {
         ContentValues cv = new ContentValues();
-
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
         cv.put(ContactEntry.COLUMN_PERSON_FIRST_NAME, "Billy");
         cv.put(ContactEntry.COLUMN_PERSON_LAST_NAME, "Bob");
@@ -147,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         cv.put(ContactEntry.COLUMN_PERSON_GENDER, 2);
         cv.put(ContactEntry.COLUMN_PERSON_RELATIONSHIP_STATUS, 0);
 
-        db.insert(ContactEntry.TABLE_NAME, null, cv);
+        Uri newUri = getContentResolver().insert(ContactEntry.CONTENT_URI, cv);
     }
 
     @Override
@@ -156,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             // Respond to a click on the "Insert dummy data" menu option
             case R.id.action_insert_dummy_data:
-                insertPet();
+                insertPerson();
                 displayDbInfo();
                 return true;
             // Respond to a click on the "Delete all entries" menu option

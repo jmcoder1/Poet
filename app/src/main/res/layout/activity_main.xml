@@ -10,14 +10,7 @@
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/activity_margin"/>
-
-    <TextView
-        android:id="@+id/text_view_person"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/activity_margin"/>
+        android:layout_height="match_parent"/>
 
     <!-- Empty view for the list -->
     <RelativeLayout

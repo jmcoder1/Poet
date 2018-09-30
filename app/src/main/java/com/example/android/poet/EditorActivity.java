@@ -2,6 +2,7 @@ package com.example.android.poet;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -103,7 +104,7 @@ public class EditorActivity extends AppCompatActivity {
                         mGender = 2; // Female
                     } else {
                         mGender = 0; // Unknown
-                    }//TODO: Add more infomration about the different genders
+                    }//TODO: Add more information about the different genders
                 }
             }
 
@@ -127,11 +128,7 @@ public class EditorActivity extends AppCompatActivity {
         String notesString = mNotesEditText.getText().toString().trim();
         // TODO: ignore the relationship status and ethnicity for now
 
-        PersonDbHelper mDbHelper = new PersonDbHelper(this);
-
         ContentValues cv = new ContentValues();
-
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
         cv.put(ContactEntry.COLUMN_PERSON_FIRST_NAME, firstNameString);
         cv.put(ContactEntry.COLUMN_PERSON_MIDDLE_NAME, middleNameString);
@@ -140,18 +137,20 @@ public class EditorActivity extends AppCompatActivity {
         cv.put(ContactEntry.COLUMN_PERSON_GENDER, mGender);
         //cv.put(ContactEntry.COLUMN_PERSON_RELATIONSHIP_STATUS, 0);
         //cv.put(ContactEntry.COLUMN_PERSON_ETHNICITY, 0);
-
         cv.put(ContactEntry.COLUMN_PERSON_NOTES, notesString);
+
         // Insert a new row for pet in the database, returning the ID of that new row.
-        long newRowId = db.insert(ContactEntry.TABLE_NAME, null, cv);
+        Uri newUri = getContentResolver().insert(ContactEntry.CONTENT_URI, cv);
 
         // Show a toast message depending on whether or not the insertion was successful
-        if (newRowId == -1) {
-            // If the row ID is -1, then there was an error with insertion.
-            Toast.makeText(this, "Error with saving pet", Toast.LENGTH_SHORT).show();
+        if (newUri == null) {
+            // If the new content URI is null, then there was an error with insertion.
+            Toast.makeText(this, getString(R.string.editor_insert_partner_failed),
+                    Toast.LENGTH_SHORT).show();
         } else {
-            // Otherwise, the insertion was successful and we can display a toast with the row ID.
-            Toast.makeText(this, "Pet saved with row id: " + newRowId, Toast.LENGTH_SHORT).show();
+            // Otherwise, the insertion was successful and we can display a toast.
+            Toast.makeText(this, getString(R.string.editor_insert_partner_successful),
+                    Toast.LENGTH_SHORT).show();
         }
     }
 
