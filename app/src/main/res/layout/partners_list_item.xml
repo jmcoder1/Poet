@@ -1,25 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Layout for a single list item in the list of pets -->
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="@dimen/activity_margin">
+    style="@style/ActivityStyle">
 
-    <TextView
-        android:id="@+id/partner_name"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/partner_profile_img"
+        android:layout_width="@dimen/partner_profile_img_width"
+        android:layout_height="@dimen/partner_profile_img_height"
+        android:layout_marginRight="@dimen/partner_profile_img_marginRight"
+        android:src="@drawable/placeholder_img"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        app:civ_border_width="0.1dp"
+        app:civ_border_color="@color/colorPrimary"/>
+
+    <LinearLayout
+        android:id="@+id/partner_text_info"
+        android:layout_toRightOf="@+id/partner_profile_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/partner_profile_img_marginRight"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/partner_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="#2B3D4D"
+            tools:text="Bill Bob"/>
+
+        <TextView
+            android:id="@+id/gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:textColor="#AEB6BD"
+            tools:text="It's complicated"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/userScore"
+        android:layout_width="wrap_content"
+        android:padding="4dp"
+        android:layout_height="32dp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/user_score_circle"
         android:fontFamily="sans-serif-medium"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:textColor="#2B3D4D"  />
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="16sp"
+        android:text="256"
+        tools:text="1024" />
 
-    <TextView
-        android:id="@+id/gender"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
-        android:textAppearance="?android:textAppearanceSmall"
-        android:textColor="#AEB6BD"  />
-</LinearLayout>
+</RelativeLayout>
