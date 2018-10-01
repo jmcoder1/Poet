@@ -18,6 +18,8 @@ import android.widget.TextView;
  */
 public class PersonCursorAdapter extends CursorAdapter {
 
+    private Context mContext;
+
     /**
      * Constructs a new {@link PersonCursorAdapter}.
      *
@@ -26,6 +28,7 @@ public class PersonCursorAdapter extends CursorAdapter {
      */
     public PersonCursorAdapter(Context context, Cursor c) {
         super(context, c, 0 /* flags */);
+        mContext = context;
     }
 
     /**
@@ -61,7 +64,7 @@ public class PersonCursorAdapter extends CursorAdapter {
         // Extract full name properties from cursor
         String fullName = getFullName(cursor);
 
-        int gender = cursor.getInt(cursor.getColumnIndexOrThrow(ContactEntry.COLUMN_PERSON_GENDER));
+        String gender = getGender(cursor);
 
         // Populate fields with extracted properties
         nameTextView.setText(fullName);
@@ -69,7 +72,7 @@ public class PersonCursorAdapter extends CursorAdapter {
     }
 
     /**
-     * Gets the full name of the parnter from the text views.
+     * Helper method gets the full name of the partner from the text views.
      * @param cursor
      * @return
      */
@@ -84,4 +87,13 @@ public class PersonCursorAdapter extends CursorAdapter {
         return fullName;
     }
 
+    /**
+     * Helper method gets the gender from the enumeration.
+     */
+
+    private String getGender(Cursor cursor) {
+        int genderEnum = cursor.getInt(cursor.getColumnIndexOrThrow(ContactEntry.COLUMN_PERSON_GENDER));
+        String gender = mContext.getResources().getStringArray(R.array.array_gender_options)[genderEnum];
+        return gender;
+    }
 }

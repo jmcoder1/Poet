@@ -68,7 +68,7 @@ public class PersonProvider extends ContentProvider {
         int match = sUriMatcher.match(uri);
         switch (match) {
             case PERSON:
-                // For the PETS code, query the pets table directly with the given
+                // For the PERSON code, query the pets table directly with the given
                 // projection, selection, selection arguments, and sort order. The cursor
                 // could contain multiple rows of the pets table.
                 cursor = db.query(
@@ -81,7 +81,7 @@ public class PersonProvider extends ContentProvider {
                         sortOrder);
                 break;
             case PERSON_ID:
-                // For the PET_ID code, extract out the ID from the URI.
+                // For the PERSON_ID code, extract out the ID from the URI.
                 // For an example URI such as "content://com.example.android.pets/pets/3",
                 // the selection will be "_id=?" and the selection argument will be a
                 // String array containing the actual ID of 3 in this case.

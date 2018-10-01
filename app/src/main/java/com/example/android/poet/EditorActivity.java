@@ -79,12 +79,10 @@ public class EditorActivity extends AppCompatActivity {
         mGenderSpinner = (Spinner) findViewById(R.id.spinner_gender);
         mGenderSpinner.setOnTouchListener(mTouchListener);
 
-        setSpinner();
+        setGenderSpinner();
     }
 
-    private void setSpinner() {
-        // Create adapter for spinner. The list options are from the String array it will use
-        // the spinner will use the default layout
+    private void setGenderSpinner() {
         ArrayAdapter genderSpinnerAdapter = ArrayAdapter.createFromResource(this,
                 R.array.array_gender_options, android.R.layout.simple_spinner_item);
 
@@ -99,19 +97,55 @@ public class EditorActivity extends AppCompatActivity {
                 String selection = (String) parent.getItemAtPosition(position);
                 if (!TextUtils.isEmpty(selection)) {
                     if (selection.equals(getString(R.string.gender_male))) {
-                        mGender = 1; // Male
+                        mGender = ContactEntry.GENDER_MALE;
                     } else if (selection.equals(getString(R.string.gender_female))) {
-                        mGender = 2; // Female
+                        mGender = ContactEntry.GENDER_FEMALE;
+                    } else if (selection.equals(getString(R.string.gender_androgyne))) {
+                        mGender = ContactEntry.GENDER_ANDROGYNE;
+                    } else if (selection.equals(getString(R.string.gender_neutrosis))) {
+                        mGender = ContactEntry.GENDER_NEUTROSIS;
+                    } else if (selection.equals(getString(R.string.gender_agender))) {
+                        mGender = ContactEntry.GENDER_AGENDER;
+                    } else if (selection.equals(getString(R.string.gender_intergender))) {
+                        mGender = ContactEntry.GENDER_INTERGENDER;
+                    } else if (selection.equals(getString(R.string.gender_demiboy))) {
+                        mGender = ContactEntry.GENDER_DEMIBOY;
+                    } else if (selection.equals(getString(R.string.gender_demigirl))) {
+                        mGender = ContactEntry.GENDER_DEMIGIRL;
+                    } else if (selection.equals(getString(R.string.gender_third_gender))) {
+                        mGender = ContactEntry.GENDER_THIRD_GENDER;
+                    } else if (selection.equals(getString(R.string.gender_genderqueer))) {
+                        mGender = ContactEntry.GENDER_GENDERQUEER;
+                    } else if (selection.equals(getString(R.string.gender_pangender))){
+                        mGender = ContactEntry.GENDER_PANGENDER;
+                    } else if (selection.equals(getString(R.string.gender_epicene))) {
+                        mGender = ContactEntry.GENDER_EPICENE;
+                    } else if (selection.equals(getString(R.string.gender_genderfluid))) {
+                        mGender = ContactEntry.GENDER_GENDERFLUID;
+                    } else if (selection.equals(getString(R.string.gender_transgender))) {
+                        mGender = ContactEntry.GENDER_TRANSGENDER;
+                    } else if (selection.equals(getString(R.string.gender_bigender))) {
+                        mGender = ContactEntry.GENDER_BIGENDER;
+                    } else if (selection.equals(getString(R.string.gender_demiagender))) {
+                        mGender = ContactEntry.GENDER_DEMIAGENDER;
+                    } else if (selection.equals(getString(R.string.gender_femme))) {
+                        mGender = ContactEntry.GENDER_FEMME;
+                    } else if (selection.equals(getString(R.string.gender_butch))) {
+                        mGender = ContactEntry.GENDER_BUTCH;
+                    } else if (selection.equals(getString(R.string.gender_transvesti_nb))) {
+                        mGender = ContactEntry.GENDER_TRANSVESTI_NB;
+                    } else if (selection.equals(getString(R.string.gender_aliagender))) {
+                        mGender = ContactEntry.GENDER_ALIAGENDER;
                     } else {
-                        mGender = 0; // Unknown
-                    }//TODO: Add more information about the different genders
+                        mGender = ContactEntry.GENDER_UNKNOWN;
+                    }
                 }
             }
 
             // Because AdapterView is an abstract class, onNothingSelected must be defined
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                mGender = 0; // Unknown
+                mGender = ContactEntry.GENDER_UNKNOWN;
             }
         });
     }

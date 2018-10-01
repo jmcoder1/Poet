@@ -59,12 +59,11 @@ public final class PersonContract {
         public static final int GENDER_GENDERFLUID = 13;
         public static final int GENDER_TRANSGENDER = 14;
         public static final int GENDER_BIGENDER = 15;
-        public static final int GENDER_BIAGENDER = 16;
-        public static final int GENDER_DEMIAGENDER = 17;
-        public static final int GENDER_FEMME = 18;
-        public static final int GENDER_BUTCH = 19;
-        public static final int GENDER_TRANSVESTI_NB = 20;
-        public static final int GENDER_ALIAGENDER = 21;
+        public static final int GENDER_DEMIAGENDER = 16;
+        public static final int GENDER_FEMME = 17;
+        public static final int GENDER_BUTCH = 18;
+        public static final int GENDER_TRANSVESTI_NB = 19;
+        public static final int GENDER_ALIAGENDER = 20;
 
         /**
          * Returns whether or not the given gender is a valid gender
@@ -77,8 +76,7 @@ public final class PersonContract {
                     || gender == GENDER_THIRD_GENDER || gender == GENDER_GENDERQUEER
                     || gender == GENDER_PANGENDER || gender == GENDER_EPICENE
                     || gender == GENDER_GENDERFLUID || gender == GENDER_TRANSGENDER
-                    || gender == GENDER_BIGENDER || gender ==  GENDER_BIGENDER
-                    || gender == GENDER_BIAGENDER || gender == GENDER_DEMIAGENDER
+                    || gender == GENDER_BIGENDER || gender == GENDER_DEMIAGENDER
                     || gender == GENDER_FEMME || gender == GENDER_BUTCH
                     || gender == GENDER_TRANSVESTI_NB || gender == GENDER_ALIAGENDER) {
                 return true;
@@ -91,7 +89,8 @@ public final class PersonContract {
         public static final int STATUS_BOYFRIEND = 1;
         public static final int STATUS_WIFE = 2;
         public static final int STATUS_HUSBAND = 3;
-        public static final int STATUS_OTHER = 4;
+        public static final int STATUS_ITS_COMPLICATED = 4;
+        //TODO Add some other categories i.e. poly/mistress...
 
         // Possible constant values for the ethnicity
     }
