@@ -115,40 +115,36 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/container_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:text="@string/relationship_label"
+                    android:text="@string/status_label"
                     style="@style/CategoryStyle" />
 
                 <LinearLayout
                     android:layout_height="wrap_content"
                     android:layout_width="0dp"
                     android:layout_weight="2"
-                    android:paddingLeft="4dp"
                     android:orientation="vertical">
 
-                    <EditText
-                        android:id="@+id/relationship"
-                        android:hint="@string/relationship_hint"
-                        android:inputType="textCapWords"
-                        style="@style/EditorFieldStyle" />
-
-                    <EditText
-                        android:id="@+id/ethnicity"
-                        android:hint="@string/ethnicity_hint"
-                        android:inputType="textCapWords"
-                        style="@style/EditorFieldStyle" />
-
-                    <EditText
-                        android:id="@+id/notes"
-                        android:hint="@string/notes_hint"
-                        android:inputType="textCapWords"
-                        style="@style/EditorFieldStyle" />
+                    <!-- Gender drop-down spinner -->
+                    <Spinner
+                        android:id="@+id/spinner_status"
+                        android:layout_height="48dp"
+                        android:layout_width="wrap_content"
+                        android:paddingRight="16dp"
+                        android:spinnerMode="dropdown"/>
                 </LinearLayout>
             </LinearLayout>
+
+            <EditText
+                    android:id="@+id/notes"
+                    android:hint="@string/notes_hint"
+                    android:inputType="textCapWords"
+                    style="@style/EditorFieldStyle" />
 
         </LinearLayout>
     </ScrollView>

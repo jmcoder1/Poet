@@ -33,10 +33,19 @@
             android:fontFamily="sans-serif-medium"
             android:textAppearance="?android:textAppearanceMedium"
             android:textColor="#2B3D4D"
-            tools:text="Bill Bob"/>
+            tools:text="David Smith"/>
 
         <TextView
-            android:id="@+id/gender"
+            android:id="@+id/partner_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:textColor="#AEB6BD"
+            tools:text="Female"/>
+
+        <TextView
+            android:id="@+id/partner_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"

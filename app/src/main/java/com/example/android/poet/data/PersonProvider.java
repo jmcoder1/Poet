@@ -19,10 +19,10 @@ public class PersonProvider extends ContentProvider {
 
     public static final String LOG_TAG = PersonProvider.class.getSimpleName();
 
-    /** URI matcher code for the content URI for the pets table */
+    /** URI matcher code for the content URI for the partners table */
     private static final int PERSON = 100;
 
-    /** URI matcher code for the content URI for a single pet in the pets table */
+    /** URI matcher code for the content URI for a single person in the partners table */
     private static final int PERSON_ID = 101;
 
     /**
@@ -47,30 +47,29 @@ public class PersonProvider extends ContentProvider {
     public boolean onCreate() {
         mDbHelper = new PersonDbHelper(getContext());
 
-        // Make sure the variable is a global variable, so it can be referenced from other
         // ContentProvider methods.
         return true;
     }
 
     /**
-     * Perform the query for the given URI. Use the given projection, selection, selection arguments, and sort order.
+     * Perform the query for the given URI using the parameters.
+     *
+     * @param uri
+     * @param projection
+     * @param selection
+     * @param selectionArgs
      */
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
                         String sortOrder) {
-        // Get readable database
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
-        // This cursor will hold the result of the query
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
         Cursor cursor;
 
         // Figure out if the URI matcher can match the URI to a specific code
         int match = sUriMatcher.match(uri);
         switch (match) {
             case PERSON:
-                // For the PERSON code, query the pets table directly with the given
-                // projection, selection, selection arguments, and sort order. The cursor
-                // could contain multiple rows of the pets table.
                 cursor = db.query(
                         ContactEntry.TABLE_NAME,
                         projection,
@@ -82,7 +81,7 @@ public class PersonProvider extends ContentProvider {
                 break;
             case PERSON_ID:
                 // For the PERSON_ID code, extract out the ID from the URI.
-                // For an example URI such as "content://com.example.android.pets/pets/3",
+                // For an example URI such as "content://com.example.android.poet/partners/3",
                 // the selection will be "_id=?" and the selection argument will be a
                 // String array containing the actual ID of 3 in this case.
                 //
@@ -92,7 +91,7 @@ public class PersonProvider extends ContentProvider {
                 selection = ContactEntry._ID + "=?";
                 selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
 
-                // This will perform a query on the pets table where the _id equals 3 to return a
+                // This will perform a query on the partners table where the _id equals 3 to return a
                 // Cursor containing that row of the table.
                 cursor = db.query(
                         ContactEntry.TABLE_NAME,
@@ -127,15 +126,17 @@ public class PersonProvider extends ContentProvider {
 
         String firstName = cv.getAsString(ContactEntry.COLUMN_PERSON_FIRST_NAME);
         Integer gender = cv.getAsInteger(ContactEntry.COLUMN_PERSON_GENDER);
-        //TODO add similar checks for ethnicity and relationship status
+        Integer status = cv.getAsInteger(ContactEntry.COLUMN_PERSON_STATUS);
+
         if(firstName == null) {
             throw new IllegalArgumentException("Person requires a first name");
         } else if (gender ==  null || !ContactEntry.isValidGender(gender)) {
             throw new IllegalArgumentException("Person requires a valid gender");
+        } else if (status == null || !ContactEntry.isValidStatus(status)) {
+            throw new IllegalArgumentException("Person requires a valid relationship status");
         }
 
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
-
         long id = database.insert(ContactEntry.TABLE_NAME, null, cv);
         // If the ID is -1, then the insertion failed. Log an error and return null.
         if (id == -1) {
@@ -170,8 +171,8 @@ public class PersonProvider extends ContentProvider {
     }
 
     /**
-     * Update pets in the database with the given content values. Apply the changes to the rows
-     * specified in the selection and selection arguments (which could be 0 or 1 or more pets).
+     * Update persons in the database with the given content values. Apply the changes to the rows
+     * specified in the selection and selection arguments (which could be 0 or 1 or more persons).
      * Return the number of rows that were successfully updated.
      */
     private int updatePerson(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
@@ -181,28 +182,25 @@ public class PersonProvider extends ContentProvider {
             return 0;
         }
 
-        // If the {@link PetEntry#COLUMN_PET_NAME} key is present,
+        // If the {@link ContactEntry#COLUMN_PERSON_FIRST_NAME} key is present,
         // check that the name value is not null.
         if (values.containsKey(ContactEntry.COLUMN_PERSON_FIRST_NAME)) {
             String name = values.getAsString(ContactEntry.COLUMN_PERSON_FIRST_NAME);
             if (name == null) {
-                throw new IllegalArgumentException("Pet requires a name");
+                throw new IllegalArgumentException("Person requires a name");
             }
         }
 
-        // If the {@link PetEntry#COLUMN_PET_GENDER} key is present,
+        // If the {@link ContactEntry#COLUMN_PERSON_GENDER} key is present,
         // check that the gender value is valid.
         if (values.containsKey(ContactEntry.COLUMN_PERSON_GENDER)) {
             Integer gender = values.getAsInteger(ContactEntry.COLUMN_PERSON_GENDER);
             if (gender == null || !ContactEntry.isValidGender(gender)) {
-                throw new IllegalArgumentException("Pet requires valid gender");
+                throw new IllegalArgumentException("Person requires valid gender");
             }
         }
 
-        // Otherwise, get writeable database to update the data
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
-
-        // Returns the number of database rows affected by the update statement
         return database.update(ContactEntry.TABLE_NAME, values, selection, selectionArgs);
     }
 
@@ -212,13 +210,11 @@ public class PersonProvider extends ContentProvider {
      */
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        // Get writeable database
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
 
         final int match = sUriMatcher.match(uri);
         switch (match) {
             case PERSON:
-                // Delete all rows that match the selection and selection args
                 return database.delete(ContactEntry.TABLE_NAME, selection, selectionArgs);
             case PERSON_ID:
                 // Delete a single row given by the ID in the URI

@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 ContactEntry.COLUMN_PERSON_FIRST_NAME,
                 ContactEntry.COLUMN_PERSON_MIDDLE_NAME,
                 ContactEntry.COLUMN_PERSON_LAST_NAME,
+                ContactEntry.COLUMN_PERSON_STATUS,
                 ContactEntry.COLUMN_PERSON_GENDER,
                 ContactEntry.COLUMN_PERSON_NOTES
         };
@@ -90,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         cv.put(ContactEntry.COLUMN_PERSON_LAST_NAME, "Bob");
         cv.put(ContactEntry.COLUMN_PERSON_PHONE_NUMBER, "0731243212231");
         cv.put(ContactEntry.COLUMN_PERSON_GENDER, 2);
-        cv.put(ContactEntry.COLUMN_PERSON_RELATIONSHIP_STATUS, 0);
+        cv.put(ContactEntry.COLUMN_PERSON_STATUS, 0);
 
         Uri newUri = getContentResolver().insert(ContactEntry.CONTENT_URI, cv);
     }

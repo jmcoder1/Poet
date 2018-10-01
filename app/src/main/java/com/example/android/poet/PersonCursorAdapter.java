@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 /**
  * {@link PersonCursorAdapter} is an adapter for a list or grid view
  * that uses a {@link Cursor} of pet data as its data source. This adapter knows
@@ -59,16 +61,17 @@ public class PersonCursorAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         // Find fields to populate in inflated template
         TextView nameTextView = (TextView) view.findViewById(R.id.partner_name);
-        TextView tvGender = (TextView) view.findViewById(R.id.gender);
+        TextView genderTextView = (TextView) view.findViewById(R.id.partner_gender);
+        TextView statusTextView = (TextView) view.findViewById(R.id.partner_status);
 
-        // Extract full name properties from cursor
         String fullName = getFullName(cursor);
-
         String gender = getGender(cursor);
+        String status = getStatus(cursor);
 
         // Populate fields with extracted properties
         nameTextView.setText(fullName);
-        tvGender.setText(String.valueOf(gender));
+        genderTextView.setText(gender);
+        statusTextView.setText(status);
     }
 
     /**
@@ -90,10 +93,15 @@ public class PersonCursorAdapter extends CursorAdapter {
     /**
      * Helper method gets the gender from the enumeration.
      */
-
     private String getGender(Cursor cursor) {
         int genderEnum = cursor.getInt(cursor.getColumnIndexOrThrow(ContactEntry.COLUMN_PERSON_GENDER));
         String gender = mContext.getResources().getStringArray(R.array.array_gender_options)[genderEnum];
         return gender;
+    }
+
+    private String getStatus(Cursor cursor) {
+        int statusEnum = cursor.getInt(cursor.getColumnIndexOrThrow(ContactEntry.COLUMN_PERSON_STATUS));
+        String status = mContext.getResources().getStringArray(R.array.array_status_options)[statusEnum];
+        return status;
     }
 }

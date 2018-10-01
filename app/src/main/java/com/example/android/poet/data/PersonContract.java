@@ -38,8 +38,7 @@ public final class PersonContract {
         public static final String COLUMN_PERSON_LAST_NAME = "lastName";
         public static final String COLUMN_PERSON_PHONE_NUMBER = "phoneNumber";
         public static final String COLUMN_PERSON_GENDER = "gender";
-        public static final String COLUMN_PERSON_RELATIONSHIP_STATUS = "relationshipStatus";
-        public static final String COLUMN_PERSON_ETHNICITY = "ethnicity";
+        public static final String COLUMN_PERSON_STATUS = "relationshipStatus";
         public static final String COLUMN_PERSON_NOTES = "notes";
 
         // Possible constant values for the gender
@@ -85,14 +84,25 @@ public final class PersonContract {
         }
 
         // Possible constant values for the relationship status
-        public static final int STATUS_GIRLFRIEND = 0;
-        public static final int STATUS_BOYFRIEND = 1;
-        public static final int STATUS_WIFE = 2;
-        public static final int STATUS_HUSBAND = 3;
-        public static final int STATUS_ITS_COMPLICATED = 4;
+        public static final int STATUS_BOYFRIEND = 0;
+        public static final int STATUS_GIRLRIEND = 1;
+        public static final int STATUS_HUSBAND = 2;
+        public static final int STATUS_WIFE = 3;
+        public static final int STATUS_COMPLICATED = 4;
         //TODO Add some other categories i.e. poly/mistress...
 
-        // Possible constant values for the ethnicity
+        /**
+         * Returns whether or not the given relationship status is valid.
+         *
+         * @param status The relationship status to the partner.
+         */
+        public static boolean isValidStatus(int status) {
+            if(status == STATUS_BOYFRIEND || status == STATUS_GIRLRIEND || status == STATUS_HUSBAND
+                    || status == STATUS_WIFE || status == STATUS_COMPLICATED) {
+                return true;
+            }
+            return false;
+        }
     }
 
 }

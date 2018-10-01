@@ -24,4 +24,13 @@
         <item>@string/gender_transvesti_nb</item>
         <item>@string/gender_aliagender</item>
     </string-array>
+
+    <!-- These are the options displayed in the relationship status drop-down Spinner -->
+    <string-array name="array_status_options">
+        <item>@string/status_boyfriend</item>
+        <item>@string/status_girlfriend</item>
+        <item>@string/status_husband</item>
+        <item>@string/status_wife</item>
+        <item>@string/status_complicated</item>
+    </string-array>
 </resources>

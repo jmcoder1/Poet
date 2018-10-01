@@ -25,6 +25,8 @@ import com.example.android.poet.R;
 
 public class EditorActivity extends AppCompatActivity {
 
+    private static final String LOG_TAG = "EditorActivity";
+
     /**
      * OnTouchListener that listens for any user touches on a View, implying that they are modifying
      * the view, and we change the mPetHasChanged boolean to true.
@@ -42,13 +44,13 @@ public class EditorActivity extends AppCompatActivity {
     private EditText mMiddleNameEditText;
     private EditText mLastNameEditText;
     private EditText mPhoneNumberEditText;
-    private EditText mRelationshipEditText;
-    private EditText mEthnicityEditText;
     private EditText mNotesEditText;
 
+    private Spinner mStatusSpinner;
     private Spinner mGenderSpinner;
 
     private int mGender = ContactEntry.GENDER_UNKNOWN;
+    private int mStatus = ContactEntry.STATUS_BOYFRIEND;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,19 +69,17 @@ public class EditorActivity extends AppCompatActivity {
         mPhoneNumberEditText = (EditText) findViewById(R.id.mobile_num);
         mPhoneNumberEditText.setOnTouchListener(mTouchListener);
 
-        mRelationshipEditText = (EditText) findViewById(R.id.relationship);
-        mRelationshipEditText.setOnTouchListener(mTouchListener);
-
-        mEthnicityEditText = (EditText) findViewById(R.id.ethnicity);
-        mEthnicityEditText.setOnTouchListener(mTouchListener);
-
         mNotesEditText = (EditText) findViewById(R.id.notes);
         mNotesEditText.setOnTouchListener(mTouchListener);
 
         mGenderSpinner = (Spinner) findViewById(R.id.spinner_gender);
         mGenderSpinner.setOnTouchListener(mTouchListener);
 
+        mStatusSpinner = (Spinner) findViewById(R.id.spinner_status);
+        mStatusSpinner.setOnTouchListener(mTouchListener);
+
         setGenderSpinner();
+        setStatusSpinner();
     }
 
     private void setGenderSpinner() {
@@ -150,6 +150,41 @@ public class EditorActivity extends AppCompatActivity {
         });
     }
 
+    private void setStatusSpinner() {
+        ArrayAdapter statusSpinnerAdapter = ArrayAdapter.createFromResource(this,
+                R.array.array_status_options, android.R.layout.simple_spinner_item);
+
+        // Specify dropdown layout style - simple list view with 1 item per line
+        statusSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        mStatusSpinner.setAdapter(statusSpinnerAdapter);
+
+        // Set the integer mSelected to the constant values
+        mStatusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selection = (String) parent.getItemAtPosition(position);
+                if (!TextUtils.isEmpty(selection)) {
+                    if (selection.equals(getString(R.string.status_boyfriend))) {
+                        mStatus = ContactEntry.STATUS_BOYFRIEND;
+                    } else if (selection.equals(getString(R.string.status_girlfriend))) {
+                        mStatus = ContactEntry.STATUS_GIRLRIEND;
+                    } else if (selection.equals(getString(R.string.status_husband))) {
+                        mStatus = ContactEntry.STATUS_HUSBAND;
+                    } else if (selection.equals(getString(R.string.status_wife))) {
+                        mStatus = ContactEntry.STATUS_WIFE;
+                    } else if (selection.equals(getString(R.string.status_complicated))) {
+                        mStatus = ContactEntry.STATUS_COMPLICATED;
+                    }
+                }
+            }
+
+            // Because AdapterView is an abstract class, onNothingSelected must be defined
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                mStatus = ContactEntry.STATUS_COMPLICATED;
+            }
+        });    }
+
     /**
      * Get user input from editor and save new pet into database.
      */
@@ -160,17 +195,14 @@ public class EditorActivity extends AppCompatActivity {
         String lastNameString = mLastNameEditText.getText().toString().trim();
         String phoneNumberString = mPhoneNumberEditText.getText().toString().trim();
         String notesString = mNotesEditText.getText().toString().trim();
-        // TODO: ignore the relationship status and ethnicity for now
 
         ContentValues cv = new ContentValues();
-
         cv.put(ContactEntry.COLUMN_PERSON_FIRST_NAME, firstNameString);
         cv.put(ContactEntry.COLUMN_PERSON_MIDDLE_NAME, middleNameString);
         cv.put(ContactEntry.COLUMN_PERSON_LAST_NAME, lastNameString);
         cv.put(ContactEntry.COLUMN_PERSON_PHONE_NUMBER, phoneNumberString);
         cv.put(ContactEntry.COLUMN_PERSON_GENDER, mGender);
-        //cv.put(ContactEntry.COLUMN_PERSON_RELATIONSHIP_STATUS, 0);
-        //cv.put(ContactEntry.COLUMN_PERSON_ETHNICITY, 0);
+        cv.put(ContactEntry.COLUMN_PERSON_STATUS, mStatus);
         cv.put(ContactEntry.COLUMN_PERSON_NOTES, notesString);
 
         // Insert a new row for pet in the database, returning the ID of that new row.

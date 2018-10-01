@@ -20,10 +20,8 @@ public class PersonDbHelper extends SQLiteOpenHelper {
             + ContactEntry.COLUMN_PERSON_MIDDLE_NAME + " TEXT, "
             + ContactEntry.COLUMN_PERSON_LAST_NAME + " TEXT, "
             + ContactEntry.COLUMN_PERSON_PHONE_NUMBER + " TEXT, "
-            + ContactEntry.COLUMN_PERSON_GENDER + " INTEGER NOT NULL DEFAULT "
-            + ContactEntry.GENDER_MALE + ", "
-            + ContactEntry.COLUMN_PERSON_RELATIONSHIP_STATUS + " INTEGER, "
-            + ContactEntry.COLUMN_PERSON_ETHNICITY + " INTEGER, "
+            + ContactEntry.COLUMN_PERSON_GENDER + " INTEGER NOT NULL DEFAULT " + ContactEntry.GENDER_MALE + ", "
+            + ContactEntry.COLUMN_PERSON_STATUS + " INTEGER, "
             + ContactEntry.COLUMN_PERSON_NOTES + " TEXT);";
 
     /**
