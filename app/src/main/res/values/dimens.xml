@@ -14,8 +14,8 @@
     <!-- Layout margin/padding for the edit text fields -->
 
     <!-- Dimensions for the input field images -->
-    <dimen name="img_width">96dp</dimen>
-    <dimen name="img_height">96dp</dimen>
+    <dimen name="profile_img_width">96dp</dimen>
+    <dimen name="profile_img_height">96dp</dimen>
     <dimen name="profile_marginTop">16dp</dimen>
     <dimen name="profile_marginBottom">16dp</dimen>
 

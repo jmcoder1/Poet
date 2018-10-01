@@ -4,6 +4,7 @@ import com.example.android.poet.data.PersonContract.ContactEntry;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,15 +55,33 @@ public class PersonCursorAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         // Find fields to populate in inflated template
-        TextView tvFirstName = (TextView) view.findViewById(R.id.firstName);
+        TextView nameTextView = (TextView) view.findViewById(R.id.partner_name);
         TextView tvGender = (TextView) view.findViewById(R.id.gender);
 
-        // Extract properties from cursor
-        String firstName = cursor.getString(cursor.getColumnIndexOrThrow(ContactEntry.COLUMN_PERSON_FIRST_NAME));
+        // Extract full name properties from cursor
+        String fullName = getFullName(cursor);
+
         int gender = cursor.getInt(cursor.getColumnIndexOrThrow(ContactEntry.COLUMN_PERSON_GENDER));
 
         // Populate fields with extracted properties
-        tvFirstName.setText(firstName);
+        nameTextView.setText(fullName);
         tvGender.setText(String.valueOf(gender));
     }
+
+    /**
+     * Gets the full name of the parnter from the text views.
+     * @param cursor
+     * @return
+     */
+    private String getFullName(Cursor cursor) {
+        String firstName = cursor.getString(cursor.getColumnIndexOrThrow(ContactEntry.COLUMN_PERSON_FIRST_NAME));
+        String middleName = cursor.getString(cursor.getColumnIndex(ContactEntry.COLUMN_PERSON_MIDDLE_NAME));
+        String lastName = cursor.getString(cursor.getColumnIndex(ContactEntry.COLUMN_PERSON_LAST_NAME));
+
+        String fullName = firstName + " " +
+                ((middleName == null || middleName.equals("")) ? "": (middleName + " ")) + lastName;
+
+        return fullName;
+    }
+
 }
