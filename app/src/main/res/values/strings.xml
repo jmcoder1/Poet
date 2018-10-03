@@ -29,12 +29,34 @@
         <!-- Label for correctly inserting the partner into the db [CHAR LIMIT = 15] -->
         <string name="editor_insert_partner_successful">Partner added!</string>
 
+        <!-- Label for successfully deleting partner from the db -->
+        <string name="editor_delete_partner_successful">Partner deleted!</string>
+
+        <!-- Label for failing to delete the partner from the db -->
+        <string name="editor_delete_partner_failed">Partner failed to be deleted</string>
+
+
+
     <!-- Strings for the title of the editor activity -->
-        <!-- Strng for when the user clicks to add a user -->
+        <!-- String for when the user clicks to add a user -->
         <string name="add_partner">Add a partner</string>
 
         <!-- String for when the user clicks to edit a user [CHAR LIMIT = 20] -->
         <string name="edit_partner">Edit Partner</string>
+
+    <!-- String for the dialog to continue editing or to save a partner -->
+        <!-- Dialog message when user is leaving editor but hasn't saved changes [CHAR LIMIT=NONE] -->
+        <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
+
+        <string name="delete_dialog_msg">Delete user!</string>
+        <!-- Dialog button text for the option to discard a user's changes [CHAR LIMIT=20] -->
+        <string name="discard">Discard</string>
+
+        <string name="delete">Delete</string>
+        <string name="cancel">Cancel</string>
+
+        <!-- Dialog button text for the option to keep editing the current partner [CHAR LIMIT=20] -->
+        <string name="keep_editing">Keep Editing</string>
 
     <!-- Category strings [CHAR LIMIT = 20] -->
     <string name="name_label">Name</string>

@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Dimensions for the activity_margin -->
-    <dimen name="activity_padding">16dp</dimen>
+    <dimen name="activity_paddingTop">16dp</dimen>
+    <dimen name="activity_paddingRight">8dp</dimen>
+    <dimen name="activity_paddingLeft">8dp</dimen>
+    <dimen name="activity_paddingBottom">16dp</dimen>
 
     <!-- Dimensions for the input field images -->
     <dimen name="profile_img_width">96dp</dimen>
     <dimen name="profile_img_height">96dp</dimen>
-    <dimen name="profile_img_marginTop">24dp</dimen>
-    <dimen name="profile_img_marginBottom">24dp</dimen>
+    <dimen name="profile_img_marginTop">16dp</dimen>
+    <dimen name="profile_img_marginBottom">16dp</dimen>
 
 
     <!-- Dimensions for the partner list item profile image -->

@@ -70,25 +70,20 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void insertPartner() {
-        ContentValues cv = new ContentValues();
-
-        cv.put(ContactEntry.COLUMN_PERSON_NAME, "Billy Bob");
-        cv.put(ContactEntry.COLUMN_PERSON_PHONE_NUMBER, "0731243212231");
-        cv.put(ContactEntry.COLUMN_PERSON_GENDER, ContactEntry.GENDER_MALE);
-        cv.put(ContactEntry.COLUMN_PERSON_STATUS, ContactEntry.STATUS_COMPLICATED);
-
-        Uri newUri = getContentResolver().insert(ContactEntry.CONTENT_URI, cv);
+    /**
+     * Helper method to delete all partners in the db.
+     */
+    private void deleteAllPartners() {
+        int rowsDeleted = getContentResolver().delete(ContactEntry.CONTENT_URI, null, null);
+        Log.v(LOG_TAG, rowsDeleted + " rows deleted from" + ContactEntry.TABLE_NAME + " database");
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_insert_dummy_data:
-                insertPartner();
-                return true;
             case R.id.action_delete_all_entries:
-                // Do nothing for now
+                deleteAllPartners();
+                Log.v(LOG_TAG, "All rows deleted from" + ContactEntry.TABLE_NAME + "  database");
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -98,29 +93,6 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_catalog, menu);
         return true;
-    }
-
-    /**
-     * This method sets the colours of the floating action button.
-     *
-     * @param fab The floating action button widget.
-     * @param primaryColor The colour of the button when it is not pressed.
-     * @param rippleColor The colour of the button when the button is pressed.
-     */
-    private void setFabColors(FloatingActionButton fab, int primaryColor, int rippleColor) {
-
-        int[][] states = {
-                {android.R.attr.state_enabled},
-                {android.R.attr.state_pressed},
-        };
-
-        int[] colors = {
-                primaryColor,
-                rippleColor,
-        };
-
-        ColorStateList colorStateList = new ColorStateList(states, colors);
-        fab.setBackgroundTintList(colorStateList);
     }
 
     @Override

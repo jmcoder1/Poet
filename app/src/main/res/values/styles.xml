@@ -7,36 +7,36 @@
     </style>
 
     <style name="ActivityStyle">
-        <item name="android:padding">@dimen/activity_padding</item>
+        <item name="android:paddingTop">@dimen/activity_paddingTop</item>
+        <item name="android:paddingLeft">@dimen/activity_paddingLeft</item>
+        <item name="android:paddingRight">@dimen/activity_paddingRight</item>
+        <item name="android:paddingBottom">@dimen/activity_paddingBottom</item>
+    </style>
+
+    <style name="CategoryIconStyle">
+        <item name="android:layout_height">24dp</item>
+        <item name="android:layout_width">24dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:layout_alignParentBottom">true</item>
     </style>
 
     <style name="EditTextStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:orientation">horizontal</item>
-        <item name="android:layout_marginTop">16dp</item>
-    </style>
-    <style name="CategoryStyle">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:layout_marginRight">8dp</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:textAppearance">?android:textAppearanceSmall</item>
     </style>
 
-    <style name="EditorFieldStyle">
+    <style name="CategoryLabelStyle">
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_weight">5</item>
-        <item name="android:fontFamily">sans-serif-light</item>
-        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textAppearance">?android:textAppearanceSmall</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 
     <style name="SpinnerStyle">
-        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_height">64dp</item>
         <item name="android:layout_width">wrap_content</item>
     </style>
-
 
 </resources>

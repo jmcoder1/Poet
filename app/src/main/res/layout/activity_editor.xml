@@ -13,86 +13,154 @@
         android:layout_width="@dimen/profile_img_width"
         android:layout_height="@dimen/profile_img_height"
         android:src="@drawable/profile_picture"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/profile_img_marginTop"
         android:layout_marginBottom="@dimen/profile_img_marginBottom" />
 
-    <LinearLayout
-        android:id="@+id/name_view"
-        style="@style/EditTextStyle"
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/profile_image">
 
-        <TextView
-            android:id="@+id/name_label"
-            android:text="@string/name_label"
-            style="@style/CategoryStyle" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/name_et"
-            android:hint="@string/name_hint"
-            android:inputType="textCapWords"
-            style="@style/EditorFieldStyle" />
-    </LinearLayout>
+            <RelativeLayout
+                android:id="@+id/name_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
 
-    <LinearLayout
-        android:id="@+id/phone_number_view"
-        style="@style/EditTextStyle"
-        android:layout_below="@id/name_view">
+                <ImageView
+                    android:id="@+id/name_icon"
+                    style="@style/CategoryIconStyle"
+                    android:src="@drawable/ic_icon_person"/>
 
-        <TextView
-            android:id="@+id/phone_number_label"
-            android:text="@string/phone_number_label"
-            style="@style/CategoryStyle" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_toRightOf="@+id/name_icon"
+                    android:layout_toEndOf="@+id/name_icon">
 
-        <EditText
-            android:id="@+id/phone_number_et"
-            android:hint="@string/phone_number_hint"
-            android:inputType="phone"
-            style="@style/EditorFieldStyle" />
-    </LinearLayout>
+                    <TextView
+                        android:id="@+id/name_label"
+                        style="@style/CategoryLabelStyle"
+                        android:text="@string/name_label"/>
 
-    <LinearLayout
-        android:id="@+id/gender_view"
-        style="@style/EditTextStyle"
-        android:layout_below="@id/phone_number_view">
+                    <EditText
+                        android:id="@+id/name_et"
+                        style="@style/EditTextStyle"
+                        android:inputType="textCapWords" />
 
-        <TextView
-            android:id="@+id/gender_label"
-            android:text="@string/gender_label"
-            style="@style/CategoryStyle" />
+                </LinearLayout>
 
-        <Spinner
-            android:id="@+id/spinner_gender"
-            android:spinnerMode="dropdown"
-            style="@style/SpinnerStyle" />
+            </RelativeLayout>
 
-    </LinearLayout>
+            <RelativeLayout
+                android:id="@+id/phone_number_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/name_view"
+                android:layout_marginTop="8dp">
 
-    <LinearLayout
-        android:id="@+id/status_view"
-        style="@style/EditTextStyle"
-        android:layout_below="@id/gender_view">
+                <ImageView
+                    android:id="@+id/phone_number_icon"
+                    style="@style/CategoryIconStyle"
+                    android:src="@drawable/ic_phone_icon"/>
 
-        <TextView
-            android:id="@+id/status_label"
-            android:text="@string/status_label"
-            style="@style/CategoryStyle" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_toRightOf="@+id/phone_number_icon"
+                    android:layout_toEndOf="@+id/phone_number_icon">
 
-        <Spinner
-            android:id="@+id/spinner_status"
-            style="@style/SpinnerStyle"
-            android:spinnerMode="dropdown"/>
+                    <TextView
+                        android:id="@+id/phone_number_label"
+                        style="@style/CategoryLabelStyle"
+                        android:text="@string/phone_number_label"/>
 
-    </LinearLayout>
+                    <EditText
+                        android:id="@+id/phone_number_et"
+                        style="@style/EditTextStyle"
+                        android:inputType="phone" />
+                </LinearLayout>
+            </RelativeLayout>
 
-    <EditText
-        android:id="@+id/notes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/status_view"
-        android:hint="@string/notes_hint"
-        android:inputType="textCapWords" />
+            <RelativeLayout
+                android:id="@+id/gender_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/phone_number_view"
+                android:layout_marginTop="8dp">
+
+                <ImageView
+                    android:id="@+id/gender_icon"
+                    style="@style/CategoryIconStyle"
+                    android:src="@drawable/ic_phone_icon"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_toRightOf="@+id/gender_icon"
+                    android:layout_toEndOf="@+id/gender_icon">
+
+                    <TextView
+                        android:id="@+id/gender_label"
+                        style="@style/CategoryLabelStyle"
+                        android:text="@string/gender_label" />
+
+                    <Spinner
+                        android:id="@+id/spinner_gender"
+                        android:spinnerMode="dropdown"
+                        style="@style/SpinnerStyle" />
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/status_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/gender_view">
+
+                <ImageView
+                    android:id="@+id/status_icon"
+                    style="@style/CategoryIconStyle"
+                    android:src="@drawable/ic_phone_icon" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/status_icon"
+                    android:layout_toRightOf="@+id/status_icon"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/status_label"
+                        style="@style/CategoryLabelStyle"
+                        android:text="@string/status_label" />
+
+                    <Spinner
+                        android:id="@+id/spinner_status"
+                        style="@style/SpinnerStyle"
+                        android:spinnerMode="dropdown" />
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <EditText
+                android:id="@+id/notes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/status_view"
+                android:hint="@string/notes_hint"
+                android:inputType="textCapWords" />
+        </LinearLayout>
+    </ScrollView>
+
 </RelativeLayout>

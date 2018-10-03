@@ -1,14 +1,16 @@
 package com.example.android.poet;
 
+import android.content.DialogInterface;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.widget.CursorAdapter;
+import android.content.DialogInterface;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -34,15 +36,17 @@ public class EditorActivity extends AppCompatActivity
 
     /**
      * OnTouchListener that listens for any user touches on a View, implying that they are modifying
-     * the view, and we change the mPetHasChanged boolean to true.
+     * the view, and we change the mPartnerHasChanged boolean to true.
      */
     private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
-            //TODO: mPetHasChanged = true;
+            mPartnerHasChanged = true;
             return false;
         }
     };
+
+    private boolean mPartnerHasChanged = false;
 
     private Uri mCurrentPartnerUri;
 
@@ -68,6 +72,10 @@ public class EditorActivity extends AppCompatActivity
 
         if(mCurrentPartnerUri == null) {
             setTitle(R.string.add_partner);
+
+            // Invalidate the options menu, so the "Delete" menu option can be hidden.
+            // (It doesn't make sense to delete a partner that hasn't been created yet.)
+            invalidateOptionsMenu();
         } else {
             setTitle(R.string.edit_partner);
             getSupportLoaderManager().initLoader(EXISTING_PARTNER_LOADER, null, this);
@@ -200,7 +208,7 @@ public class EditorActivity extends AppCompatActivity
     }
 
     /**
-     * Get user input from editor and save new pet into database.
+     * Get user input from editor and save new partner into database.
      */
     private void savePartner() {
 
@@ -215,6 +223,9 @@ public class EditorActivity extends AppCompatActivity
         cv.put(ContactEntry.COLUMN_PERSON_STATUS, mStatus);
         cv.put(ContactEntry.COLUMN_PERSON_NOTES, notes);
 
+        if(mCurrentPartnerUri == null && TextUtils.isEmpty(name)) {
+            return;
+        }
 
         if(mCurrentPartnerUri == null) {
             Uri newUri = getContentResolver().insert(ContactEntry.CONTENT_URI, cv);
@@ -232,6 +243,119 @@ public class EditorActivity extends AppCompatActivity
         }
     }
 
+    private void showUnsavedChangesDialog(
+            DialogInterface.OnClickListener discardButtonClickListener) {
+            // Create an AlertDialog.Builder and set the message, and click listeners
+            // for the positive and negative buttons on the dialog.
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(R.string.unsaved_changes_dialog_msg);
+            builder.setPositiveButton(R.string.discard, discardButtonClickListener);
+            builder.setNegativeButton(R.string.keep_editing, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // User clicked the "Keep editing" button, so dismiss the dialog
+                    // and continue editing the partner.
+                    if (dialog != null) {
+                        dialog.dismiss();
+                    }
+                }
+            });
+
+            // Create and show the AlertDialog
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+
+    }
+
+    /**
+     * This method is called after invalidateOptionsMenu(), so that the
+     * menu can be updated (some menu items can be hidden or made visible).
+     */
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        // If this is a new partner, hide the "Delete" menu item.
+        if (mCurrentPartnerUri == null) {
+            MenuItem menuItem = menu.findItem(R.id.action_delete);
+            menuItem.setVisible(false);
+        }
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        // If the partner hasn't changed, continue with handling back button press
+        if (!mPartnerHasChanged) {
+            super.onBackPressed();
+            return;
+        }
+
+        // Otherwise if there are unsaved changes, setup a dialog to warn the user.
+        // Create a click listener to handle the user confirming that changes should be discarded.
+        DialogInterface.OnClickListener discardButtonClickListener =
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // User clicked "Discard" button, close the current activity.
+                        finish();
+                    }
+                };
+
+        // Show dialog that there are unsaved changes
+        showUnsavedChangesDialog(discardButtonClickListener);
+    }
+
+    private void showDeleteConfirmationDialog() {
+        // Create an AlertDialog.Builder and set the message, and click listeners
+        // for the postivie and negative buttons on the dialog.
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.delete_dialog_msg);
+        builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Delete" button, so delete the partner.
+                deletePartner();
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Cancel" button, so dismiss the dialog
+                // and continue editing the partner.
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        // Create and show the AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    /**
+     * Perform the deletion of the partner in the database.
+     */
+    private void deletePartner() {
+        // Only perform the delete if this is an existing partner.
+        if (mCurrentPartnerUri != null) {
+            // Call the ContentResolver to delete the partner at the given content URI.
+            // Pass in null for the selection and selection args because the mCurrentPartnerUri
+            // content URI already identifies the p that we want.
+            int rowsDeleted = getContentResolver().delete(mCurrentPartnerUri, null, null);
+            // Show a toast message depending on whether or not the delete was successful.
+            if (rowsDeleted == 0) {
+                // If no rows were deleted, then there was an error with the delete.
+                Toast.makeText(this, getString(R.string.editor_delete_partner_failed),
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                // Otherwise, the delete was successful and we can display a toast.
+                Toast.makeText(this, getString(R.string.editor_delete_partner_successful),
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
+            // Close the activity
+            finish();
+    }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_editor, menu);
@@ -242,19 +366,33 @@ public class EditorActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         // User clicked on a menu option in the app bar overflow menu
         switch (item.getItemId()) {
-            // Respond to a click on the "Save" menu option
+
             case R.id.action_save:
                 savePartner();
                 finish();
                 return true;
-            // Respond to a click on the "Delete" menu option
+
             case R.id.action_delete:
-                // Do nothing for now
+                showDeleteConfirmationDialog();
                 return true;
-            // Respond to a click on the "Up" arrow button in the app bar
+
             case android.R.id.home:
-                // Navigate back to parent activity (CatalogActivity)
-                NavUtils.navigateUpFromSameTask(this);
+                if (!mPartnerHasChanged) {
+                    NavUtils.navigateUpFromSameTask(EditorActivity.this);
+                    return true;
+                }
+
+                DialogInterface.OnClickListener discardButtonClickListener =
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                // User clicked "Discard" button, navigate to parent activity.
+                                NavUtils.navigateUpFromSameTask(EditorActivity.this);
+                            }
+                        };
+
+                // Show a dialog that notifies the user they have unsaved changes
+                showUnsavedChangesDialog(discardButtonClickListener);
                 return true;
         }
         return super.onOptionsItemSelected(item);
