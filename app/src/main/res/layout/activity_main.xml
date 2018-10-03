@@ -9,7 +9,7 @@
     tools:context=".MainActivity">
 
     <ListView
-        android:id="@+id/list"
+        android:id="@+id/partners_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
@@ -34,7 +34,7 @@
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif-medium"
             android:paddingTop="16dp"
-            android:text="@string/empty_people_list"
+            android:text="@string/empty_partner_list"
             android:textAppearance="?android:textAppearanceMedium"/>
 
         <TextView
@@ -45,13 +45,13 @@
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif"
             android:paddingTop="8dp"
-            android:text="@string/empty_people_subtitle"
+            android:text="@string/empty_partner_subtitle"
             android:textAppearance="?android:textAppearanceSmall"
             android:textColor="#A2AAB0"/>
     </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/edit_fab"
+        android:id="@+id/add_partner_fab"
         android:layout_width="@dimen/fab_width"
         android:layout_height="@dimen/fab_height"
         android:layout_gravity="end|bottom"

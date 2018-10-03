@@ -1,12 +1,18 @@
 package com.example.android.poet;
 
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
+import android.support.v4.widget.CursorAdapter;
 import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -17,13 +23,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.android.poet.MainActivity;
 import com.example.android.poet.data.PersonContract.ContactEntry;
-import com.example.android.poet.data.PersonDbHelper;
 
 import com.example.android.poet.R;
 
-public class EditorActivity extends AppCompatActivity {
+public class EditorActivity extends AppCompatActivity
+        implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final String LOG_TAG = "EditorActivity";
 
@@ -39,10 +44,11 @@ public class EditorActivity extends AppCompatActivity {
         }
     };
 
-    // EditText input form
-    private EditText mFirstNameEditText;
-    private EditText mMiddleNameEditText;
-    private EditText mLastNameEditText;
+    private Uri mCurrentPartnerUri;
+
+    private static final int EXISTING_PARTNER_LOADER = 0;
+
+    private EditText mNameEditText;
     private EditText mPhoneNumberEditText;
     private EditText mNotesEditText;
 
@@ -57,16 +63,20 @@ public class EditorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
 
-        mFirstNameEditText = (EditText) findViewById(R.id.first_name);
-        mFirstNameEditText.setOnTouchListener(mTouchListener);
+        Intent intent = getIntent();
+        mCurrentPartnerUri = intent.getData();
 
-        mMiddleNameEditText = (EditText) findViewById(R.id.middle_name);
-        mMiddleNameEditText.setOnTouchListener(mTouchListener);
+        if(mCurrentPartnerUri == null) {
+            setTitle(R.string.add_partner);
+        } else {
+            setTitle(R.string.edit_partner);
+            getSupportLoaderManager().initLoader(EXISTING_PARTNER_LOADER, null, this);
+        }
 
-        mLastNameEditText = (EditText) findViewById(R.id.last_name);
-        mLastNameEditText.setOnTouchListener(mTouchListener);
+        mNameEditText = (EditText) findViewById(R.id.name_et);
+        mNameEditText.setOnTouchListener(mTouchListener);
 
-        mPhoneNumberEditText = (EditText) findViewById(R.id.mobile_num);
+        mPhoneNumberEditText = (EditText) findViewById(R.id.phone_number_et);
         mPhoneNumberEditText.setOnTouchListener(mTouchListener);
 
         mNotesEditText = (EditText) findViewById(R.id.notes);
@@ -148,6 +158,8 @@ public class EditorActivity extends AppCompatActivity {
                 mGender = ContactEntry.GENDER_UNKNOWN;
             }
         });
+
+        Log.v(LOG_TAG, "setGender: mGender set to " + mGender);
     }
 
     private void setStatusSpinner() {
@@ -183,40 +195,40 @@ public class EditorActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
                 mStatus = ContactEntry.STATUS_COMPLICATED;
             }
-        });    }
+        });
+        Log.v(LOG_TAG, "setStatus: mStatus set to" + mStatus);
+    }
 
     /**
      * Get user input from editor and save new pet into database.
      */
-    private void insertPet() {
+    private void savePartner() {
 
-        String firstNameString = mFirstNameEditText.getText().toString().trim();
-        String middleNameString = mMiddleNameEditText.getText().toString().trim();
-        String lastNameString = mLastNameEditText.getText().toString().trim();
-        String phoneNumberString = mPhoneNumberEditText.getText().toString().trim();
-        String notesString = mNotesEditText.getText().toString().trim();
+        String name = mNameEditText.getText().toString().trim();
+        String phoneNumber = mPhoneNumberEditText.getText().toString().trim();
+        String notes = mNotesEditText.getText().toString().trim();
 
         ContentValues cv = new ContentValues();
-        cv.put(ContactEntry.COLUMN_PERSON_FIRST_NAME, firstNameString);
-        cv.put(ContactEntry.COLUMN_PERSON_MIDDLE_NAME, middleNameString);
-        cv.put(ContactEntry.COLUMN_PERSON_LAST_NAME, lastNameString);
-        cv.put(ContactEntry.COLUMN_PERSON_PHONE_NUMBER, phoneNumberString);
+        cv.put(ContactEntry.COLUMN_PERSON_NAME, name);
+        cv.put(ContactEntry.COLUMN_PERSON_PHONE_NUMBER, phoneNumber);
         cv.put(ContactEntry.COLUMN_PERSON_GENDER, mGender);
         cv.put(ContactEntry.COLUMN_PERSON_STATUS, mStatus);
-        cv.put(ContactEntry.COLUMN_PERSON_NOTES, notesString);
+        cv.put(ContactEntry.COLUMN_PERSON_NOTES, notes);
 
-        // Insert a new row for pet in the database, returning the ID of that new row.
-        Uri newUri = getContentResolver().insert(ContactEntry.CONTENT_URI, cv);
 
-        // Show a toast message depending on whether or not the insertion was successful
-        if (newUri == null) {
-            // If the new content URI is null, then there was an error with insertion.
-            Toast.makeText(this, getString(R.string.editor_insert_partner_failed),
-                    Toast.LENGTH_SHORT).show();
+        if(mCurrentPartnerUri == null) {
+            Uri newUri = getContentResolver().insert(ContactEntry.CONTENT_URI, cv);
         } else {
-            // Otherwise, the insertion was successful and we can display a toast.
-            Toast.makeText(this, getString(R.string.editor_insert_partner_successful),
-                    Toast.LENGTH_SHORT).show();
+            int rowsAffected = getContentResolver().update(mCurrentPartnerUri, cv, null, null);
+            if (rowsAffected == 0) {
+                // If no rows were affected, then there was an error with the update.
+                Toast.makeText(this, getString(R.string.editor_insert_partner_failed),
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                // Otherwise, the update was successful and we can display a toast.
+                Toast.makeText(this, getString(R.string.editor_insert_partner_successful),
+                        Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -232,7 +244,7 @@ public class EditorActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             // Respond to a click on the "Save" menu option
             case R.id.action_save:
-                insertPet();
+                savePartner();
                 finish();
                 return true;
             // Respond to a click on the "Delete" menu option
@@ -248,4 +260,58 @@ public class EditorActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle bundle) {
+        String[] projection = {
+                ContactEntry._ID,
+                ContactEntry.COLUMN_PERSON_NAME,
+                ContactEntry.COLUMN_PERSON_GENDER,
+                ContactEntry.COLUMN_PERSON_STATUS,
+                ContactEntry.COLUMN_PERSON_PHONE_NUMBER,
+                ContactEntry.COLUMN_PERSON_NOTES
+        };
+
+        return new CursorLoader(this,
+                mCurrentPartnerUri,
+                projection,
+                null,
+                null,
+                null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+
+        if(cursor == null || cursor.getCount() < 1) return;
+        if (cursor.moveToFirst()) {
+            // Find the columns of partner attributes that we're interested in
+            int nameColumnIndex = cursor.getColumnIndex(ContactEntry.COLUMN_PERSON_NAME);
+            int genderColumnIndex = cursor.getColumnIndex(ContactEntry.COLUMN_PERSON_GENDER);
+            int statusColumnIndex = cursor.getColumnIndex(ContactEntry.COLUMN_PERSON_STATUS);
+            int phoneNumberColumnIndex = cursor.getColumnIndex(ContactEntry.COLUMN_PERSON_PHONE_NUMBER);
+            int notesColumnIndex = cursor.getColumnIndex(ContactEntry.COLUMN_PERSON_NOTES);
+
+            // Extract out the value from the Cursor for the given column index
+            String name = cursor.getString(nameColumnIndex);
+            int gender = cursor.getInt(genderColumnIndex);
+            int status = cursor.getInt(statusColumnIndex);
+            String phoneNumber = cursor.getString(phoneNumberColumnIndex);
+            String notes = cursor.getString(notesColumnIndex);
+
+            mNameEditText.setText(name);
+            mPhoneNumberEditText.setText(phoneNumber);
+            mNotesEditText.setText(notes);
+            mGenderSpinner.setSelection(gender);
+            mStatusSpinner.setSelection(status);
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mNameEditText.setText("");
+        mPhoneNumberEditText.setText("");
+        mNotesEditText.setText("");
+        mGenderSpinner.setSelection(ContactEntry.GENDER_UNKNOWN);
+        mStatusSpinner.setSelection(ContactEntry.STATUS_BOYFRIEND);
+    }
 }

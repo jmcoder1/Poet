@@ -33,12 +33,10 @@ public final class PersonContract {
         public static final String TABLE_NAME = "partners";
         public static final String _ID = BaseColumns._ID;
 
-        public static final String COLUMN_PERSON_FIRST_NAME = "firstName";
-        public static final String COLUMN_PERSON_MIDDLE_NAME = "middleName";
-        public static final String COLUMN_PERSON_LAST_NAME = "lastName";
+        public static final String COLUMN_PERSON_NAME = "name";
         public static final String COLUMN_PERSON_PHONE_NUMBER = "phoneNumber";
         public static final String COLUMN_PERSON_GENDER = "gender";
-        public static final String COLUMN_PERSON_STATUS = "relationshipStatus";
+        public static final String COLUMN_PERSON_STATUS = "status";
         public static final String COLUMN_PERSON_NOTES = "notes";
 
         // Possible constant values for the gender

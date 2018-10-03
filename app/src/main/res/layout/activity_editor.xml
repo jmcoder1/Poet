@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     style="@style/ActivityStyle"
     tools:context=".EditorActivity">
 
@@ -14,138 +13,86 @@
         android:layout_width="@dimen/profile_img_width"
         android:layout_height="@dimen/profile_img_height"
         android:src="@drawable/profile_picture"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/profile_marginTop"
-        android:layout_marginBottom="@dimen/profile_marginBottom"
-        app:civ_border_width="2dp"
-        app:civ_border_color="@color/colorPrimary"/>
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="@dimen/profile_img_marginTop"
+        android:layout_marginBottom="@dimen/profile_img_marginBottom" />
 
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/name_view"
+        style="@style/EditTextStyle"
+        android:layout_below="@+id/profile_image">
+
+        <TextView
+            android:id="@+id/name_label"
+            android:text="@string/name_label"
+            style="@style/CategoryStyle" />
+
+        <EditText
+            android:id="@+id/name_et"
+            android:hint="@string/name_hint"
+            android:inputType="textCapWords"
+            style="@style/EditorFieldStyle" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/phone_number_view"
+        style="@style/EditTextStyle"
+        android:layout_below="@id/name_view">
+
+        <TextView
+            android:id="@+id/phone_number_label"
+            android:text="@string/phone_number_label"
+            style="@style/CategoryStyle" />
+
+        <EditText
+            android:id="@+id/phone_number_et"
+            android:hint="@string/phone_number_hint"
+            android:inputType="phone"
+            style="@style/EditorFieldStyle" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/gender_view"
+        style="@style/EditTextStyle"
+        android:layout_below="@id/phone_number_view">
+
+        <TextView
+            android:id="@+id/gender_label"
+            android:text="@string/gender_label"
+            style="@style/CategoryStyle" />
+
+        <Spinner
+            android:id="@+id/spinner_gender"
+            android:spinnerMode="dropdown"
+            style="@style/SpinnerStyle" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/status_view"
+        style="@style/EditTextStyle"
+        android:layout_below="@id/gender_view">
+
+        <TextView
+            android:id="@+id/status_label"
+            android:text="@string/status_label"
+            style="@style/CategoryStyle" />
+
+        <Spinner
+            android:id="@+id/spinner_status"
+            style="@style/SpinnerStyle"
+            android:spinnerMode="dropdown"/>
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/notes"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:text="@string/overview_label"
-                    style="@style/CategoryStyle" />
-
-                <LinearLayout
-                    android:layout_height="wrap_content"
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:paddingLeft="4dp"
-                    android:orientation="vertical">
-
-                    <EditText
-                        android:id="@+id/first_name"
-                        android:hint="@string/first_name_hint"
-                        android:inputType="textCapWords"
-                        style="@style/EditorFieldStyle" />
-
-                    <EditText
-                        android:id="@+id/middle_name"
-                        android:inputType="textCapWords"
-                        style="@style/EditorFieldStyle" />
-
-                    <EditText
-                        android:id="@+id/last_name"
-                        android:hint="@string/last_name_hint"
-                        android:inputType="textCapWords"
-                        style="@style/EditorFieldStyle" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:text="@string/number_label"
-                    style="@style/CategoryStyle" />
-
-                <LinearLayout
-                    android:layout_height="wrap_content"
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:paddingLeft="4dp"
-                    android:orientation="vertical">
-
-                    <EditText
-                        android:id="@+id/mobile_num"
-                        android:hint="@string/mobile_num_hint"
-                        android:inputType="number"
-                        style="@style/EditorFieldStyle" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/container_gender"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:text="@string/gender_label"
-                    style="@style/CategoryStyle" />
-
-                <LinearLayout
-                    android:layout_height="wrap_content"
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:orientation="vertical">
-
-                    <!-- Gender drop-down spinner -->
-                    <Spinner
-                        android:id="@+id/spinner_gender"
-                        android:layout_height="48dp"
-                        android:layout_width="wrap_content"
-                        android:paddingRight="16dp"
-                        android:spinnerMode="dropdown"/>
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/container_status"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:text="@string/status_label"
-                    style="@style/CategoryStyle" />
-
-                <LinearLayout
-                    android:layout_height="wrap_content"
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:orientation="vertical">
-
-                    <!-- Gender drop-down spinner -->
-                    <Spinner
-                        android:id="@+id/spinner_status"
-                        android:layout_height="48dp"
-                        android:layout_width="wrap_content"
-                        android:paddingRight="16dp"
-                        android:spinnerMode="dropdown"/>
-                </LinearLayout>
-            </LinearLayout>
-
-            <EditText
-                    android:id="@+id/notes"
-                    android:hint="@string/notes_hint"
-                    android:inputType="textCapWords"
-                    style="@style/EditorFieldStyle" />
-
-        </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/status_view"
+        android:hint="@string/notes_hint"
+        android:inputType="textCapWords" />
+</RelativeLayout>

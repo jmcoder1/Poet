@@ -64,30 +64,13 @@ public class PersonCursorAdapter extends CursorAdapter {
         TextView genderTextView = (TextView) view.findViewById(R.id.partner_gender);
         TextView statusTextView = (TextView) view.findViewById(R.id.partner_status);
 
-        String fullName = getFullName(cursor);
+        String name = cursor.getString(cursor.getColumnIndexOrThrow(ContactEntry.COLUMN_PERSON_NAME));
         String gender = getGender(cursor);
         String status = getStatus(cursor);
 
-        // Populate fields with extracted properties
-        nameTextView.setText(fullName);
+        nameTextView.setText(name);
         genderTextView.setText(gender);
         statusTextView.setText(status);
-    }
-
-    /**
-     * Helper method gets the full name of the partner from the text views.
-     * @param cursor
-     * @return
-     */
-    private String getFullName(Cursor cursor) {
-        String firstName = cursor.getString(cursor.getColumnIndexOrThrow(ContactEntry.COLUMN_PERSON_FIRST_NAME));
-        String middleName = cursor.getString(cursor.getColumnIndex(ContactEntry.COLUMN_PERSON_MIDDLE_NAME));
-        String lastName = cursor.getString(cursor.getColumnIndex(ContactEntry.COLUMN_PERSON_LAST_NAME));
-
-        String fullName = firstName + " " +
-                ((middleName == null || middleName.equals("")) ? "": (middleName + " ")) + lastName;
-
-        return fullName;
     }
 
     /**

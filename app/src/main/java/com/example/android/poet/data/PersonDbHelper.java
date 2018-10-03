@@ -1,10 +1,8 @@
 package com.example.android.poet.data;
 
-import android.database.sqlite.SQLiteOpenHelper;
-
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.example.android.poet.data.PersonContract.ContactEntry;
 
@@ -16,9 +14,7 @@ public class PersonDbHelper extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_PERSON_TABLE =  "CREATE TABLE " + ContactEntry.TABLE_NAME
             + " (" + ContactEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + ContactEntry.COLUMN_PERSON_FIRST_NAME + " TEXT NOT NULL, "
-            + ContactEntry.COLUMN_PERSON_MIDDLE_NAME + " TEXT, "
-            + ContactEntry.COLUMN_PERSON_LAST_NAME + " TEXT, "
+            + ContactEntry.COLUMN_PERSON_NAME + " TEXT NOT NULL, "
             + ContactEntry.COLUMN_PERSON_PHONE_NUMBER + " TEXT, "
             + ContactEntry.COLUMN_PERSON_GENDER + " INTEGER NOT NULL DEFAULT " + ContactEntry.GENDER_MALE + ", "
             + ContactEntry.COLUMN_PERSON_STATUS + " INTEGER, "

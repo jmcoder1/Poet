@@ -1,6 +1,10 @@
 package com.example.android.poet;
 
+import android.app.LoaderManager;
+import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.CursorLoader;
+import android.content.Loader;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
@@ -12,100 +16,77 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.android.poet.data.PersonContract.ContactEntry;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    // The edit text FAB
-    private FloatingActionButton addPersonFab;
+    private static final String LOG_TAG = "MainActivity".getClass().getSimpleName();
 
-    private static final String LOG_TAG = "MainActivity";
+    private static final int PARTNER_LOADER = 0;
 
+    private FloatingActionButton addPartnerFab;
+
+    private PersonCursorAdapter mPersonCursorAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        addPersonFab = (FloatingActionButton) findViewById(R.id.edit_fab);
-        addPersonFab.setOnClickListener(new View.OnClickListener() {
+        addPartnerFab = (FloatingActionButton) findViewById(R.id.add_partner_fab);
+        addPartnerFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, EditorActivity.class);
                 startActivity(intent);
             }
         });
-        displayDbInfo();
+
+        getLoaderManager().initLoader(PARTNER_LOADER, null, this);
+
+        mPersonCursorAdapter = new PersonCursorAdapter(this, null);
+        ListView partnerListView = (ListView) findViewById(R.id.partners_list);
+        partnerListView.setAdapter(mPersonCursorAdapter);
+
+        View emptyView = findViewById(R.id.empty_view);
+        partnerListView.setEmptyView(emptyView);
+        partnerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MainActivity.this, EditorActivity.class);
+
+                //  forms a content uri with the URI of the specific item that was clicked on
+                Uri currentPartnerUri = ContentUris.withAppendedId(ContactEntry.CONTENT_URI, id);
+
+                intent.setData(currentPartnerUri);
+
+                startActivity(intent);
+            }
+        });
+
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu options from the res/menu/menu_catalog.xml file.
-        // This adds menu items to the app bar.
-        getMenuInflater().inflate(R.menu.menu_catalog, menu);
-        return true;
-    }
-
-    /**
-     * Temporary helper method to display information in the onscreen TextView about the state of
-     * the pets database.
-     */
-    private void displayDbInfo() {
-        String[] projection = {
-                ContactEntry._ID,
-                ContactEntry.COLUMN_PERSON_FIRST_NAME,
-                ContactEntry.COLUMN_PERSON_MIDDLE_NAME,
-                ContactEntry.COLUMN_PERSON_LAST_NAME,
-                ContactEntry.COLUMN_PERSON_STATUS,
-                ContactEntry.COLUMN_PERSON_GENDER,
-                ContactEntry.COLUMN_PERSON_NOTES
-        };
-
-        String selection = null;
-        String[] selectionArgs = null;
-
-        Cursor cursor = getContentResolver().query(
-                ContactEntry.CONTENT_URI,
-                projection,
-                null,
-                null,
-                null);
-
-        // Find the ListView which will be populated with the pet data
-        ListView personListView = (ListView) findViewById(R.id.list);
-
-        // Setup an Adapter to create a list item for each row of pet data in the Cursor.
-        PersonCursorAdapter adapter = new PersonCursorAdapter(this, cursor);
-
-        // Attach the adapter to the ListView.
-        personListView.setAdapter(adapter);
-    }
-
-    private void insertPerson() {
+    private void insertPartner() {
         ContentValues cv = new ContentValues();
 
-        cv.put(ContactEntry.COLUMN_PERSON_FIRST_NAME, "Billy");
-        cv.put(ContactEntry.COLUMN_PERSON_LAST_NAME, "Bob");
+        cv.put(ContactEntry.COLUMN_PERSON_NAME, "Billy Bob");
         cv.put(ContactEntry.COLUMN_PERSON_PHONE_NUMBER, "0731243212231");
-        cv.put(ContactEntry.COLUMN_PERSON_GENDER, 2);
-        cv.put(ContactEntry.COLUMN_PERSON_STATUS, 0);
+        cv.put(ContactEntry.COLUMN_PERSON_GENDER, ContactEntry.GENDER_MALE);
+        cv.put(ContactEntry.COLUMN_PERSON_STATUS, ContactEntry.STATUS_COMPLICATED);
 
         Uri newUri = getContentResolver().insert(ContactEntry.CONTENT_URI, cv);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // User clicked on a menu option in the app bar overflow menu
         switch (item.getItemId()) {
-            // Respond to a click on the "Insert dummy data" menu option
             case R.id.action_insert_dummy_data:
-                insertPerson();
-                displayDbInfo();
+                insertPartner();
                 return true;
-            // Respond to a click on the "Delete all entries" menu option
             case R.id.action_delete_all_entries:
                 // Do nothing for now
                 return true;
@@ -113,24 +94,10 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * This method initialises the my_location gps widget that centres tha map to the
-     * user device location.
-     */
-    private void initAddPersonFab() {
-
-        // Sets the colour of the FAB
-        setFabColors(addPersonFab,
-                getResources().getColor(R.color.colorPrimary),
-                getResources().getColor(R.color.colorPrimary));
-
-        // Controls what happens when the my location widget is pressed
-        addPersonFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(LOG_TAG, "addPersonFab: clicked my location FAB widget");
-            }
-        });
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_catalog, menu);
+        return true;
     }
 
     /**
@@ -157,8 +124,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        displayDbInfo();
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        String[] projection = {
+                ContactEntry._ID,
+                ContactEntry.COLUMN_PERSON_NAME,
+                ContactEntry.COLUMN_PERSON_GENDER,
+                ContactEntry.COLUMN_PERSON_STATUS,
+                ContactEntry.COLUMN_PERSON_PHONE_NUMBER,
+                ContactEntry.COLUMN_PERSON_NOTES
+        };
+
+        return new CursorLoader(this,
+                ContactEntry.CONTENT_URI,
+                projection,
+                null,
+                null,
+                null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        mPersonCursorAdapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mPersonCursorAdapter.swapCursor(null);
     }
 }

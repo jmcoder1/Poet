@@ -1,43 +1,52 @@
 <resources>
     <string name="app_name">Poet</string>
 
-    <!-- Title text for the empty view, which describes the empty dog house image [CHAR LIMIT=50] -->
-    <string name="empty_people_list">It\'s a bit lonely here</string>
+    <!-- Strings title text for the text views when there is no data -->
+        <!-- Title text for the empty view, which describes the empty partners ist [CHAR LIMIT = 50] -->
+        <string name="empty_partner_list">It\'s a bit lonely here</string>
 
-    <!-- Subtitle text for the empty view that prompts the user to add a pet [CHAR LIMIT=50] -->
-    <string name="empty_people_subtitle">Get started by adding a person</string>
+        <!-- Subtitle text for the empty view that prompts the user to add a partner [CHAR LIMIT = 50] -->
+        <string name="empty_partner_subtitle">Get started by adding a partner</string>
 
-    <!-- Label for overflow menu option that inserts fake pet data into the app [CHAR LIMIT=20] -->
-    <string name="action_insert_dummy_data">Insert Dummy Data</string>
+    <!-- Strings for the overflow menu options in main_activity -->
+        <!-- Label for overflow menu option that inserts dummy partner into the app [CHAR LIMIT = 20] -->
+        <string name="action_insert_dummy_data">Insert Dummy Data</string>
 
-    <!-- Label for overflow menu option that deletes all pet data in the app [CHAR LIMIT=20] -->
-    <string name="action_delete_all_entries">Delete All Pets</string>
+        <!-- Label for overflow menu option that deletes all partner data in the app [CHAR LIMIT = 20] -->
+        <string name="action_delete_all_entries">Delete All Partners</string>
 
-    <!-- Label for editor menu option to save pet and leave editor [CHAR LIMIT=20] -->
-    <string name="action_save">Save</string>
+    <!-- Strings for the editor menu in editor_activity -->
+        <!-- Label for editor menu option to save partner and leave editor [CHAR LIMIT = 20] -->
+        <string name="action_save">Save</string>
 
-    <!-- Label for editor overflow menu option that deletes the current pet [CHAR LIMIT=20] -->
-    <string name="action_delete">Delete</string>
+        <!-- Label for editor overflow menu option that deletes the current partner [CHAR LIMIT = 20] -->
+        <string name="action_delete">Delete</string>
 
-    <!-- Label for failing to insert pet into the db [CHAR LIMIT = 15]-->
-    <string name="editor_insert_partner_failed">Person failed to be added</string>
+    <!-- Strings in the editor_activity toast messages -->
+        <!-- Label for failing to insert partner into the db [CHAR LIMIT = 15]-->
+        <string name="editor_insert_partner_failed">Partner failed to be added</string>
 
-    <!-- Label for correctly inserting the pet into the db [CHAR LIMIT = 15] -->
-    <string name="editor_insert_partner_successful">Person added!</string>
-    
-    <!-- Category strings -->
-    <string name="overview_label">Overview</string>
-    <string name="number_label">Phone no.</string>
-    <string name="status_label">Relationship Status</string>
+        <!-- Label for correctly inserting the partner into the db [CHAR LIMIT = 15] -->
+        <string name="editor_insert_partner_successful">Partner added!</string>
+
+    <!-- Strings for the title of the editor activity -->
+        <!-- Strng for when the user clicks to add a user -->
+        <string name="add_partner">Add a partner</string>
+
+        <!-- String for when the user clicks to edit a user [CHAR LIMIT = 20] -->
+        <string name="edit_partner">Edit Partner</string>
+
+    <!-- Category strings [CHAR LIMIT = 20] -->
+    <string name="name_label">Name</string>
+    <string name="phone_number_label">Phone</string>
+    <string name="status_label">Status</string>
     <string name="gender_label">Gender</string>
 
     <!-- EditTextView hints [CHAR LIMIT = 20]-->
-    <string name="first_name_hint">First name</string>
-    <string name="last_name_hint">Last name</string>
-    <string name="mobile_num_hint">XXXX-XXXX-XXXX</string>
+    <string name="name_hint">Name</string>
+    <string name="phone_number_hint">XXXX-XXXX-XXXX</string>
     <string name="gender_hint">Gender</string>
-    <string name="relationship_hint">Relationship</string>
-    <string name="ethnicity_hint">Ethnicity</string>
+    <string name="status_hint">Relationship Status</string>
     <string name="notes_hint">Notes</string>
 
     <!-- Strings for the possible genders [CHAR LIMIT = 20]-->
@@ -63,7 +72,7 @@
     <string name="gender_transvesti_nb">Transvesti n-b</string>
     <string name="gender_aliagender">Aliagender</string>
 
-    <!-- Strin for the possible relationship statuses [CHAR LIMIT = 20] -->
+    <!-- String for the possible relationship statuses [CHAR LIMIT = 20] -->
     <string name="status_boyfriend">Boyfriend</string>
     <string name="status_girlfriend">Girlfriend</string>
     <string name="status_husband">Husband</string>

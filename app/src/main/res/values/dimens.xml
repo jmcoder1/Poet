@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Dimensions for the activity_margin -->
-    <dimen name="activity_paddingLeft">16dp</dimen>
-    <dimen name="activity_paddingTop">8dp</dimen>
-    <dimen name="activity_paddingBottom">8dp</dimen>
-    <dimen name="activity_paddingRight">8dp</dimen>
+    <dimen name="activity_padding">16dp</dimen>
 
-    <!-- Dimensions for all the FABs -->
+    <!-- Dimensions for the input field images -->
+    <dimen name="profile_img_width">96dp</dimen>
+    <dimen name="profile_img_height">96dp</dimen>
+    <dimen name="profile_img_marginTop">24dp</dimen>
+    <dimen name="profile_img_marginBottom">24dp</dimen>
+
+
+    <!-- Dimensions for the partner list item profile image -->
+    <dimen name="partner_profile_img_width">64dp</dimen>
+    <dimen name="partner_profile_img_height">64dp</dimen>
+    <dimen name="partner_profile_img_marginRight">16dp</dimen>
+
+    <!-- Dimensions for all the FABs items -->
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="fab_border_width">0dp</dimen>
     <dimen name="fab_pressed_translation">12dp</dimen>
@@ -14,20 +23,8 @@
     <dimen name="fab_width">80dp</dimen>
     <dimen name="fab_elevation">4dp</dimen>
 
-    <!-- Layout margin/padding for the edit text fields -->
-
-    <!-- Dimensions for the input field images -->
-    <dimen name="profile_img_width">96dp</dimen>
-    <dimen name="profile_img_height">96dp</dimen>
-    <dimen name="profile_marginTop">16dp</dimen>
-    <dimen name="profile_marginBottom">16dp</dimen>
-
-    <!-- Dimensions for the partner list item profile image -->
-    <dimen name="partner_profile_img_width">64dp</dimen>
-    <dimen name="partner_profile_img_height">64dp</dimen>
-    <dimen name="partner_profile_img_marginRight">16dp</dimen>
-
     <!-- Dimensions for the icon field images -->
+
         <!-- Sizes for the icon -->
         <dimen name="icon_width">48dp</dimen>
         <dimen name="icon_height">48dp</dimen>
