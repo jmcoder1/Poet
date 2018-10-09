@@ -34,7 +34,6 @@ public final class PersonContract {
         public static final String _ID = BaseColumns._ID;
 
         public static final String COLUMN_PERSON_NAME = "name";
-        public static final String COLUMN_PERSON_PHONE_NUMBER = "phoneNumber";
         public static final String COLUMN_PERSON_GENDER = "gender";
         public static final String COLUMN_PERSON_STATUS = "status";
         public static final String COLUMN_PERSON_NOTES = "notes";
@@ -101,6 +100,7 @@ public final class PersonContract {
             }
             return false;
         }
+
     }
 
 }

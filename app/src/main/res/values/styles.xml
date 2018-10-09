@@ -6,13 +6,6 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="ActivityStyle">
-        <item name="android:paddingTop">@dimen/activity_paddingTop</item>
-        <item name="android:paddingLeft">@dimen/activity_paddingLeft</item>
-        <item name="android:paddingRight">@dimen/activity_paddingRight</item>
-        <item name="android:paddingBottom">@dimen/activity_paddingBottom</item>
-    </style>
-
     <style name="CategoryIconStyle">
         <item name="android:layout_height">24dp</item>
         <item name="android:layout_width">24dp</item>
@@ -37,6 +30,27 @@
     <style name="SpinnerStyle">
         <item name="android:layout_height">64dp</item>
         <item name="android:layout_width">wrap_content</item>
+    </style>
+
+    <style name="PartnerProfileImageStyle">
+        <item name="android:layout_width">@dimen/profile_img_width</item>
+        <item name="android:layout_height">@dimen/profile_img_height</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="PartnerProfileExample">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="BottomRightFabStyle">
+        <item name="android:layout_margin">@dimen/item_margin</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:scaleType">center</item>
     </style>
 
 </resources>

@@ -2,60 +2,36 @@
     <string name="app_name">Poet</string>
 
     <!-- Strings title text for the text views when there is no data -->
-        <!-- Title text for the empty view, which describes the empty partners ist [CHAR LIMIT = 50] -->
         <string name="empty_partner_list">It\'s a bit lonely here</string>
-
-        <!-- Subtitle text for the empty view that prompts the user to add a partner [CHAR LIMIT = 50] -->
         <string name="empty_partner_subtitle">Get started by adding a partner</string>
 
-    <!-- Strings for the overflow menu options in main_activity -->
-        <!-- Label for overflow menu option that inserts dummy partner into the app [CHAR LIMIT = 20] -->
-        <string name="action_insert_dummy_data">Insert Dummy Data</string>
-
-        <!-- Label for overflow menu option that deletes all partner data in the app [CHAR LIMIT = 20] -->
-        <string name="action_delete_all_entries">Delete All Partners</string>
-
-    <!-- Strings for the editor menu in editor_activity -->
-        <!-- Label for editor menu option to save partner and leave editor [CHAR LIMIT = 20] -->
+    <!-- String for the overflow menus -->
+        <!-- main_activity label strings  -->
+        <string name="action_delete_all_entries">Clear All</string>
+        <!-- editor_activity label strings -->
         <string name="action_save">Save</string>
-
-        <!-- Label for editor overflow menu option that deletes the current partner [CHAR LIMIT = 20] -->
         <string name="action_delete">Delete</string>
+        <string name="action_edit">Edit</string>
 
-    <!-- Strings in the editor_activity toast messages -->
-        <!-- Label for failing to insert partner into the db [CHAR LIMIT = 15]-->
-        <string name="editor_insert_partner_failed">Partner failed to be added</string>
+    <!-- String for successfully or unsuccessfully inserting the partner into the database -->
+        <string name="editor_insert_partner_successful">Added to Partner list</string>
+        <string name="editor_insert_partner_failed">An error has occurred</string>
+        <string name="editor_delete_partner_successful">Deleted from Partner list</string>
+        <string name="editor_delete_partner_failed">An error has occurred</string>
 
-        <!-- Label for correctly inserting the partner into the db [CHAR LIMIT = 15] -->
-        <string name="editor_insert_partner_successful">Partner added!</string>
-
-        <!-- Label for successfully deleting partner from the db -->
-        <string name="editor_delete_partner_successful">Partner deleted!</string>
-
-        <!-- Label for failing to delete the partner from the db -->
-        <string name="editor_delete_partner_failed">Partner failed to be deleted</string>
-
-
-
-    <!-- Strings for the title of the editor activity -->
-        <!-- String for when the user clicks to add a user -->
+    <!-- Strings for the title of the editor activity [CHAR LIMIT = 15] -->
         <string name="add_partner">Add a partner</string>
+        <string name="edit_partner">Edit</string>
 
-        <!-- String for when the user clicks to edit a user [CHAR LIMIT = 20] -->
-        <string name="edit_partner">Edit Partner</string>
-
-    <!-- String for the dialog to continue editing or to save a partner -->
-        <!-- Dialog message when user is leaving editor but hasn't saved changes [CHAR LIMIT=NONE] -->
+    <!-- String for the dialog to continue editing or to save a partner [CHAR LIMIT = 50] -->
+        <!-- -Label strings for -->
         <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
+        <string name="delete_dialog_msg">Are you sure you want to delete this partner?</string>
 
-        <string name="delete_dialog_msg">Delete user!</string>
-        <!-- Dialog button text for the option to discard a user's changes [CHAR LIMIT=20] -->
+        <!-- Label dialog button texts for the options and user changes [CHAR LIMIT=20] -->
         <string name="discard">Discard</string>
-
         <string name="delete">Delete</string>
         <string name="cancel">Cancel</string>
-
-        <!-- Dialog button text for the option to keep editing the current partner [CHAR LIMIT=20] -->
         <string name="keep_editing">Keep Editing</string>
 
     <!-- Category strings [CHAR LIMIT = 20] -->
@@ -63,13 +39,7 @@
     <string name="phone_number_label">Phone</string>
     <string name="status_label">Status</string>
     <string name="gender_label">Gender</string>
-
-    <!-- EditTextView hints [CHAR LIMIT = 20]-->
-    <string name="name_hint">Name</string>
-    <string name="phone_number_hint">XXXX-XXXX-XXXX</string>
-    <string name="gender_hint">Gender</string>
-    <string name="status_hint">Relationship Status</string>
-    <string name="notes_hint">Notes</string>
+    <string name="notes_label">Notes</string>
 
     <!-- Strings for the possible genders [CHAR LIMIT = 20]-->
     <string name="gender_unknown">Unknown</string>

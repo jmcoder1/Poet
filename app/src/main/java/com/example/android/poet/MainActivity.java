@@ -1,5 +1,6 @@
 package com.example.android.poet;
 
+import android.app.Activity;
 import android.app.LoaderManager;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity
         partnerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MainActivity.this, EditorActivity.class);
+                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
 
                 //  forms a content uri with the URI of the specific item that was clicked on
                 Uri currentPartnerUri = ContentUris.withAppendedId(ContactEntry.CONTENT_URI, id);
@@ -102,7 +103,6 @@ public class MainActivity extends AppCompatActivity
                 ContactEntry.COLUMN_PERSON_NAME,
                 ContactEntry.COLUMN_PERSON_GENDER,
                 ContactEntry.COLUMN_PERSON_STATUS,
-                ContactEntry.COLUMN_PERSON_PHONE_NUMBER,
                 ContactEntry.COLUMN_PERSON_NOTES
         };
 

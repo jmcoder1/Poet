@@ -15,7 +15,6 @@ public class PersonDbHelper extends SQLiteOpenHelper {
     private static final String SQL_CREATE_PERSON_TABLE =  "CREATE TABLE " + ContactEntry.TABLE_NAME
             + " (" + ContactEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + ContactEntry.COLUMN_PERSON_NAME + " TEXT NOT NULL, "
-            + ContactEntry.COLUMN_PERSON_PHONE_NUMBER + " TEXT, "
             + ContactEntry.COLUMN_PERSON_GENDER + " INTEGER NOT NULL DEFAULT " + ContactEntry.GENDER_MALE + ", "
             + ContactEntry.COLUMN_PERSON_STATUS + " INTEGER, "
             + ContactEntry.COLUMN_PERSON_NOTES + " TEXT);";

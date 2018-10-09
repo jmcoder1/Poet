@@ -32,7 +32,7 @@ import com.example.android.poet.R;
 public class EditorActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private static final String LOG_TAG = "EditorActivity";
+    private static final String LOG_TAG = "EditorActivity".getClass().getSimpleName();
 
     /**
      * OnTouchListener that listens for any user touches on a View, implying that they are modifying
@@ -53,7 +53,6 @@ public class EditorActivity extends AppCompatActivity
     private static final int EXISTING_PARTNER_LOADER = 0;
 
     private EditText mNameEditText;
-    private EditText mPhoneNumberEditText;
     private EditText mNotesEditText;
 
     private Spinner mStatusSpinner;
@@ -83,9 +82,6 @@ public class EditorActivity extends AppCompatActivity
 
         mNameEditText = (EditText) findViewById(R.id.name_et);
         mNameEditText.setOnTouchListener(mTouchListener);
-
-        mPhoneNumberEditText = (EditText) findViewById(R.id.phone_number_et);
-        mPhoneNumberEditText.setOnTouchListener(mTouchListener);
 
         mNotesEditText = (EditText) findViewById(R.id.notes);
         mNotesEditText.setOnTouchListener(mTouchListener);
@@ -213,12 +209,10 @@ public class EditorActivity extends AppCompatActivity
     private void savePartner() {
 
         String name = mNameEditText.getText().toString().trim();
-        String phoneNumber = mPhoneNumberEditText.getText().toString().trim();
         String notes = mNotesEditText.getText().toString().trim();
 
         ContentValues cv = new ContentValues();
         cv.put(ContactEntry.COLUMN_PERSON_NAME, name);
-        cv.put(ContactEntry.COLUMN_PERSON_PHONE_NUMBER, phoneNumber);
         cv.put(ContactEntry.COLUMN_PERSON_GENDER, mGender);
         cv.put(ContactEntry.COLUMN_PERSON_STATUS, mStatus);
         cv.put(ContactEntry.COLUMN_PERSON_NOTES, notes);
@@ -235,6 +229,7 @@ public class EditorActivity extends AppCompatActivity
                 // If no rows were affected, then there was an error with the update.
                 Toast.makeText(this, getString(R.string.editor_insert_partner_failed),
                         Toast.LENGTH_SHORT).show();
+                Log.v(LOG_TAG, "There was an error the update");
             } else {
                 // Otherwise, the update was successful and we can display a toast.
                 Toast.makeText(this, getString(R.string.editor_insert_partner_successful),
@@ -263,7 +258,6 @@ public class EditorActivity extends AppCompatActivity
             // Create and show the AlertDialog
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
-
     }
 
     /**
@@ -304,58 +298,6 @@ public class EditorActivity extends AppCompatActivity
         showUnsavedChangesDialog(discardButtonClickListener);
     }
 
-    private void showDeleteConfirmationDialog() {
-        // Create an AlertDialog.Builder and set the message, and click listeners
-        // for the postivie and negative buttons on the dialog.
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(R.string.delete_dialog_msg);
-        builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // User clicked the "Delete" button, so delete the partner.
-                deletePartner();
-            }
-        });
-        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // User clicked the "Cancel" button, so dismiss the dialog
-                // and continue editing the partner.
-                if (dialog != null) {
-                    dialog.dismiss();
-                }
-            }
-        });
-
-        // Create and show the AlertDialog
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
-
-    /**
-     * Perform the deletion of the partner in the database.
-     */
-    private void deletePartner() {
-        // Only perform the delete if this is an existing partner.
-        if (mCurrentPartnerUri != null) {
-            // Call the ContentResolver to delete the partner at the given content URI.
-            // Pass in null for the selection and selection args because the mCurrentPartnerUri
-            // content URI already identifies the p that we want.
-            int rowsDeleted = getContentResolver().delete(mCurrentPartnerUri, null, null);
-            // Show a toast message depending on whether or not the delete was successful.
-            if (rowsDeleted == 0) {
-                // If no rows were deleted, then there was an error with the delete.
-                Toast.makeText(this, getString(R.string.editor_delete_partner_failed),
-                        Toast.LENGTH_SHORT).show();
-            } else {
-                // Otherwise, the delete was successful and we can display a toast.
-                Toast.makeText(this, getString(R.string.editor_delete_partner_successful),
-                        Toast.LENGTH_SHORT).show();
-            }
-        }
-            // Close the activity
-            finish();
-    }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_editor, menu);
@@ -364,16 +306,10 @@ public class EditorActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // User clicked on a menu option in the app bar overflow menu
         switch (item.getItemId()) {
-
             case R.id.action_save:
                 savePartner();
                 finish();
-                return true;
-
-            case R.id.action_delete:
-                showDeleteConfirmationDialog();
                 return true;
 
             case android.R.id.home:
@@ -405,7 +341,6 @@ public class EditorActivity extends AppCompatActivity
                 ContactEntry.COLUMN_PERSON_NAME,
                 ContactEntry.COLUMN_PERSON_GENDER,
                 ContactEntry.COLUMN_PERSON_STATUS,
-                ContactEntry.COLUMN_PERSON_PHONE_NUMBER,
                 ContactEntry.COLUMN_PERSON_NOTES
         };
 
@@ -426,18 +361,16 @@ public class EditorActivity extends AppCompatActivity
             int nameColumnIndex = cursor.getColumnIndex(ContactEntry.COLUMN_PERSON_NAME);
             int genderColumnIndex = cursor.getColumnIndex(ContactEntry.COLUMN_PERSON_GENDER);
             int statusColumnIndex = cursor.getColumnIndex(ContactEntry.COLUMN_PERSON_STATUS);
-            int phoneNumberColumnIndex = cursor.getColumnIndex(ContactEntry.COLUMN_PERSON_PHONE_NUMBER);
             int notesColumnIndex = cursor.getColumnIndex(ContactEntry.COLUMN_PERSON_NOTES);
 
             // Extract out the value from the Cursor for the given column index
             String name = cursor.getString(nameColumnIndex);
+            setTitle(name);
             int gender = cursor.getInt(genderColumnIndex);
             int status = cursor.getInt(statusColumnIndex);
-            String phoneNumber = cursor.getString(phoneNumberColumnIndex);
             String notes = cursor.getString(notesColumnIndex);
 
             mNameEditText.setText(name);
-            mPhoneNumberEditText.setText(phoneNumber);
             mNotesEditText.setText(notes);
             mGenderSpinner.setSelection(gender);
             mStatusSpinner.setSelection(status);
@@ -447,7 +380,6 @@ public class EditorActivity extends AppCompatActivity
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mNameEditText.setText("");
-        mPhoneNumberEditText.setText("");
         mNotesEditText.setText("");
         mGenderSpinner.setSelection(ContactEntry.GENDER_UNKNOWN);
         mStatusSpinner.setSelection(ContactEntry.STATUS_BOYFRIEND);

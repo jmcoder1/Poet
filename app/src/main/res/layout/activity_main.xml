@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/ActivityStyle"
+    android:layout_margin="16dp"
     tools:context=".MainActivity">
 
     <ListView
@@ -52,17 +52,13 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_partner_fab"
-        android:layout_width="@dimen/fab_width"
-        android:layout_height="@dimen/fab_height"
-        android:layout_gravity="end|bottom"
+        style="@style/BottomRightFabStyle"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:src="@drawable/ic_plus_icon"
         android:scaleType="center"
-        android:layout_margin="@dimen/fab_margin"
         app:fabSize="normal"
-        app:borderWidth="@dimen/fab_border_width"
         app:backgroundTint="@color/colorPrimary"/>
 
 </RelativeLayout>

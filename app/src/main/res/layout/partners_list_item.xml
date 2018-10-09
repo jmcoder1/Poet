@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
             android:textAppearance="?android:textAppearanceSmall"
-            android:textColor="#AEB6BD"
+            android:textColor="@color/textColorSecondary"
             tools:text="Female"/>
 
         <TextView
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
             android:textAppearance="?android:textAppearanceSmall"
-            android:textColor="#AEB6BD"
+            android:textColor="@color/textColorSecondary"
             tools:text="It's complicated"/>
     </LinearLayout>
 
@@ -66,7 +66,7 @@
         android:layout_alignParentEnd="true"
         android:background="@drawable/user_score_circle"
         android:fontFamily="sans-serif-medium"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/textColorSecondary"
         android:textSize="16sp"
         android:text="256"
         tools:text="1024" />

@@ -23,6 +23,10 @@
             android:name=".EditorActivity">
         </activity>
 
+        <activity
+            android:name=".ProfileActivity">
+        </activity>
+
         <provider
             android:name=".data.PersonProvider"
             android:authorities="com.example.android.poet"
