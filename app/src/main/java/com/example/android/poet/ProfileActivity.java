@@ -177,6 +177,7 @@ public class ProfileActivity extends AppCompatActivity
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle bundle) {
+
         String[] projection = {
                 ContactEntry._ID,
                 ContactEntry.COLUMN_PERSON_NAME,
@@ -184,6 +185,8 @@ public class ProfileActivity extends AppCompatActivity
                 ContactEntry.COLUMN_PERSON_STATUS,
                 ContactEntry.COLUMN_PERSON_NOTES
         };
+
+        Log.v(LOG_TAG, "onCreateLoader called");
 
         return new CursorLoader(this,
                 mCurrentPartnerUri,
@@ -222,6 +225,7 @@ public class ProfileActivity extends AppCompatActivity
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         //TODO: Add something here eventually
+        Log.v(LOG_TAG, "onLoaderReset called");
     }
 
 }

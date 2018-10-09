@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final String LOG_TAG = "MainActivity".getClass().getSimpleName();
-
     private static final int PARTNER_LOADER = 0;
 
     private FloatingActionButton addPartnerFab;
@@ -62,9 +61,7 @@ public class MainActivity extends AppCompatActivity
 
                 //  forms a content uri with the URI of the specific item that was clicked on
                 Uri currentPartnerUri = ContentUris.withAppendedId(ContactEntry.CONTENT_URI, id);
-
                 intent.setData(currentPartnerUri);
-
                 startActivity(intent);
             }
         });
