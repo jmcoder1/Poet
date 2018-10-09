@@ -1,6 +1,5 @@
 package com.example.android.poet;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
@@ -8,8 +7,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.content.DialogInterface;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -22,53 +19,35 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.poet.data.PersonContract.ContactEntry;
-
-import com.example.android.poet.R;
 import com.example.android.poet.databinding.ActivityProfileBinding;
-
-import org.w3c.dom.Text;
 
 public class ProfileActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final String LOG_TAG = "ProfileActivity".getClass().getSimpleName();
     private static final int EXISTING_PARTNER_LOADER = 1;
+    private ActivityProfileBinding mBinding;
+    private FloatingActionButton editPartnerFAB;
+    private Uri mCurrentPartnerUri;
 
     private TextView.OnTouchListener mTouchListener = new TextView.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            mPartnerHasChanged = true;
             onOpenEdit();
             return false;
         }
     };
-
-    private ActivityProfileBinding mBinding;
-
-    private boolean mPartnerHasChanged = false;
-
-    private Uri mCurrentPartnerUri;
-
-    private TextView mPartnerGenderTextView;
-    private TextView mPartnerStatusTextView;
-    private TextView mPartnerNotesTextView;
-
-    private FloatingActionButton editPartnerFAB;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_profile);
 
-        Intent intent = getIntent();
-        mCurrentPartnerUri = intent.getData();
-
+        mCurrentPartnerUri = getIntent().getData();
         getSupportLoaderManager().initLoader(EXISTING_PARTNER_LOADER, null, this);
 
         editPartnerFAB = (FloatingActionButton) findViewById(R.id.edit_partner_fab);
@@ -78,31 +57,6 @@ public class ProfileActivity extends AppCompatActivity
                 onOpenEdit();
             }
         });
-
-
-    }
-
-    private void showUnsavedChangesDialog(
-            DialogInterface.OnClickListener discardButtonClickListener) {
-        // Create an AlertDialog.Builder and set the message, and click listeners
-        // for the positive and negative buttons on the dialog.
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(R.string.unsaved_changes_dialog_msg);
-        builder.setPositiveButton(R.string.discard, discardButtonClickListener);
-        builder.setNegativeButton(R.string.keep_editing, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // User clicked the "Keep editing" button, so dismiss the dialog
-                // and continue editing the partner.
-                if (dialog != null) {
-                    dialog.dismiss();
-                }
-            }
-        });
-
-        // Create and show the AlertDialog
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-
     }
 
     /**
@@ -128,31 +82,13 @@ public class ProfileActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        // If the partner hasn't changed, continue with handling back button press
-        if (!mPartnerHasChanged) {
-            super.onBackPressed();
-            return;
-        }
+        super.onBackPressed();
 
-        //TODO Remove this component
-        // Otherwise if there are unsaved changes, setup a dialog to warn the user.
-        // Create a click listener to handle the user confirming that changes should be discarded.
-        DialogInterface.OnClickListener discardButtonClickListener =
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // User clicked "Discard" button, close the current activity.
-                        finish();
-                    }
-                };
-
-        // Show dialog that there are unsaved changes
-        showUnsavedChangesDialog(discardButtonClickListener);
     }
 
     private void showDeleteConfirmationDialog() {
         // Create an AlertDialog.Builder and set the message, and click listeners
-        // for the postivie and negative buttons on the dialog.
+        // for the positive and negative buttons on the dialog.
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.delete_dialog_msg);
         builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
@@ -213,22 +149,7 @@ public class ProfileActivity extends AppCompatActivity
                 showDeleteConfirmationDialog();
                 return true;
             case android.R.id.home:
-                if (!mPartnerHasChanged) {
-                    NavUtils.navigateUpFromSameTask(ProfileActivity.this);
-                    return true;
-                }
-
-                DialogInterface.OnClickListener discardButtonClickListener =
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                // User clicked "Discard" button, navigate to parent activity.
-                                NavUtils.navigateUpFromSameTask(ProfileActivity.this);
-                            }
-                        };
-
-                // Show a dialog that notifies the user they have unsaved changes
-                showUnsavedChangesDialog(discardButtonClickListener);
+                NavUtils.navigateUpFromSameTask(ProfileActivity.this);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -274,8 +195,8 @@ public class ProfileActivity extends AppCompatActivity
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-
         if(cursor == null || cursor.getCount() < 1) return;
+
         if (cursor.moveToFirst()) {
             int nameColumnIndex = cursor.getColumnIndex(ContactEntry.COLUMN_PERSON_NAME);
             int notesColumnIndex = cursor.getColumnIndex(ContactEntry.COLUMN_PERSON_NOTES);
@@ -292,9 +213,9 @@ public class ProfileActivity extends AppCompatActivity
             mBinding.partnerProfileGenderEntry.setText(gender);
             mBinding.partnerProfileStatusEntry.setText(status);
             mBinding.partnerProfileNotesEntry.setText(notes);
-            mBinding.partnerProfileGenderLabel.setOnTouchListener(mTouchListener);
-            mBinding.partnerProfileStatusLabel.setOnTouchListener(mTouchListener);
-            mBinding.partnerProfileNotesLabel.setOnTouchListener(mTouchListener);
+            mBinding.partnerProfileGenderEntry.setOnTouchListener(mTouchListener);
+            mBinding.partnerProfileStatusEntry.setOnTouchListener(mTouchListener);
+            mBinding.partnerProfileNotesEntry.setOnTouchListener(mTouchListener);
         }
     }
 

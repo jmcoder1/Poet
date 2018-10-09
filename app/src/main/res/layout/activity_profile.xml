@@ -130,7 +130,7 @@
         android:id="@+id/edit_partner_fab"
         style="@style/BottomRightFabStyle"
         android:src="@drawable/ic_action_edit"
-        app:backgroundTint="@color/colorPrimary"
+        app:backgroundTint="@color/colorAccent"
         app:fabSize="normal"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
