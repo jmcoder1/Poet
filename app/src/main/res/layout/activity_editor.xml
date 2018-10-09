@@ -1,136 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="16dp"
+    android:padding="16dp"
     tools:context=".EditorActivity">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile_image"
-        android:layout_width="@dimen/profile_img_width"
-        android:layout_height="@dimen/profile_img_height"
-        android:src="@drawable/profile_picture"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/profile_img_marginTop"
-        android:layout_marginBottom="@dimen/profile_img_marginBottom" />
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true">
 
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/profile_image">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/partner_profile_img"
+            style="@style/PartnerProfileImageStyle"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/profile_picture"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        <ImageView
+            android:id="@+id/editor_partner_name_icon"
+            style="@style/IconEditTextStyle"
+            android:src="@drawable/ic_icon_person"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/partner_profile_img"/>
 
-            <RelativeLayout
-                android:id="@+id/name_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
+        <EditText
+            android:id="@+id/name_et"
+            style="@style/EditTextStyle"
+            android:inputType="textCapWords"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/editor_partner_name_icon"
+            app:layout_constraintTop_toBottomOf="@+id/partner_profile_img"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent=".8" />
 
-                <ImageView
-                    android:id="@+id/name_icon"
-                    style="@style/CategoryIconStyle"
-                    android:src="@drawable/ic_icon_person"/>
+        <ImageView
+            android:id="@+id/gender_icon"
+            style="@style/IconEditTextStyle"
+            android:src="@drawable/ic_phone_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editor_partner_name_icon" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_toRightOf="@+id/name_icon"
-                    android:layout_toEndOf="@+id/name_icon">
+        <Spinner
+            android:id="@+id/spinner_gender"
+            style="@style/SpinnerStyle"
+            android:spinnerMode="dropdown"
+            app:layout_constraintStart_toEndOf="@+id/gender_icon"
+            app:layout_constraintTop_toBottomOf="@+id/name_et" />
 
-                    <TextView
-                        android:id="@+id/name_label"
-                        style="@style/CategoryLabelStyle"
-                        android:text="@string/name_label"/>
+        <ImageView
+            android:id="@+id/status_icon"
+            style="@style/IconEditTextStyle"
+            android:src="@drawable/ic_phone_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/gender_icon" />
 
-                    <EditText
-                        android:id="@+id/name_et"
-                        style="@style/EditTextStyle"
-                        android:inputType="textCapWords" />
+        <Spinner
+            android:id="@+id/spinner_status"
+            style="@style/SpinnerStyle"
+            android:spinnerMode="dropdown"
+            app:layout_constraintStart_toEndOf="@+id/status_icon"
+            app:layout_constraintTop_toBottomOf="@+id/spinner_gender" />
 
-                </LinearLayout>
+        <EditText
+            android:id="@+id/notes"
+            style="@style/EditTextStyle"
+            android:inputType="textCapWords"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner_status"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="1" />
 
-            </RelativeLayout>
+    </android.support.constraint.ConstraintLayout>
 
-            <RelativeLayout
-                android:id="@+id/gender_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/name_view"
-                android:layout_marginTop="8dp">
-
-                <ImageView
-                    android:id="@+id/gender_icon"
-                    style="@style/CategoryIconStyle"
-                    android:src="@drawable/ic_phone_icon"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_toRightOf="@+id/gender_icon"
-                    android:layout_toEndOf="@+id/gender_icon">
-
-                    <TextView
-                        android:id="@+id/gender_label"
-                        style="@style/CategoryLabelStyle"
-                        android:text="@string/gender_label" />
-
-                    <Spinner
-                        android:id="@+id/spinner_gender"
-                        android:spinnerMode="dropdown"
-                        style="@style/SpinnerStyle" />
-                </LinearLayout>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/status_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/gender_view"
-                android:layout_marginTop="8dp">
-
-                <ImageView
-                    android:id="@+id/status_icon"
-                    style="@style/CategoryIconStyle"
-                    android:src="@drawable/ic_phone_icon" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/status_icon"
-                    android:layout_toRightOf="@+id/status_icon"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/status_label"
-                        style="@style/CategoryLabelStyle"
-                        android:text="@string/status_label" />
-
-                    <Spinner
-                        android:id="@+id/spinner_status"
-                        style="@style/SpinnerStyle"
-                        android:spinnerMode="dropdown" />
-                </LinearLayout>
-
-            </RelativeLayout>
-
-            <EditText
-                android:id="@+id/notes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_below="@id/status_view"
-                android:inputType="textCapWords" />
-        </LinearLayout>
-    </ScrollView>
-
-</RelativeLayout>
+</ScrollView>

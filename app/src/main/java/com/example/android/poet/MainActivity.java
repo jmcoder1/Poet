@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity
     private static final String LOG_TAG = "MainActivity".getClass().getSimpleName();
     private static final int PARTNER_LOADER = 0;
 
-    private FloatingActionButton addPartnerFab;
 
     private PersonCursorAdapter mPersonCursorAdapter;
 
@@ -37,7 +36,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        addPartnerFab = (FloatingActionButton) findViewById(R.id.add_partner_fab);
+        FloatingActionButton addPartnerFab = (FloatingActionButton) findViewById(R.id.add_partner_fab);
         addPartnerFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -260,20 +260,6 @@ public class EditorActivity extends AppCompatActivity
             alertDialog.show();
     }
 
-    /**
-     * This method is called after invalidateOptionsMenu(), so that the
-     * menu can be updated (some menu items can be hidden or made visible).
-     */
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-        // If this is a new partner, hide the "Delete" menu item.
-        if (mCurrentPartnerUri == null) {
-            MenuItem menuItem = menu.findItem(R.id.action_delete);
-            menuItem.setVisible(false);
-        }
-        return true;
-    }
 
     @Override
     public void onBackPressed() {

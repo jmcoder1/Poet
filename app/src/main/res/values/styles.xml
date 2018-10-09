@@ -6,33 +6,42 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="CategoryIconStyle">
+    <style name="BottomRightFabStyle">
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:scaleType">center</item>
+        <item name="android:backgroundTint">@color/colorAccent</item>
+    </style>
+
+
+    <!-- Style for the EditorActivity -->
+    <style name="EditorActivityTextViewStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">32dp</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+    </style>
+
+    <style name="IconEditTextStyle" parent="EditorActivityTextViewStyle">
         <item name="android:layout_height">24dp</item>
         <item name="android:layout_width">24dp</item>
-        <item name="android:layout_marginRight">16dp</item>
-        <item name="android:layout_alignParentBottom">true</item>
     </style>
 
-    <style name="EditTextStyle">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+    <style name="EditTextStyle" parent="EditorActivityTextViewStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">24dp</item>
     </style>
 
-    <style name="CategoryLabelStyle">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:fontFamily">sans-serif</item>
-        <item name="android:textSize">12sp</item>
-        <item name="android:textAppearance">?android:textAppearanceSmall</item>
-        <item name="android:textAllCaps">true</item>
-    </style>
-
-    <style name="SpinnerStyle">
-        <item name="android:layout_height">64dp</item>
+    <style name="SpinnerStyle" parent="EditTextStyle">
+        <item name="android:layout_height">24dp</item>
         <item name="android:layout_width">wrap_content</item>
     </style>
 
-    <style name="PartnerProfileImageStyle">
+    <style name="PartnerProfileImageStyle" parent="ProfileActivityTextViewStyle">
         <item name="android:layout_width">@dimen/profile_img_width</item>
         <item name="android:layout_height">@dimen/profile_img_height</item>
         <item name="android:gravity">center</item>
@@ -46,17 +55,9 @@
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="BottomRightFabStyle">
-        <item name="android:layout_margin">8dp</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:scaleType">center</item>
-        <item name="android:backgroundTint">@color/colorAccent</item>
-    </style>
-
     <!-- Styles for ProfileActivity -->
 
-    <style name="ActivityTextViewStyle">
+    <style name="ProfileActivityTextViewStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">8dp</item>
@@ -66,12 +67,12 @@
         <item name="android:layout_marginRight">16dp</item>
     </style>
 
-    <style name="ProfileActivityTextViewEntryStyle" parent="ActivityTextViewStyle">
+    <style name="ProfileActivityTextViewEntryStyle" parent="ProfileActivityTextViewStyle">
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
-    <style name="ProfileActivityLabelStyle" parent="ActivityTextViewStyle">
+    <style name="ProfileActivityLabelStyle" parent="ProfileActivityTextViewStyle">
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/textColorPrimary</item>
     </style>
