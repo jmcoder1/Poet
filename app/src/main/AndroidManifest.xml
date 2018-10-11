@@ -27,6 +27,15 @@
             android:name=".ProfileActivity">
         </activity>
 
+        <activity
+            android:name=".SettingsActivity"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+
+
         <provider
             android:name=".data.PersonProvider"
             android:authorities="com.example.android.poet"

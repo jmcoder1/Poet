@@ -33,4 +33,17 @@
         <item>@string/status_wife</item>
         <item>@string/status_complicated</item>
     </string-array>
+
+    <array name="pref_color_theme_labels">
+        <item>@string/pref_show_dark_theme_label</item>
+        <item>@string/pref_show_aqua_theme_label</item>
+        <item>@string/pref_show_blue_pink_theme_label</item>
+    </array>
+
+    <array name="pref_color_theme_values">
+        <item>@string/pref_show_dark_theme_key</item>
+        <item>@string/pref_show_aqua_theme_key</item>
+        <item>@string/pref_show_blue_pink_theme_key</item>
+    </array>
+
 </resources>

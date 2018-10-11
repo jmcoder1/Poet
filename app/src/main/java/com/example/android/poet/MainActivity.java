@@ -6,7 +6,9 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -65,6 +67,24 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        setUpSharedPreference();
+
+    }
+
+    private void setUpSharedPreference() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        /*mVisualizerView.setShowBass(sharedPreferences.getBoolean(getString(R.string.pref_show_bass_key),
+                getResources().getBoolean(R.bool.pref_show_bass_default)));
+        mVisualizerView.setShowMid(sharedPreferences.getBoolean(getString(R.string.pref_show_mid_range_key),
+                getResources().getBoolean(R.bool.pref_show_mid_range_default)));
+        mVisualizerView.setShowTreble(sharedPreferences.getBoolean(getString(R.string.pref_show_treble_key),
+                getResources().getBoolean(R.bool.pref_show_treble_default)));
+        loadColorFromPreferences(sharedPreferences);
+        loadSizeFromSharedPreferences(sharedPreferences);
+        */
+
+        // Register the listener
+        //sharedPreferences.registerOnSharedPreferenceChangeListener(this);
     }
 
     /**
@@ -81,6 +101,11 @@ public class MainActivity extends AppCompatActivity
             case R.id.action_delete_all_entries:
                 deleteAllPartners();
                 Log.v(LOG_TAG, "All rows deleted from" + ContactEntry.TABLE_NAME + "  database");
+                return true;
+            case R.id.action_settings:
+                Log.v(LOG_TAG, "opened Settings activity");
+                Intent startSettingsActivity = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(startSettingsActivity);
                 return true;
         }
         return super.onOptionsItemSelected(item);

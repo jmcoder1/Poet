@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--
+    <CheckBoxPreference
+        android:defaultValue="@bool/pref_show_genders-default"
+        android:key="@string/pref_show_bass_key"
+        android:summaryOff="@string/pref_show_false"
+        android:summaryOn="@string/pref_show_true"
+        android:title="@string/pref_show_bass_label" />-->
+
+    <ListPreference
+        android:defaultValue="@string/pref_show_blue_pink_theme_label"
+        android:entries="@array/pref_color_theme_labels"
+        android:entryValues="@array/pref_color_theme_values"
+        android:key="@string/pref_genders_key"
+        android:title="@string/pref_color_theme_label" />
+
+</PreferenceScreen>
