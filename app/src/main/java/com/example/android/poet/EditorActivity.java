@@ -1,6 +1,8 @@
 package com.example.android.poet;
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -30,7 +32,7 @@ import com.example.android.poet.data.PersonContract.ContactEntry;
 import com.example.android.poet.R;
 
 public class EditorActivity extends AppCompatActivity
-        implements LoaderManager.LoaderCallbacks<Cursor> {
+        implements LoaderManager.LoaderCallbacks<Cursor>, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String LOG_TAG = "EditorActivity".getClass().getSimpleName();
 
@@ -96,9 +98,35 @@ public class EditorActivity extends AppCompatActivity
         setStatusSpinner();
     }
 
+    /**
+     * Helper method to read from SharedPreferences to determine the set number of genders.
+     * @return
+     */
+    private boolean showMultipleGenders() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        return sharedPreferences.getBoolean(getString(R.string.pref_show_genders_key)
+                , getResources().getBoolean(R.bool.pref_genders_default));
+    }
+
+    /**
+     * Helper method to get the ArrayAdapter for the gender spinner from the multiple genders.
+     * @return
+     */
+    private ArrayAdapter getGenderSpinner() {
+        ArrayAdapter genderSpinnerAdapter;
+        if(showMultipleGenders()) {
+            genderSpinnerAdapter = ArrayAdapter.createFromResource(this,
+                    R.array.array_gender_options, android.R.layout.simple_spinner_item);
+        } else {
+            genderSpinnerAdapter = ArrayAdapter.createFromResource(this,
+                    R.array.array_multiple_gender_options, android.R.layout.simple_spinner_item);
+        }
+        return genderSpinnerAdapter;
+    }
+
     private void setGenderSpinner() {
-        ArrayAdapter genderSpinnerAdapter = ArrayAdapter.createFromResource(this,
-                R.array.array_gender_options, android.R.layout.simple_spinner_item);
+
+        ArrayAdapter genderSpinnerAdapter = getGenderSpinner();
 
         // Specify dropdown layout style - simple list view with 1 item per line
         genderSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
@@ -260,7 +288,6 @@ public class EditorActivity extends AppCompatActivity
             alertDialog.show();
     }
 
-
     @Override
     public void onBackPressed() {
         // If the partner hasn't changed, continue with handling back button press
@@ -369,5 +396,10 @@ public class EditorActivity extends AppCompatActivity
         mNotesEditText.setText("");
         mGenderSpinner.setSelection(ContactEntry.GENDER_UNKNOWN);
         mStatusSpinner.setSelection(ContactEntry.STATUS_BOYFRIEND);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        //
     }
 }

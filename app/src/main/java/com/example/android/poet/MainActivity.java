@@ -89,12 +89,11 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals(getString(R.string.pref_theme_key))) {
             loadThemeFromPreferences(sharedPreferences);
-        } else if (key.equals(getString(R.string.pref_genders_key))) {
-            //mVisualizerView.setShowMid(sharedPreferences.getBoolean(key, getResources().getBoolean(R.bool.pref_show_genders_default)));
         }
     }
 

@@ -84,8 +84,13 @@
         <string name="pref_show_aqua_theme_key" translatable="false">show_aqua_theme</string>
         <string name="pref_show_default_theme_key" translatable="false">show_default_theme</string>
 
-        <string name="pref_genders_key" translatable="false">genders</string>
-        <string name="pref_gender_label" translatable="true">Partner Gender</string>
+        <!-- Labels & Keys for the genders -->
+        <string name="pref_show_genders_key" translatable="false">show_genders</string>
+        <string name="pref_show_genders_label" translatable="true">Show Genders</string>
         <string name="pref_theme_key" translatable="false">theme</string>
         <string name="pref_theme_label" translatable="true">Themes</string>
+
+        <string name="pref_show_true">Shown</string>
+        <string name="pref_show_false">Hidden</string>
+
 </resources>

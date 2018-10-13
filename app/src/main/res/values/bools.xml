@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <bool name="pref_show_genders_default">false</bool>
+    <bool name="pref_genders_default">false</bool>
 </resources>

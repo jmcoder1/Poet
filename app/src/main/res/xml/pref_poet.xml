@@ -4,19 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--
-    <CheckBoxPreference
-        android:defaultValue="@bool/pref_show_genders-default"
-        android:key="@string/pref_show_bass_key"
-        android:summaryOff="@string/pref_show_false"
-        android:summaryOn="@string/pref_show_true"
-        android:title="@string/pref_show_bass_label" />-->
-
     <ListPreference
         android:defaultValue="@string/pref_show_default_theme_label"
         android:entries="@array/pref_theme_labels"
         android:entryValues="@array/pref_theme_values"
         android:key="@string/pref_theme_key"
         android:title="@string/pref_theme_label" />
+
+    <CheckBoxPreference
+        android:defaultValue="@bool/pref_genders_default"
+        android:key="@string/pref_show_genders_key"
+        android:summaryOff="@string/pref_show_false"
+        android:summaryOn="@string/pref_show_true"
+        android:title="@string/pref_show_genders_label" />
 
 </PreferenceScreen>

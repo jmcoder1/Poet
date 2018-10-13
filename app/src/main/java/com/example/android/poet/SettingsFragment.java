@@ -16,7 +16,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
 
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
-        // Add visualizer preferences, defined in the XML file in res->xml->pref_visualizer
         addPreferencesFromResource(R.xml.pref_poet);
 
         SharedPreferences sharedPreferences = getPreferenceScreen().getSharedPreferences();
@@ -33,7 +32,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                 setPreferenceSummary(p, value);
             }
         }
-
     }
 
     @Override
@@ -64,9 +62,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                 // Set the summary to that label
                 listPreference.setSummary(listPreference.getEntries()[prefIndex]);
             }
-        } else if (preference instanceof EditTextPreference) {
-            // For EditTextPreferences, set the summary to the value's simple string representation.
-            preference.setSummary(value);
         }
     }
 
