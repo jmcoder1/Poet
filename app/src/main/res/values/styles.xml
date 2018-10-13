@@ -7,6 +7,21 @@
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
     </style>
 
+    <style name="AppThemeAqua" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/colorPrimaryAqua</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkAqua</item>
+        <item name="colorAccent">@color/colorAccentAqua</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+    </style>
+
+    <style name="AppThemeDark" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+    </style>
+
+
     <style name="BottomRightFabStyle">
         <item name="android:layout_margin">8dp</item>
         <item name="android:layout_width">wrap_content</item>

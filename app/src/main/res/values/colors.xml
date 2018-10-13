@@ -6,4 +6,9 @@
     <color name="textColorPrimary">#212121</color>
     <color name="textColorSecondary">#757575</color>
     <color name="colorBackground">#fafafb</color>
+
+    <color name="colorPrimaryAqua">#0064FF</color>
+    <color name="colorPrimaryDarkAqua">#0d47a1</color>
+    <color name="colorAccentAqua">#1973FF</color>
+
 </resources>

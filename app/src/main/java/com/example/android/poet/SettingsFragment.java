@@ -33,12 +33,12 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                 setPreferenceSummary(p, value);
             }
         }
+
     }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         // Figure out which preference was changed
-        /*
         Preference preference = findPreference(key);
         if (null != preference) {
             // Updates the summary for the preference
@@ -46,7 +46,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                 String value = sharedPreferences.getString(preference.getKey(), "");
                 setPreferenceSummary(preference, value);
             }
-        }*/
+        }
     }
 
     /**
@@ -70,17 +70,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         }
     }
 
-    // COMPLETED (2) Override onPreferenceChange. This method should try to convert the new preference value
-    // to a float; if it cannot, show a helpful error message and return false. If it can be converted
-    // to a float check that that float is between 0 (exclusive) and 3 (inclusive). If it isn't, show
-    // an error message and return false. If it is a valid number, return true.
-
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         // In this context, we're using the onPreferenceChange listener for checking whether the
         // size setting was set to a valid value.
 
-        Toast error = Toast.makeText(getContext(), "Please select a number between 0.1 and 3", Toast.LENGTH_SHORT);
         return true;
     }
 

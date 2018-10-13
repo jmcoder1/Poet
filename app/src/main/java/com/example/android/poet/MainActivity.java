@@ -1,9 +1,7 @@
 package com.example.android.poet;
 
-import android.app.Activity;
 import android.app.LoaderManager;
 import android.content.ContentUris;
-import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.content.SharedPreferences;
@@ -11,7 +9,6 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -25,16 +22,18 @@ import android.widget.ListView;
 import com.example.android.poet.data.PersonContract.ContactEntry;
 
 public class MainActivity extends AppCompatActivity
-        implements LoaderManager.LoaderCallbacks<Cursor> {
+        implements LoaderManager.LoaderCallbacks<Cursor>, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String LOG_TAG = "MainActivity".getClass().getSimpleName();
     private static final int PARTNER_LOADER = 0;
-
 
     private PersonCursorAdapter mPersonCursorAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        setUpSharedPreference();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -67,24 +66,37 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        setUpSharedPreference();
-
     }
 
     private void setUpSharedPreference() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        /*mVisualizerView.setShowBass(sharedPreferences.getBoolean(getString(R.string.pref_show_bass_key),
-                getResources().getBoolean(R.bool.pref_show_bass_default)));
-        mVisualizerView.setShowMid(sharedPreferences.getBoolean(getString(R.string.pref_show_mid_range_key),
-                getResources().getBoolean(R.bool.pref_show_mid_range_default)));
-        mVisualizerView.setShowTreble(sharedPreferences.getBoolean(getString(R.string.pref_show_treble_key),
-                getResources().getBoolean(R.bool.pref_show_treble_default)));
-        loadColorFromPreferences(sharedPreferences);
-        loadSizeFromSharedPreferences(sharedPreferences);
-        */
 
-        // Register the listener
-        //sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+        loadThemeFromPreferences(sharedPreferences);
+
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+    }
+
+    private void loadThemeFromPreferences(SharedPreferences sharedPreferences) {
+        String sharedPreferenceTheme = sharedPreferences.getString(getString(R.string.pref_color_theme_key),
+                getString(R.string.pref_show_blue_pink_theme_label));
+
+        if(sharedPreferenceTheme.equals(getString(R.string.pref_show_blue_pink_theme_label))) {
+            setTheme(R.style.AppTheme);
+        } else if(sharedPreferenceTheme.equals(getString(R.string.pref_show_aqua_theme_label))) {
+            setTheme(R.style.AppThemeAqua);
+        } else if(sharedPreferenceTheme.equals(getString(R.string.pref_show_dark_theme_key))) {
+            setTheme(R.style.AppThemeDark);
+        }
+    }
+
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals(getString(R.string.pref_color_theme_key))) {
+            loadThemeFromPreferences(sharedPreferences);
+        } else if (key.equals(getString(R.string.pref_genders_key))) {
+            //mVisualizerView.setShowMid(sharedPreferences.getBoolean(key, getResources().getBoolean(R.bool.pref_show_genders_default)));
+        }
     }
 
     /**
@@ -143,5 +155,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mPersonCursorAdapter.swapCursor(null);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .unregisterOnSharedPreferenceChangeListener(this);
     }
 }
