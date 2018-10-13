@@ -75,17 +75,17 @@
 
     <!-- Strings for the SharedPreferences -->
         <!-- Labels for the colour theme ListPreferences -->
-        <string name="pref_show_dark_theme_label">Dark Theme</string>
-        <string name="pref_show_aqua_theme_label">Light Theme</string>
-        <string name="pref_show_blue_pink_theme_label">Blue Pink Theme</string>
+        <string name="pref_show_default_theme_label" translatable="true">Default</string>
+        <string name="pref_show_dark_theme_label" translatable="true">Dark</string>
+        <string name="pref_show_aqua_theme_label" translatable="true">Aqua</string>
 
         <!-- Keys name for storing colour themes in SharedPreferences -->
         <string name="pref_show_dark_theme_key" translatable="false">show_dark_theme</string>
         <string name="pref_show_aqua_theme_key" translatable="false">show_aqua_theme</string>
-        <string name="pref_show_blue_pink_theme_key" translatable="false">show_blue_pink_theme</string>
+        <string name="pref_show_default_theme_key" translatable="false">show_default_theme</string>
 
         <string name="pref_genders_key" translatable="false">genders</string>
-        <string name="pref_gender_label">Partner Gender</string>
-        <string name="pref_color_theme_key" translatable="false">color</string>
-        <string name="pref_color_theme_label" translatable="false">Color Theme</string>
+        <string name="pref_gender_label" translatable="true">Partner Gender</string>
+        <string name="pref_theme_key" translatable="false">theme</string>
+        <string name="pref_theme_label" translatable="true">Themes</string>
 </resources>

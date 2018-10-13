@@ -13,10 +13,10 @@
         android:title="@string/pref_show_bass_label" />-->
 
     <ListPreference
-        android:defaultValue="@string/pref_show_blue_pink_theme_label"
-        android:entries="@array/pref_color_theme_labels"
-        android:entryValues="@array/pref_color_theme_values"
-        android:key="@string/pref_color_theme_key"
-        android:title="@string/pref_color_theme_label" />
+        android:defaultValue="@string/pref_show_default_theme_label"
+        android:entries="@array/pref_theme_labels"
+        android:entryValues="@array/pref_theme_values"
+        android:key="@string/pref_theme_key"
+        android:title="@string/pref_theme_label" />
 
 </PreferenceScreen>

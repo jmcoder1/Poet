@@ -77,22 +77,21 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void loadThemeFromPreferences(SharedPreferences sharedPreferences) {
-        String sharedPreferenceTheme = sharedPreferences.getString(getString(R.string.pref_color_theme_key),
-                getString(R.string.pref_show_blue_pink_theme_label));
+        String sharedPreferenceTheme = sharedPreferences.getString(getString(R.string.pref_theme_key),
+                getString(R.string.pref_show_default_theme_label));
 
-        if(sharedPreferenceTheme.equals(getString(R.string.pref_show_blue_pink_theme_label))) {
+        if(sharedPreferenceTheme.equals(getString(R.string.pref_show_default_theme_key))) {
             setTheme(R.style.AppTheme);
-        } else if(sharedPreferenceTheme.equals(getString(R.string.pref_show_aqua_theme_label))) {
+        } else if(sharedPreferenceTheme.equals(getString(R.string.pref_show_aqua_theme_key))) {
             setTheme(R.style.AppThemeAqua);
         } else if(sharedPreferenceTheme.equals(getString(R.string.pref_show_dark_theme_key))) {
             setTheme(R.style.AppThemeDark);
         }
     }
 
-
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(getString(R.string.pref_color_theme_key))) {
+        if (key.equals(getString(R.string.pref_theme_key))) {
             loadThemeFromPreferences(sharedPreferences);
         } else if (key.equals(getString(R.string.pref_genders_key))) {
             //mVisualizerView.setShowMid(sharedPreferences.getBoolean(key, getResources().getBoolean(R.bool.pref_show_genders_default)));
