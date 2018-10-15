@@ -31,9 +31,13 @@
         <ImageView
             android:id="@+id/editor_partner_name_icon"
             style="@style/IconEditTextStyle"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:src="@drawable/ic_icon_person"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/partner_profile_img"/>
+            app:layout_constraintTop_toBottomOf="@+id/partner_profile_img"
+            app:layout_constraintTop_toTopOf="@+id/name_et" />
 
         <EditText
             android:id="@+id/name_et"
@@ -48,9 +52,13 @@
         <ImageView
             android:id="@+id/gender_icon"
             style="@style/IconEditTextStyle"
-            android:src="@drawable/ic_phone_icon"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_gender_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/spinner_gender"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editor_partner_name_icon" />
+            app:layout_constraintTop_toTopOf="@+id/spinner_gender" />
 
         <Spinner
             android:id="@+id/spinner_gender"
@@ -62,9 +70,13 @@
         <ImageView
             android:id="@+id/status_icon"
             style="@style/IconEditTextStyle"
-            android:src="@drawable/ic_phone_icon"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_status_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/spinner_status"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/gender_icon" />
+            app:layout_constraintTop_toTopOf="@+id/spinner_status" />
 
         <Spinner
             android:id="@+id/spinner_status"
@@ -84,5 +96,4 @@
             app:layout_constraintWidth_percent="1" />
 
     </android.support.constraint.ConstraintLayout>
-
 </ScrollView>
