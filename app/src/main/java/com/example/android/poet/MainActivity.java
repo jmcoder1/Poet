@@ -1,16 +1,12 @@
 package com.example.android.poet;
 
 import android.app.LoaderManager;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.ContentUris;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Build;
 import android.preference.PreferenceManager;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -25,34 +21,28 @@ import android.widget.ListView;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.app.NotificationManager;
-import android.support.v4.app.NotificationCompat;
 
 import java.util.Calendar;
 
 import com.example.android.poet.data.PersonContract.ContactEntry;
 import com.example.android.poet.utilities.AlarmReceiver;
-import com.example.android.poet.utilities.NotificationUtils;
 
 public class MainActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor>, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String LOG_TAG = "MainActivity".getClass().getSimpleName();
     private static final int PARTNER_LOADER = 0;
-    private PersonCursorAdapter mPersonCursorAdapter;
+    private static final int NOTIFICATION_HOUR = 20;
+    private static final int NOTIFICATION_MINUTES = 00;
 
-    private PendingIntent pendingIntent;
+    private PersonCursorAdapter mPersonCursorAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         setUpSharedPreference();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        startAtTime();
-
-
 
         FloatingActionButton addPartnerFab = (FloatingActionButton) findViewById(R.id.add_partner_fab);
         addPartnerFab.setOnClickListener(new View.OnClickListener() {
@@ -64,6 +54,7 @@ public class MainActivity extends AppCompatActivity
         });
 
         getLoaderManager().initLoader(PARTNER_LOADER, null, this);
+        addDailyNotification();
 
         mPersonCursorAdapter = new PersonCursorAdapter(this, null);
         ListView partnerListView = (ListView) findViewById(R.id.partners_list);
@@ -82,47 +73,42 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
-
-    }
-
-    public void startAtTime() {
-        //TODO: Change method to add parameters
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
-        /* Retrieve a PendingIntent that will perform a broadcast */
-        Intent alarmIntent = new Intent(MainActivity.this, AlarmReceiver.class);
-        pendingIntent = PendingIntent.getBroadcast(MainActivity.this,
-                0, alarmIntent, 0);
-        alarmIntent.setData((Uri.parse("custom://"+System.currentTimeMillis())));
-        alarmManager.cancel(pendingIntent);
-
-        int interval = 1000 * 60 * 20;
-
-        // TODO: Change the time to a constant
-        /* Set the alarm to start at 10:30 AM */
-        Calendar calendar = Calendar.getInstance();
-        Calendar now = Calendar.getInstance();
-
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 18);
-        calendar.set(Calendar.MINUTE, 23);
-
-        if (now.after(calendar)) {
-            Log.d("Hey","Added a day");
-            calendar.add(Calendar.DATE, 1);
-        }
-
-        /* Repeating on every 20 minutes interval */ //TODO Change this
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                interval, pendingIntent);
     }
 
     private void setUpSharedPreference() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-
         loadThemeFromPreferences(sharedPreferences);
-
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+    }
+
+    /**
+     * Helper method to add daily notification to notify the person to use the application.
+     *
+     */
+    public void addDailyNotification() {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        /* Retrieve a PendingIntent that will perform a broadcast */
+        Intent alarmIntent = new Intent(MainActivity.this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this,
+                0, alarmIntent, 0);
+        alarmIntent.setData((Uri.parse("custom:// " + System.currentTimeMillis())));
+        alarmManager.cancel(pendingIntent);
+
+        int dayInterval = 1000 * 60 * 60 * 24;
+
+        /* Set the alarm to start at X time AM */
+        Calendar calendar = Calendar.getInstance();
+        Calendar now = Calendar.getInstance();
+
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, NOTIFICATION_HOUR);
+        calendar.set(Calendar.MINUTE, NOTIFICATION_MINUTES);
+
+        if (now.after(calendar)) calendar.add(Calendar.DATE, 1);
+
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                dayInterval, pendingIntent);
     }
 
     private void loadThemeFromPreferences(SharedPreferences sharedPreferences) {
@@ -208,5 +194,11 @@ public class MainActivity extends AppCompatActivity
         super.onDestroy();
         PreferenceManager.getDefaultSharedPreferences(this)
                 .unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setUpSharedPreference();
     }
 }

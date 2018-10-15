@@ -18,9 +18,6 @@ import com.example.android.poet.MainActivity;
 import com.example.android.poet.R;
 
 
-/**
- * Utility class for creating hydration notifications
- */
 public class NotificationUtils {
 
     /**
@@ -38,8 +35,6 @@ public class NotificationUtils {
      * This notification channel id is used to link notifications to this channel
      */
     private static final String PARTNER_REMINDER_NOTIFICATION_CHANNEL_ID = "reminder_notification_channel";
-    private static final int ACTION_DRINK_PENDING_INTENT_ID = 1;
-    private static final int ACTION_IGNORE_PENDING_INTENT_ID = 14;
 
     public static void clearAllNotifications(Context context) {
         NotificationManager notificationManager = (NotificationManager)
@@ -69,8 +64,6 @@ public class NotificationUtils {
                         context.getString(R.string.charging_reminder_notification_body)))
                 .setDefaults(Notification.DEFAULT_VIBRATE)
                 .setContentIntent(contentIntent(context))
-                //.addAction(drinkWaterAction(context))
-                //.addAction(ignoreReminderAction(context))
                 .setAutoCancel(true);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN
@@ -78,15 +71,6 @@ public class NotificationUtils {
             notificationBuilder.setPriority(NotificationCompat.PRIORITY_HIGH);
         }
         notificationManager.notify(PARTNER_REMINDER_NOTIFICATION_ID, notificationBuilder.build());
-    }
-
-    private static void ignoreReminderAction(Context context) {
-
-        //TODO: Change the ignoreReminderAction
-    }
-
-    private static void drinkWaterAction(Context context) {
-        //TODO: Change the drinkWaterAction
     }
 
     private static PendingIntent contentIntent(Context context) {
