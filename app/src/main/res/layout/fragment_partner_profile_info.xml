@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/partner_profile_gender_label"
+        style="@style/ProfileActivityLabelStyle"
+        android:text="@string/gender_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/partner_profile_gender_entry"
+        style="@style/ProfileActivityTextViewEntryStyle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/partner_profile_gender_label"
+        tools:text="Male" />
+
+    <TextView
+        android:id="@+id/partner_profile_status_label"
+        style="@style/ProfileActivityLabelStyle"
+        android:text="@string/status_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/partner_profile_gender_entry"
+        tools:text="Status" />
+
+    <TextView
+        android:id="@+id/partner_profile_status_entry"
+        style="@style/ProfileActivityTextViewEntryStyle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/partner_profile_status_label"
+        tools:text="It's complicated" />
+
+    <TextView
+        android:id="@+id/partner_profile_notes_label"
+        style="@style/ProfileActivityLabelStyle"
+        android:text="@string/notes_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/partner_profile_status_entry"
+        tools:text="Notes" />
+
+    <TextView
+        android:id="@+id/partner_profile_notes_entry"
+        style="@style/ProfileActivityTextViewEntryStyle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/partner_profile_notes_label"
+        tools:text="Best time ever!" />
+
+</android.support.constraint.ConstraintLayout>

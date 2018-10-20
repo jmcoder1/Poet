@@ -1,7 +1,6 @@
 package com.example.android.poet.ui;
 
 import android.content.DialogInterface;
-import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
@@ -18,48 +17,30 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.poet.PartnerProfileFragment;
+import com.example.android.poet.PartnerProfileInfoFragment;
 import com.example.android.poet.R;
 import com.example.android.poet.data.PersonContract.ContactEntry;
-import com.example.android.poet.databinding.ActivityProfileBinding;
 
 public class ProfileActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final String LOG_TAG = "ProfileActivity".getClass().getSimpleName();
     private static final int EXISTING_PARTNER_LOADER = 1;
-    private ActivityProfileBinding mBinding;
-    private FloatingActionButton editPartnerFAB;
     private Uri mCurrentPartnerUri;
-
-    private String mPartnerName;
-
-    private TextView.OnTouchListener mTouchListener = new TextView.OnTouchListener() {
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            onOpenEdit();
-            return false;
-        }
-    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Intent intent = getIntent();
-        mPartnerName = intent.getStringExtra("name");
-
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_profile);
+        setContentView(R.layout.activity_profile);
 
         mCurrentPartnerUri = getIntent().getData();
         getSupportLoaderManager().initLoader(EXISTING_PARTNER_LOADER, null, this);
 
-        editPartnerFAB = (FloatingActionButton) findViewById(R.id.edit_partner_fab);
+        FloatingActionButton editPartnerFAB = (FloatingActionButton) findViewById(R.id.edit_partner_fab);
         editPartnerFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -220,26 +201,24 @@ public class ProfileActivity extends AppCompatActivity
             String status = getStatus(cursor);
             String notes = cursor.getString(notesColumnIndex);
 
-            Log.v(LOG_TAG, "onLoadFinished called: " + "name: " + name + "\ngender: "
-                    + gender + "\nstatus: " + status + "\nnotes: " + notes);
+            FragmentManager fragmentManager = getSupportFragmentManager();
 
-            mBinding.partnerProfileGenderEntry.setText(gender);
-            mBinding.partnerProfileStatusEntry.setText(status);
-            mBinding.partnerProfileNotesEntry.setText(notes);
-            mBinding.partnerProfileGenderEntry.setOnTouchListener(mTouchListener);
-            mBinding.partnerProfileStatusEntry.setOnTouchListener(mTouchListener);
-            mBinding.partnerProfileNotesEntry.setOnTouchListener(mTouchListener);
+            PartnerProfileInfoFragment partnerProfileInfoFragment = new PartnerProfileInfoFragment();
+            partnerProfileInfoFragment.setGender(gender);
+            partnerProfileInfoFragment.setNotes(notes);
+            partnerProfileInfoFragment.setStatus(status);
+            partnerProfileInfoFragment.setCurrentPartnerUri(mCurrentPartnerUri);
 
-            //TODO Set the partner profile image view here
+            fragmentManager.beginTransaction()
+                    .add(R.id.partner_profile_info_container, partnerProfileInfoFragment)
+                    .commit();
+
             PartnerProfileFragment partnerProfileFragment = new PartnerProfileFragment();
             partnerProfileFragment.setPartnerName(name);
-
-            FragmentManager fragmentManager = getSupportFragmentManager();
 
             fragmentManager.beginTransaction()
                     .add(R.id.partner_profile_img_container, partnerProfileFragment)
                     .commit();
-
         }
     }
 
