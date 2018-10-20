@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:theme="@style/Theme.AppCompat.Light">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,19 +23,19 @@
         </activity>
 
         <activity
-            android:name=".EditorActivity">
+            android:name=".ui.EditorActivity">
         </activity>
 
         <activity
-            android:name=".ProfileActivity">
+            android:name=".ui.ProfileActivity">
         </activity>
 
         <activity
             android:name=".SettingsActivity"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".ui.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".ui.MainActivity" />
         </activity>
 
         <provider

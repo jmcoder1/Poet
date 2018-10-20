@@ -1,4 +1,4 @@
-package com.example.android.poet;
+package com.example.android.poet.ui;
 
 import android.app.LoaderManager;
 import android.content.ContentUris;
@@ -24,6 +24,9 @@ import android.content.Context;
 
 import java.util.Calendar;
 
+import com.example.android.poet.PersonCursorAdapter;
+import com.example.android.poet.R;
+import com.example.android.poet.SettingsActivity;
 import com.example.android.poet.data.PersonContract.ContactEntry;
 import com.example.android.poet.utilities.AlarmReceiver;
 

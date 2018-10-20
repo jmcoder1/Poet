@@ -1,9 +1,10 @@
-package com.example.android.poet;
+package com.example.android.poet.ui;
 
 import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -22,6 +23,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.poet.PartnerProfileFragment;
+import com.example.android.poet.R;
 import com.example.android.poet.data.PersonContract.ContactEntry;
 import com.example.android.poet.databinding.ActivityProfileBinding;
 
@@ -34,6 +37,8 @@ public class ProfileActivity extends AppCompatActivity
     private FloatingActionButton editPartnerFAB;
     private Uri mCurrentPartnerUri;
 
+    private String mPartnerName;
+
     private TextView.OnTouchListener mTouchListener = new TextView.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -45,6 +50,10 @@ public class ProfileActivity extends AppCompatActivity
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+        mPartnerName = intent.getStringExtra("name");
+
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_profile);
 
         mCurrentPartnerUri = getIntent().getData();
@@ -206,6 +215,7 @@ public class ProfileActivity extends AppCompatActivity
 
             String name = cursor.getString(nameColumnIndex);
             setTitle(name);
+
             String gender = getGender(cursor);
             String status = getStatus(cursor);
             String notes = cursor.getString(notesColumnIndex);
@@ -219,6 +229,17 @@ public class ProfileActivity extends AppCompatActivity
             mBinding.partnerProfileGenderEntry.setOnTouchListener(mTouchListener);
             mBinding.partnerProfileStatusEntry.setOnTouchListener(mTouchListener);
             mBinding.partnerProfileNotesEntry.setOnTouchListener(mTouchListener);
+
+            //TODO Set the partner profile image view here
+            PartnerProfileFragment partnerProfileFragment = new PartnerProfileFragment();
+            partnerProfileFragment.setPartnerName(name);
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+
+            fragmentManager.beginTransaction()
+                    .add(R.id.partner_profile_img_container, partnerProfileFragment)
+                    .commit();
+
         }
     }
 

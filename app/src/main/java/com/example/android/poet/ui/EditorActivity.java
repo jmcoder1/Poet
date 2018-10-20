@@ -1,4 +1,4 @@
-package com.example.android.poet;
+package com.example.android.poet.ui;
 
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -6,7 +6,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.content.DialogInterface;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;

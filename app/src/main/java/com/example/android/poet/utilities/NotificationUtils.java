@@ -11,10 +11,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationCompat.Action;
 import android.support.v4.content.ContextCompat;
 
-import com.example.android.poet.MainActivity;
+import com.example.android.poet.ui.MainActivity;
 import com.example.android.poet.R;
 
 

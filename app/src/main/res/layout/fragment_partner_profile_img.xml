@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- This fragment displays one image of the partner profile image -->
+
+<TextView
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/partner_profile_text_view"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:layout_width="@dimen/profile_img_width"
+    android:layout_height="@dimen/profile_img_height"
+    android:background="@drawable/user_item_circle"
+    android:textColor="@color/colorBackground"
+    android:textSize="36sp"
+    android:visibility="invisible"
+    tools:text="S" />

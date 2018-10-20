@@ -8,43 +8,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="16dp"
-        tools:context=".ProfileActivity">
+        tools:context=".ui.ProfileActivity">
 
-        <TextView
-            android:id="@+id/partner_profile_img_none"
-            style="@style/PartnerProfileImageStyle"
-            android:layout_marginBottom="16dp"
+        <FrameLayout
+            android:id="@+id/partner_profile_img_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
             android:layout_marginTop="16dp"
-            android:background="@drawable/user_item_circle"
-            android:textColor="@color/colorBackground"
-            android:textSize="36sp"
-            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="A" />
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/partner_profile_img"
-            style="@style/PartnerProfileImageStyle"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/profile_picture"
-            android:visibility="visible"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent=".25"/>
 
         <TextView
             android:id="@+id/partner_profile_gender_label"
             style="@style/ProfileActivityLabelStyle"
             android:text="@string/gender_label"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/partner_profile_img"/>
+            app:layout_constraintTop_toBottomOf="@id/partner_profile_img_container"/>
 
         <TextView
             android:id="@+id/partner_profile_gender_entry"
