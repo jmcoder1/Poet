@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity
         alarmIntent.setData((Uri.parse("custom:// " + System.currentTimeMillis())));
         alarmManager.cancel(pendingIntent);
 
-        int dayInterval = 1000 * 60 * 60 * 24;
+        int dayInterval = 1000 * 60 * 60 * 24; //TODO Fix the daily interval
 
         /* Set the alarm to start at X time AM */
         Calendar calendar = Calendar.getInstance();

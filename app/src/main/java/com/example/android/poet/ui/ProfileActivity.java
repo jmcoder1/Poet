@@ -1,6 +1,7 @@
 package com.example.android.poet.ui;
 
 import android.content.DialogInterface;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
@@ -51,31 +52,10 @@ public class ProfileActivity extends AppCompatActivity
         });
     }
 
-    /**
-     * This method is called after invalidateOptionsMenu(), so that the
-     * menu can be updated (some menu items can be hidden or made visible).
-     */
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-        // If this is a new partner, hide the "Delete" menu item.
-        if (mCurrentPartnerUri == null) {
-            MenuItem menuItem = menu.findItem(R.id.action_delete);
-            menuItem.setVisible(false);
-        }
-        return true;
-    }
-
     private void onOpenEdit() {
         Intent intent = new Intent(ProfileActivity.this, EditorActivity.class);
         intent.setData(mCurrentPartnerUri);
         startActivity(intent);
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
     }
 
     private void showDeleteConfirmationDialog() {
@@ -148,7 +128,7 @@ public class ProfileActivity extends AppCompatActivity
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle bundle) {
+    public Loader<Cursor> onCreateLoader(@NonNull int id, @NonNull Bundle bundle) {
 
         String[] projection = {
                 ContactEntry._ID,
@@ -169,7 +149,7 @@ public class ProfileActivity extends AppCompatActivity
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
         if(cursor == null || cursor.getCount() < 1) return;
 
         if (cursor.moveToFirst()) {
@@ -206,7 +186,7 @@ public class ProfileActivity extends AppCompatActivity
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
+    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
         //TODO: Add something here eventually
         Log.v(LOG_TAG, "onLoaderReset called");
     }
