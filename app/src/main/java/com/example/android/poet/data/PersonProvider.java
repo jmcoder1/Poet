@@ -3,12 +3,14 @@ package com.example.android.poet.data;
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.util.Log;
 
+import com.example.android.poet.R;
 import com.example.android.poet.data.PersonContract.ContactEntry;
 
 
@@ -269,5 +271,28 @@ public class PersonProvider extends ContentProvider {
             default:
                 throw new IllegalStateException("Unknown URI " + uri + " with match " + match);
         }
+    }
+
+    /** Helper methods to get the status of the person
+     *
+     * @param cursor
+     * @param mContext
+     * @return
+     */
+    public static String getStatus(Cursor cursor, Context mContext) {
+        int statusEnum = cursor.getInt(cursor.getColumnIndexOrThrow(ContactEntry.COLUMN_PERSON_STATUS));
+        String status = mContext.getResources().getStringArray(R.array.array_status_options)[statusEnum];
+        return status;
+    }
+
+    /**
+     * Helper method to get the gender of the person.
+     * @param cursor
+     * @param context
+     * @return
+     */
+    public static String getGender(Cursor cursor, Context context) {
+        int genderEnum = cursor.getInt(cursor.getColumnIndexOrThrow(ContactEntry.COLUMN_PERSON_GENDER));
+        return context.getResources().getStringArray(R.array.array_gender_options)[genderEnum];
     }
 }

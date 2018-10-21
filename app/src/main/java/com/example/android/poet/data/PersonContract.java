@@ -1,8 +1,12 @@
 package com.example.android.poet.data;
 
 import android.content.ContentResolver;
+import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
 import android.provider.BaseColumns;
+
+import com.example.android.poet.R;
 
 public final class PersonContract {
 
@@ -100,7 +104,6 @@ public final class PersonContract {
             }
             return false;
         }
-
     }
 
 }

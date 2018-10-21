@@ -1,6 +1,7 @@
 package com.example.android.poet;
 
 import com.example.android.poet.data.PersonContract.ContactEntry;
+import com.example.android.poet.data.PersonProvider;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -65,26 +66,13 @@ public class PersonCursorAdapter extends CursorAdapter {
         TextView statusTextView = (TextView) view.findViewById(R.id.partner_status);
 
         String name = cursor.getString(cursor.getColumnIndexOrThrow(ContactEntry.COLUMN_PERSON_NAME));
-        String gender = getGender(cursor);
-        String status = getStatus(cursor);
+        String gender = PersonProvider.getGender(cursor, context);
+        String status = PersonProvider.getStatus(cursor, context);
 
         nameTextView.setText(name);
         genderTextView.setText(gender);
         statusTextView.setText(status);
     }
 
-    /**
-     * Helper method gets the gender from the enumeration.
-     */
-    private String getGender(Cursor cursor) {
-        int genderEnum = cursor.getInt(cursor.getColumnIndexOrThrow(ContactEntry.COLUMN_PERSON_GENDER));
-        String gender = mContext.getResources().getStringArray(R.array.array_gender_options)[genderEnum];
-        return gender;
-    }
 
-    private String getStatus(Cursor cursor) {
-        int statusEnum = cursor.getInt(cursor.getColumnIndexOrThrow(ContactEntry.COLUMN_PERSON_STATUS));
-        String status = mContext.getResources().getStringArray(R.array.array_status_options)[statusEnum];
-        return status;
-    }
 }

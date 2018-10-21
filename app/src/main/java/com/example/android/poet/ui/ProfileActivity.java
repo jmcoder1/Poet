@@ -24,6 +24,7 @@ import com.example.android.poet.PartnerProfileFragment;
 import com.example.android.poet.PartnerProfileInfoFragment;
 import com.example.android.poet.R;
 import com.example.android.poet.data.PersonContract.ContactEntry;
+import com.example.android.poet.data.PersonProvider;
 
 public class ProfileActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -38,6 +39,7 @@ public class ProfileActivity extends AppCompatActivity
         setContentView(R.layout.activity_profile);
 
         mCurrentPartnerUri = getIntent().getData();
+
         getSupportLoaderManager().initLoader(EXISTING_PARTNER_LOADER, null, this);
 
         FloatingActionButton editPartnerFAB = (FloatingActionButton) findViewById(R.id.edit_partner_fab);
@@ -145,26 +147,6 @@ public class ProfileActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Helper method to get the gender from the database using the cursor passed to it.
-     * @param cursor
-     * @return
-     */
-    private String getGender(Cursor cursor) {
-        int genderEnum = cursor.getInt(cursor.getColumnIndexOrThrow(ContactEntry.COLUMN_PERSON_GENDER));
-        return getApplicationContext().getResources().getStringArray(R.array.array_gender_options)[genderEnum];
-    }
-
-    /**
-     * Helper method to get the status from the database using the cursor passed to it.
-     * @param cursor
-     * @return
-     */
-    private String getStatus(Cursor cursor) {
-        int statusEnum = cursor.getInt(cursor.getColumnIndexOrThrow(ContactEntry.COLUMN_PERSON_STATUS));
-        return getApplicationContext().getResources().getStringArray(R.array.array_status_options)[statusEnum];
-    }
-
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle bundle) {
 
@@ -197,8 +179,9 @@ public class ProfileActivity extends AppCompatActivity
             String name = cursor.getString(nameColumnIndex);
             setTitle(name);
 
-            String gender = getGender(cursor);
-            String status = getStatus(cursor);
+            String gender = PersonProvider.getGender(cursor,getApplicationContext());
+            String status = PersonProvider.getStatus(cursor, getApplicationContext());
+
             String notes = cursor.getString(notesColumnIndex);
 
             FragmentManager fragmentManager = getSupportFragmentManager();
