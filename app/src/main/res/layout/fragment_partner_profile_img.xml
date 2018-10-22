@@ -3,7 +3,6 @@
 <!-- This fragment displays one image of the partner profile image -->
 
 <TextView
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/partner_profile_text_view"
     android:layout_gravity="center"

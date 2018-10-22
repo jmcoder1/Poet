@@ -3,6 +3,7 @@ package com.example.android.poet.ui;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -26,6 +27,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.android.poet.PartnerEditorFragment;
+import com.example.android.poet.PartnerProfileInfoFragment;
 import com.example.android.poet.data.PersonContract.ContactEntry;
 
 import com.example.android.poet.R;
@@ -386,6 +389,15 @@ public class EditorActivity extends AppCompatActivity
             mNotesEditText.setText(notes);
             mGenderSpinner.setSelection(gender);
             mStatusSpinner.setSelection(status);
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+
+            PartnerEditorFragment partnerEditorFragment = new PartnerEditorFragment();
+
+            fragmentManager.beginTransaction()
+                    .add(R.id.partner_editor_img_container, partnerEditorFragment)
+                    .commit();
+
         }
     }
 
