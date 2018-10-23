@@ -5,5 +5,4 @@
     android:layout_gravity="center"
     android:layout_width="@dimen/profile_img_width"
     android:layout_height="@dimen/profile_img_height"
-    android:src="@drawable/profile_picture"
     android:visibility="visible" />

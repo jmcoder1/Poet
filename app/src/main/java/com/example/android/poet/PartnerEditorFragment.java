@@ -2,20 +2,15 @@ package com.example.android.poet;
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -52,17 +47,16 @@ public class PartnerEditorFragment extends Fragment{
     }
 
     private void openGallery() {
-        Intent gallery = new Intent(Intent.ACTION_PICK,
-            MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-    startActivityForResult(gallery, GALLERY_CODE);
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(intent,GALLERY_CODE);
     }
 
     @Override
     public void onActivityResult (int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == GALLERY_CODE) {
-            mImageUri = data.getData();
-            partnerEditorImageView.setImageURI(mImageUri);
+            Uri uri = data.getData();
+            partnerEditorImageView.setImageURI(uri);
         }
     }
 }
