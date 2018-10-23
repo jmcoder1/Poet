@@ -213,7 +213,7 @@ public class EditorActivity extends AppCompatActivity
                     if (selection.equals(getString(R.string.status_boyfriend))) {
                         mStatus = ContactEntry.STATUS_BOYFRIEND;
                     } else if (selection.equals(getString(R.string.status_girlfriend))) {
-                        mStatus = ContactEntry.STATUS_GIRLRIEND;
+                        mStatus = ContactEntry.STATUS_GIRLFRIEND;
                     } else if (selection.equals(getString(R.string.status_husband))) {
                         mStatus = ContactEntry.STATUS_HUSBAND;
                     } else if (selection.equals(getString(R.string.status_wife))) {

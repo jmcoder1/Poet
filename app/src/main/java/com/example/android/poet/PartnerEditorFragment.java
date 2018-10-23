@@ -1,6 +1,5 @@
 package com.example.android.poet;
 
-import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -41,6 +40,7 @@ public class PartnerEditorFragment extends Fragment{
         View rootView = inflater.inflate(R.layout.fragment_partner_editor_img, container, false);
 
         partnerEditorImageView = (CircleImageView) rootView.findViewById(R.id.partner_editor_img);
+        partnerEditorImageView.setImageURI(mImageUri);
         partnerEditorImageView.setOnTouchListener(mTouchListener);
 
         return rootView;
@@ -55,8 +55,14 @@ public class PartnerEditorFragment extends Fragment{
     public void onActivityResult (int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == GALLERY_CODE) {
-            Uri uri = data.getData();
-            partnerEditorImageView.setImageURI(uri);
+            mImageUri = data.getData();
+            partnerEditorImageView.setImageURI(mImageUri);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        partnerEditorImageView.setImageURI(mImageUri);
     }
 }

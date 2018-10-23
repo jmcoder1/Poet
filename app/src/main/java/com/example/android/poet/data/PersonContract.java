@@ -41,6 +41,7 @@ public final class PersonContract {
         public static final String COLUMN_PERSON_GENDER = "gender";
         public static final String COLUMN_PERSON_STATUS = "status";
         public static final String COLUMN_PERSON_NOTES = "notes";
+        public static final String COLUMN_PERSON_IMG = "image";
 
         // Possible constant values for the gender
         public static final int GENDER_UNKNOWN = 0;
@@ -69,7 +70,7 @@ public final class PersonContract {
          * Returns whether or not the given gender is a valid gender
          */
         public static boolean isValidGender(int gender) {
-            if (gender == GENDER_UNKNOWN || gender == GENDER_MALE || gender == GENDER_FEMALE
+            return (gender == GENDER_UNKNOWN || gender == GENDER_MALE || gender == GENDER_FEMALE
                     || gender == GENDER_ANDROGYNE || gender == GENDER_NEUTROSIS
                     || gender == GENDER_AGENDER || gender == GENDER_INTERGENDER
                     || gender == GENDER_DEMIBOY || gender == GENDER_DEMIGIRL
@@ -78,15 +79,12 @@ public final class PersonContract {
                     || gender == GENDER_GENDERFLUID || gender == GENDER_TRANSGENDER
                     || gender == GENDER_BIGENDER || gender == GENDER_DEMIAGENDER
                     || gender == GENDER_FEMME || gender == GENDER_BUTCH
-                    || gender == GENDER_TRANSVESTI_NB || gender == GENDER_ALIAGENDER) {
-                return true;
-            }
-            return false;
+                    || gender == GENDER_TRANSVESTI_NB || gender == GENDER_ALIAGENDER);
         }
 
         // Possible constant values for the relationship status
         public static final int STATUS_BOYFRIEND = 0;
-        public static final int STATUS_GIRLRIEND = 1;
+        public static final int STATUS_GIRLFRIEND = 1;
         public static final int STATUS_HUSBAND = 2;
         public static final int STATUS_WIFE = 3;
         public static final int STATUS_COMPLICATED = 4;
@@ -98,11 +96,8 @@ public final class PersonContract {
          * @param status The relationship status to the partner.
          */
         public static boolean isValidStatus(int status) {
-            if(status == STATUS_BOYFRIEND || status == STATUS_GIRLRIEND || status == STATUS_HUSBAND
-                    || status == STATUS_WIFE || status == STATUS_COMPLICATED) {
-                return true;
-            }
-            return false;
+            return (status == STATUS_BOYFRIEND || status == STATUS_GIRLFRIEND || status == STATUS_HUSBAND
+                    || status == STATUS_WIFE || status == STATUS_COMPLICATED);
         }
     }
 
