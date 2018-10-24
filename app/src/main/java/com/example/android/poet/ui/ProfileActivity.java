@@ -129,7 +129,7 @@ public class ProfileActivity extends AppCompatActivity
 
     @Override
     public Loader<Cursor> onCreateLoader(@NonNull int id, @NonNull Bundle bundle) {
-
+        Log.v(LOG_TAG, "onCreateLoader called");
         String[] projection = {
                 ContactEntry._ID,
                 ContactEntry.COLUMN_PERSON_NAME,
@@ -138,8 +138,6 @@ public class ProfileActivity extends AppCompatActivity
                 ContactEntry.COLUMN_PERSON_NOTES,
                 ContactEntry.COLUMN_PERSON_IMG
         };
-
-        Log.v(LOG_TAG, "onCreateLoader called");
 
         return new CursorLoader(this,
                 mCurrentPartnerUri,
@@ -156,16 +154,26 @@ public class ProfileActivity extends AppCompatActivity
         if (cursor.moveToFirst()) {
             int nameColumnIndex = cursor.getColumnIndex(ContactEntry.COLUMN_PERSON_NAME);
             int notesColumnIndex = cursor.getColumnIndex(ContactEntry.COLUMN_PERSON_NOTES);
+            int imgColumnIndex = cursor.getColumnIndex(ContactEntry.COLUMN_PERSON_IMG);
 
             String name = cursor.getString(nameColumnIndex);
             setTitle(name);
 
-            String gender = PersonProvider.getGender(cursor,getApplicationContext());
+            String gender = PersonProvider.getGender(cursor, getApplicationContext());
             String status = PersonProvider.getStatus(cursor, getApplicationContext());
-
             String notes = cursor.getString(notesColumnIndex);
+            byte[] imgByte  = cursor.getBlob(imgColumnIndex);
 
             FragmentManager fragmentManager = getSupportFragmentManager();
+
+            PartnerProfileFragment partnerProfileFragment = new PartnerProfileFragment();
+            partnerProfileFragment.setPartnerName(name);
+            partnerProfileFragment.setHasPartnerProfileImg(imgByte != null);
+            partnerProfileFragment.setPartnerProfileImg(imgByte);
+
+            fragmentManager.beginTransaction()
+                    .add(R.id.partner_profile_img_container, partnerProfileFragment)
+                    .commit();
 
             PartnerProfileInfoFragment partnerProfileInfoFragment = new PartnerProfileInfoFragment();
             partnerProfileInfoFragment.setGender(gender);
@@ -175,13 +183,6 @@ public class ProfileActivity extends AppCompatActivity
 
             fragmentManager.beginTransaction()
                     .add(R.id.partner_profile_info_container, partnerProfileInfoFragment)
-                    .commit();
-
-            PartnerProfileFragment partnerProfileFragment = new PartnerProfileFragment();
-            partnerProfileFragment.setPartnerName(name);
-
-            fragmentManager.beginTransaction()
-                    .add(R.id.partner_profile_img_container, partnerProfileFragment)
                     .commit();
         }
     }

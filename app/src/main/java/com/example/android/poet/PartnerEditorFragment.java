@@ -1,12 +1,10 @@
 package com.example.android.poet;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -18,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -30,15 +27,12 @@ public class PartnerEditorFragment extends Fragment{
     private static final String LOG_TAG = "PartnerEditorFragment".getClass().getSimpleName();
 
     private Bitmap mBitmapImg;
-    private OnDataPass dataPasser;
-
     private byte[] mByteImg;
+    private String mName;
 
     private CircleImageView partnerEditorImageView;
 
-    public PartnerEditorFragment() {
-
-    }
+    public PartnerEditorFragment() { }
 
     private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
         @Override
@@ -48,6 +42,7 @@ public class PartnerEditorFragment extends Fragment{
         }
     };
 
+    private OnDataPass dataPasser;
     public interface OnDataPass {
         public void onDataPass(byte[]  imgData);
     }
@@ -55,9 +50,9 @@ public class PartnerEditorFragment extends Fragment{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_partner_editor_img, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_partner_img, container, false);
 
-        partnerEditorImageView = (CircleImageView) rootView.findViewById(R.id.partner_editor_img);
+        partnerEditorImageView = (CircleImageView) rootView.findViewById(R.id.partner_img);
         partnerEditorImageView.setImageBitmap(mBitmapImg);
         partnerEditorImageView.setOnTouchListener(mTouchListener);
 
@@ -65,12 +60,14 @@ public class PartnerEditorFragment extends Fragment{
     }
 
     private void openGallery() {
+        Log.v(LOG_TAG, "openGallery: called");
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(intent,GALLERY_CODE);
     }
 
     @Override
     public void onActivityResult (int requestCode, int resultCode, Intent data) {
+        Log.v(LOG_TAG, "onActivityResult: called");
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == GALLERY_CODE) {
             Uri imgUri = data.getData();
@@ -78,15 +75,16 @@ public class PartnerEditorFragment extends Fragment{
                 mBitmapImg = decodeUri(imgUri, 400);
                 partnerEditorImageView.setImageBitmap(mBitmapImg);
             }
-            mByteImg = getBitmapFromByte(mBitmapImg);
+            mByteImg = getByteFromBitmap(mBitmapImg);
             passData(mByteImg);
-            // TODO: Here save to db as byte then set image bitmap everywhere else
-
         }
     }
 
+    /**
+     * Helper method to convert image Uri to image Bitmap.
+     */
     protected Bitmap decodeUri(Uri selectedImage, int REQUIRED_SIZE) {
-
+        Log.v(LOG_TAG, "decodeUri: called");
         try {
 
             // Decode image size
@@ -121,32 +119,34 @@ public class PartnerEditorFragment extends Fragment{
         return null;
     }
 
+    public void setName(String name) {
+        mName = name;
+    }
+
     public void setByteImg(byte[] img) {
+        Log.v(LOG_TAG, "setByteImg: called");
         if(img != null) {
             mByteImg = img;
             mBitmapImg = BitmapFactory.decodeByteArray(mByteImg , 0, mByteImg .length);
-
         }
     }
 
-    public byte[] getByteImg() {
-        return mByteImg;
-    }
-
-    private byte[] getBitmapFromByte(Bitmap b){
+    private byte[] getByteFromBitmap(Bitmap b){
+        Log.v(LOG_TAG, "getBitmapFromByte: called");
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         b.compress(Bitmap.CompressFormat.PNG, 0, bos);
         return bos.toByteArray();
-
     }
 
     public void passData(byte[]  imgData) {
+        Log.v(LOG_TAG, "passData: called \nData: " + imgData);
         dataPasser.onDataPass(imgData);
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        Log.v(LOG_TAG, "onAttach: called");
         dataPasser = (OnDataPass) context;
     }
 }

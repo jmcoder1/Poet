@@ -295,4 +295,5 @@ public class PersonProvider extends ContentProvider {
         int genderEnum = cursor.getInt(cursor.getColumnIndexOrThrow(ContactEntry.COLUMN_PERSON_GENDER));
         return context.getResources().getStringArray(R.array.array_gender_options)[genderEnum];
     }
+
 }

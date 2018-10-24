@@ -406,6 +406,7 @@ public class EditorActivity extends AppCompatActivity
 
             partnerEditorFragment = new PartnerEditorFragment();
             if(imgByte != null) partnerEditorFragment.setByteImg(imgByte);
+            partnerEditorFragment.setName(name);
 
             fragmentManager.beginTransaction()
                     .add(R.id.partner_editor_img_container, partnerEditorFragment)

@@ -6,6 +6,7 @@ import com.example.android.poet.data.PersonProvider;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,16 +68,26 @@ public class PersonCursorAdapter extends CursorAdapter {
         TextView nameTextView = (TextView) view.findViewById(R.id.partner_name);
         TextView genderTextView = (TextView) view.findViewById(R.id.partner_gender);
         TextView statusTextView = (TextView) view.findViewById(R.id.partner_status);
-        //TODO: Change this *- CircleImageView img = (CircleImageView) view.findViewById(R.id.partner_profile_img);
+        CircleImageView circleImageView = (CircleImageView) view.findViewById(R.id.partner_profile_img);
 
         String name = cursor.getString(cursor.getColumnIndexOrThrow(ContactEntry.COLUMN_PERSON_NAME));
         String gender = PersonProvider.getGender(cursor, context);
         String status = PersonProvider.getStatus(cursor, context);
+        byte[] imgByte = cursor.getBlob(cursor.getColumnIndexOrThrow(ContactEntry.COLUMN_PERSON_IMG));
+
+        if(imgByte != null) {
+            Bitmap imgBitmap = getBitmapFromByte(imgByte);
+            circleImageView.setImageBitmap(imgBitmap);
+        }
 
         nameTextView.setText(name);
         genderTextView.setText(gender);
         statusTextView.setText(status);
     }
 
+    private Bitmap getBitmapFromByte(byte[] byteImg){
+        Bitmap bitmap = BitmapFactory.decodeByteArray(byteImg , 0, byteImg .length);
+        return bitmap;
+    }
 
 }

@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<!-- This fragment displays one image of the partner profile image -->
-
 <TextView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/partner_profile_text_view"
+    android:id="@+id/partner_img_text_view"
     android:layout_gravity="center"
     android:gravity="center"
     android:layout_width="@dimen/profile_img_width"
