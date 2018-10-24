@@ -5,6 +5,7 @@ import com.example.android.poet.data.PersonProvider;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import android.widget.CursorAdapter;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * {@link PersonCursorAdapter} is an adapter for a list or grid view
@@ -64,6 +67,7 @@ public class PersonCursorAdapter extends CursorAdapter {
         TextView nameTextView = (TextView) view.findViewById(R.id.partner_name);
         TextView genderTextView = (TextView) view.findViewById(R.id.partner_gender);
         TextView statusTextView = (TextView) view.findViewById(R.id.partner_status);
+        //TODO: Change this *- CircleImageView img = (CircleImageView) view.findViewById(R.id.partner_profile_img);
 
         String name = cursor.getString(cursor.getColumnIndexOrThrow(ContactEntry.COLUMN_PERSON_NAME));
         String gender = PersonProvider.getGender(cursor, context);

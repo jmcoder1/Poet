@@ -19,7 +19,7 @@ public final class PersonContract {
         // Constants for the content provider
         public static final String CONTENT_AUTHORITY = "com.example.android.poet";
         public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
-        public static final String PATH_PERSON = "partners";
+        public static final String PATH_PERSON = ContactEntry.TABLE_NAME;
         public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_PERSON);
 
         /**
@@ -36,7 +36,6 @@ public final class PersonContract {
 
         public static final String TABLE_NAME = "partners";
         public static final String _ID = BaseColumns._ID;
-
         public static final String COLUMN_PERSON_NAME = "name";
         public static final String COLUMN_PERSON_GENDER = "gender";
         public static final String COLUMN_PERSON_STATUS = "status";

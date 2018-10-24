@@ -8,6 +8,7 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.example.android.poet.R;
@@ -39,8 +40,8 @@ public class PersonProvider extends ContentProvider {
         // The calls to addURI() go here, for all of the content URI patterns that the provider
         // should recognize. All paths added to the UriMatcher have a corresponding code to return
         // when a match is found.
-        sUriMatcher.addURI(ContactEntry.CONTENT_AUTHORITY, "partners", PERSON);
-        sUriMatcher.addURI(ContactEntry.CONTENT_AUTHORITY, "partners/#", PERSON_ID);
+        sUriMatcher.addURI(ContactEntry.CONTENT_AUTHORITY, ContactEntry.TABLE_NAME, PERSON);
+        sUriMatcher.addURI(ContactEntry.CONTENT_AUTHORITY, ContactEntry.TABLE_NAME + "/#", PERSON_ID);
 
     }
 
@@ -48,7 +49,6 @@ public class PersonProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         mDbHelper = new PersonDbHelper(getContext());
-
         return true;
     }
 
@@ -61,7 +61,7 @@ public class PersonProvider extends ContentProvider {
      * @param selectionArgs
      */
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
+    public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs,
                         String sortOrder) {
 
         SQLiteDatabase db = mDbHelper.getReadableDatabase();

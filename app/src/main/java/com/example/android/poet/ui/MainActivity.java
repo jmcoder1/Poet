@@ -171,7 +171,8 @@ public class MainActivity extends AppCompatActivity
                 ContactEntry.COLUMN_PERSON_NAME,
                 ContactEntry.COLUMN_PERSON_GENDER,
                 ContactEntry.COLUMN_PERSON_STATUS,
-                ContactEntry.COLUMN_PERSON_NOTES
+                ContactEntry.COLUMN_PERSON_NOTES,
+                ContactEntry.COLUMN_PERSON_IMG
         };
 
         return new CursorLoader(this,

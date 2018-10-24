@@ -89,7 +89,7 @@ public class ProfileActivity extends AppCompatActivity
         if (mCurrentPartnerUri != null) {
             // Call the ContentResolver to delete the partner at the given content URI.
             // Pass in null for the selection and selection args because the mCurrentPartnerUri
-            // content URI already identifies the p that we want.
+            // content URI already identifies the partner that we want.
             int rowsDeleted = getContentResolver().delete(mCurrentPartnerUri, null, null);
             // Show a toast message depending on whether or not the delete was successful.
             if (rowsDeleted == 0) {
@@ -135,7 +135,8 @@ public class ProfileActivity extends AppCompatActivity
                 ContactEntry.COLUMN_PERSON_NAME,
                 ContactEntry.COLUMN_PERSON_GENDER,
                 ContactEntry.COLUMN_PERSON_STATUS,
-                ContactEntry.COLUMN_PERSON_NOTES
+                ContactEntry.COLUMN_PERSON_NOTES,
+                ContactEntry.COLUMN_PERSON_IMG
         };
 
         Log.v(LOG_TAG, "onCreateLoader called");

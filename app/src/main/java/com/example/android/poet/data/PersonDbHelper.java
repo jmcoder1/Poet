@@ -10,7 +10,7 @@ public class PersonDbHelper extends SQLiteOpenHelper {
 
     public static final String LOG_TAG = PersonDbHelper.class.getSimpleName();
     private static final String DATABASE_NAME = "partners.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + ContactEntry.TABLE_NAME;
 

@@ -1,5 +1,6 @@
 package com.example.android.poet.ui;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -34,7 +35,8 @@ import com.example.android.poet.data.PersonContract.ContactEntry;
 import com.example.android.poet.R;
 
 public class EditorActivity extends AppCompatActivity
-        implements LoaderManager.LoaderCallbacks<Cursor>, SharedPreferences.OnSharedPreferenceChangeListener {
+        implements LoaderManager.LoaderCallbacks<Cursor>, SharedPreferences.OnSharedPreferenceChangeListener,
+        PartnerEditorFragment.OnDataPass{
 
     private static final String LOG_TAG = "EditorActivity".getClass().getSimpleName();
 
@@ -51,6 +53,7 @@ public class EditorActivity extends AppCompatActivity
     };
 
     private boolean mPartnerHasChanged = false;
+    private PartnerEditorFragment partnerEditorFragment;
 
     private Uri mCurrentPartnerUri;
 
@@ -64,6 +67,8 @@ public class EditorActivity extends AppCompatActivity
 
     private int mGender = ContactEntry.GENDER_UNKNOWN;
     private int mStatus = ContactEntry.STATUS_BOYFRIEND;
+
+    private byte[] mPartnerByteImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -247,6 +252,10 @@ public class EditorActivity extends AppCompatActivity
         cv.put(ContactEntry.COLUMN_PERSON_STATUS, mStatus);
         cv.put(ContactEntry.COLUMN_PERSON_NOTES, notes);
 
+        if(mPartnerByteImg != null) {
+            cv.put(ContactEntry.COLUMN_PERSON_IMG, mPartnerByteImg);
+        }
+
         if(mCurrentPartnerUri == null && TextUtils.isEmpty(name)) {
             return;
         }
@@ -356,7 +365,8 @@ public class EditorActivity extends AppCompatActivity
                 ContactEntry.COLUMN_PERSON_NAME,
                 ContactEntry.COLUMN_PERSON_GENDER,
                 ContactEntry.COLUMN_PERSON_STATUS,
-                ContactEntry.COLUMN_PERSON_NOTES
+                ContactEntry.COLUMN_PERSON_NOTES,
+                ContactEntry.COLUMN_PERSON_IMG
         };
 
         return new CursorLoader(this,
@@ -377,6 +387,7 @@ public class EditorActivity extends AppCompatActivity
             int genderColumnIndex = cursor.getColumnIndex(ContactEntry.COLUMN_PERSON_GENDER);
             int statusColumnIndex = cursor.getColumnIndex(ContactEntry.COLUMN_PERSON_STATUS);
             int notesColumnIndex = cursor.getColumnIndex(ContactEntry.COLUMN_PERSON_NOTES);
+            int imgColumnIndex = cursor.getColumnIndex(ContactEntry.COLUMN_PERSON_IMG);
 
             // Extract out the value from the Cursor for the given column index
             String name = cursor.getString(nameColumnIndex);
@@ -384,6 +395,7 @@ public class EditorActivity extends AppCompatActivity
             int gender = cursor.getInt(genderColumnIndex);
             int status = cursor.getInt(statusColumnIndex);
             String notes = cursor.getString(notesColumnIndex);
+            byte[] imgByte = cursor.getBlob(imgColumnIndex);
 
             mNameEditText.setText(name);
             mNotesEditText.setText(notes);
@@ -392,7 +404,8 @@ public class EditorActivity extends AppCompatActivity
 
             FragmentManager fragmentManager = getSupportFragmentManager();
 
-            PartnerEditorFragment partnerEditorFragment = new PartnerEditorFragment();
+            partnerEditorFragment = new PartnerEditorFragment();
+            if(imgByte != null) partnerEditorFragment.setByteImg(imgByte);
 
             fragmentManager.beginTransaction()
                     .add(R.id.partner_editor_img_container, partnerEditorFragment)
@@ -412,5 +425,11 @@ public class EditorActivity extends AppCompatActivity
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         //
+    }
+
+    @Override
+    public void onDataPass(byte[] imgData) {
+        Log.d(LOG_TAG,"onDataPass: called " + imgData);
+        mPartnerByteImg = imgData;
     }
 }
