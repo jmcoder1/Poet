@@ -9,4 +9,4 @@
     android:background="@drawable/user_item_circle"
     android:textColor="@color/colorBackground"
     android:textSize="36sp"
-    android:visibility="invisible" />
+    android:visibility="visible" />

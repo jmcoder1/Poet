@@ -28,6 +28,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.android.poet.Partner;
 import com.example.android.poet.PartnerEditorFragment;
 import com.example.android.poet.PartnerProfileInfoFragment;
 import com.example.android.poet.data.PersonContract.ContactEntry;
@@ -397,6 +398,11 @@ public class EditorActivity extends AppCompatActivity
             String notes = cursor.getString(notesColumnIndex);
             byte[] imgByte = cursor.getBlob(imgColumnIndex);
 
+            Partner partner = new Partner(name);
+            if(imgByte != null) partner.setImgByte(imgByte);
+            if(imgByte != null) partner.setHasImg(imgByte != null);
+
+
             mNameEditText.setText(name);
             mNotesEditText.setText(notes);
             mGenderSpinner.setSelection(gender);
@@ -405,8 +411,7 @@ public class EditorActivity extends AppCompatActivity
             FragmentManager fragmentManager = getSupportFragmentManager();
 
             partnerEditorFragment = new PartnerEditorFragment();
-            if(imgByte != null) partnerEditorFragment.setByteImg(imgByte);
-            partnerEditorFragment.setName(name);
+            partnerEditorFragment.setPartner(partner);
 
             fragmentManager.beginTransaction()
                     .add(R.id.partner_editor_img_container, partnerEditorFragment)

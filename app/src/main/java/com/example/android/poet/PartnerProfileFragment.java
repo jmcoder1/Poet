@@ -15,9 +15,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PartnerProfileFragment extends Fragment {
 
-    private String mName;
-    private boolean mHasImg;
-    private byte[] mImgByte;
+    private Partner mPartner;
 
     public PartnerProfileFragment() {    }
 
@@ -31,40 +29,15 @@ public class PartnerProfileFragment extends Fragment {
         View rootViewTextView = inflater.inflate(R.layout.fragment_partner_img_tv, container, false);
         View rootViewCircleImageView = inflater.inflate(R.layout.fragment_partner_img, container, false);
 
-        TextView partnerProfileTextView = (TextView) rootViewTextView.findViewById(R.id.partner_img_text_view);
-        CircleImageView partnerProfileCircleImageView = (CircleImageView) rootViewCircleImageView.findViewById(R.id.partner_img);
+        TextView partnerTextView = (TextView) rootViewTextView.findViewById(R.id.partner_img_text_view);
+        CircleImageView partnerCircleImageView = (CircleImageView) rootViewCircleImageView.findViewById(R.id.partner_img);
+        CircleImageView partnerCircleImageViewDefault = (CircleImageView) rootViewCircleImageView.findViewById(R.id.partner_img_default);
 
-        if(mHasImg) {
-            partnerProfileCircleImageView.setVisibility(View.VISIBLE);
-            Bitmap bitmapImg = getBitmapFromByte(mImgByte);
-            partnerProfileCircleImageView.setImageBitmap(bitmapImg);
+        return mPartner.getPartnerImg(partnerTextView, partnerCircleImageView, partnerCircleImageViewDefault);
 
-            partnerProfileTextView.setVisibility(TextView.INVISIBLE);
-            return rootViewCircleImageView;
-        } else {
-            partnerProfileTextView.setVisibility(TextView.VISIBLE);
-            String firstLetter = mName.substring(0, 1);
-            partnerProfileTextView.setText(firstLetter);
-
-            partnerProfileCircleImageView.setVisibility(View.INVISIBLE);
-            return  rootViewTextView;
-        }
     }
 
-    public void setHasPartnerProfileImg(boolean hasProfilePicture) {
-        mHasImg = hasProfilePicture;
-    }
-
-    public void setPartnerProfileImg(byte[] imgByte) {
-        mImgByte = imgByte;
-    }
-
-    public void setPartnerName(String name) {
-        mName = name;
-    }
-
-    private Bitmap getBitmapFromByte(byte[] byteImg){
-        Bitmap bitmap = BitmapFactory.decodeByteArray(byteImg , 0, byteImg .length);
-        return bitmap;
+    public void setPartner(Partner partner) {
+        mPartner = partner;
     }
 }

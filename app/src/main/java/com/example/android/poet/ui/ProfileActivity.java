@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.android.poet.Partner;
 import com.example.android.poet.PartnerProfileFragment;
 import com.example.android.poet.PartnerProfileInfoFragment;
 import com.example.android.poet.R;
@@ -164,12 +165,14 @@ public class ProfileActivity extends AppCompatActivity
             String notes = cursor.getString(notesColumnIndex);
             byte[] imgByte  = cursor.getBlob(imgColumnIndex);
 
+            Partner partner = new Partner(name);
+            partner.setImgByte(imgByte);
+            partner.setHasImg(imgByte != null);
+
             FragmentManager fragmentManager = getSupportFragmentManager();
 
             PartnerProfileFragment partnerProfileFragment = new PartnerProfileFragment();
-            partnerProfileFragment.setPartnerName(name);
-            partnerProfileFragment.setHasPartnerProfileImg(imgByte != null);
-            partnerProfileFragment.setPartnerProfileImg(imgByte);
+            partnerProfileFragment.setPartner(partner);
 
             fragmentManager.beginTransaction()
                     .add(R.id.partner_profile_img_container, partnerProfileFragment)

@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
 
@@ -26,9 +27,7 @@ public class PartnerEditorFragment extends Fragment{
     private static final int GALLERY_CODE = 1;
     private static final String LOG_TAG = "PartnerEditorFragment".getClass().getSimpleName();
 
-    private Bitmap mBitmapImg;
-    private byte[] mByteImg;
-    private String mName;
+    private Partner mPartner;
 
     private CircleImageView partnerEditorImageView;
 
@@ -50,13 +49,16 @@ public class PartnerEditorFragment extends Fragment{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_partner_img, container, false);
+        View rootViewTextView = inflater.inflate(R.layout.fragment_partner_img_tv, container, false);
+        View rootViewCircleImageView = inflater.inflate(R.layout.fragment_partner_img, container, false);
 
-        partnerEditorImageView = (CircleImageView) rootView.findViewById(R.id.partner_img);
-        partnerEditorImageView.setImageBitmap(mBitmapImg);
-        partnerEditorImageView.setOnTouchListener(mTouchListener);
+        TextView partnerTextView = (TextView) rootViewTextView.findViewById(R.id.partner_img_text_view);
+        CircleImageView partnerCircleImageView = (CircleImageView) rootViewCircleImageView.findViewById(R.id.partner_img);
+        CircleImageView partnerCircleImageViewDefault = (CircleImageView) rootViewCircleImageView.findViewById(R.id.partner_img_default);
 
-        return rootView;
+        View finalView = mPartner.getPartnerImg(partnerTextView, partnerCircleImageView, partnerCircleImageViewDefault);
+        finalView.setOnTouchListener(mTouchListener);
+        return finalView;
     }
 
     private void openGallery() {
@@ -72,11 +74,10 @@ public class PartnerEditorFragment extends Fragment{
         if (resultCode == RESULT_OK && requestCode == GALLERY_CODE) {
             Uri imgUri = data.getData();
             if(imgUri != null) {
-                mBitmapImg = decodeUri(imgUri, 400);
-                partnerEditorImageView.setImageBitmap(mBitmapImg);
+                mPartner.setImgBitmap(decodeUri(imgUri, 400));
             }
-            mByteImg = getByteFromBitmap(mBitmapImg);
-            passData(mByteImg);
+            mPartner.setImgByte(mPartner.getImgBitmap());
+            passData(mPartner.getImgByte());
         }
     }
 
@@ -119,23 +120,9 @@ public class PartnerEditorFragment extends Fragment{
         return null;
     }
 
-    public void setName(String name) {
-        mName = name;
-    }
 
-    public void setByteImg(byte[] img) {
-        Log.v(LOG_TAG, "setByteImg: called");
-        if(img != null) {
-            mByteImg = img;
-            mBitmapImg = BitmapFactory.decodeByteArray(mByteImg , 0, mByteImg .length);
-        }
-    }
-
-    private byte[] getByteFromBitmap(Bitmap b){
-        Log.v(LOG_TAG, "getBitmapFromByte: called");
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        b.compress(Bitmap.CompressFormat.PNG, 0, bos);
-        return bos.toByteArray();
+    public void setPartner(Partner partner) {
+        mPartner = partner;
     }
 
     public void passData(byte[]  imgData) {
