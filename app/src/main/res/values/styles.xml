@@ -45,6 +45,7 @@
     <style name="IconEditTextStyle" parent="EditorActivityTextViewStyle">
         <item name="android:layout_height">24dp</item>
         <item name="android:layout_width">24dp</item>
+        <item name="android:layout_marginTop">32dp</item>
     </style>
 
     <style name="EditTextStyle" parent="EditorActivityTextViewStyle">

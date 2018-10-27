@@ -2,9 +2,10 @@ package com.example.android.poet;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import com.example.android.poet.data.PersonContract.ContactEntry;
+
 
 import java.io.ByteArrayOutputStream;
 
@@ -13,7 +14,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class Partner {
 
     private String mName;
+    private String mGender;
+    private String mStatus;
+    private String mNotes;
+    private int mGenderEnum = ContactEntry.GENDER_UNKNOWN;
+    private int mStatusEnum = ContactEntry.STATUS_BOYFRIEND;
     private boolean mHasImg = false;
+    private boolean mPartnerHasChanged = false;
     private byte[] mImgByte;
     private Bitmap mImgBitmap;
 
@@ -21,8 +28,36 @@ public class Partner {
         mName = name;
     }
 
+    public Partner() {}
+
     public String getName() {
         return mName;
+    }
+
+    public String getGender() { return mGender; }
+
+    public String getNotes() { return mNotes; }
+
+    public String getStatus() { return mStatus;}
+
+    public int getGenderEnum() { return mGenderEnum; }
+
+    public int getStatusEnum() { return mStatusEnum; }
+
+    public void setGender(String gender) {
+        mGender = gender;
+    }
+
+    public void setStatus(String status) {
+        mStatus = status;
+    }
+
+    public void setGenderEnum(int gender) { mGenderEnum = gender; }
+
+    public void setStatusEnum(int status) { mStatusEnum = status; }
+
+    public void setNotes(String notes) {
+        mNotes = notes;
     }
 
     public void setHasImg(boolean hasImg) {
@@ -34,6 +69,7 @@ public class Partner {
     }
 
     public void setImgByte(Bitmap imgBitmap) {
+        mImgBitmap = imgBitmap;
         mImgByte = getByteFromBitmap(imgBitmap);
     }
 
@@ -41,8 +77,20 @@ public class Partner {
         mImgBitmap = imgBitmap;
     }
 
+    public void setHasChanged(boolean changed) {
+        mPartnerHasChanged = changed;
+    }
+
+    public boolean getHasChanged() {
+        return mPartnerHasChanged;
+    }
+
     public Bitmap getImgBitmap() {
         return mImgBitmap;
+    }
+
+    public void setName(String name) {
+        mName = name;
     }
 
     public byte[] getImgByte() {
@@ -60,7 +108,7 @@ public class Partner {
         View rootView;
 
         // There are only 3 options - no name or profile picture, no profile picture, and no name.
-        if (!mHasImg && mName == null) { // TODO:
+        if (!mHasImg && mName == null) {
             rootView = defaultImg;
         } else if(mHasImg) {
             mImgBitmap = getBitmapFromByte(mImgByte);

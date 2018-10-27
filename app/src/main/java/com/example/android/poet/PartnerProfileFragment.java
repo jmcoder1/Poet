@@ -28,10 +28,11 @@ public class PartnerProfileFragment extends Fragment {
 
         View rootViewTextView = inflater.inflate(R.layout.fragment_partner_img_tv, container, false);
         View rootViewCircleImageView = inflater.inflate(R.layout.fragment_partner_img, container, false);
+        View rootViewCircleImageViewDefault = inflater.inflate(R.layout.fragment_partner_img_default, container, false);;
 
         TextView partnerTextView = (TextView) rootViewTextView.findViewById(R.id.partner_img_text_view);
         CircleImageView partnerCircleImageView = (CircleImageView) rootViewCircleImageView.findViewById(R.id.partner_img);
-        CircleImageView partnerCircleImageViewDefault = (CircleImageView) rootViewCircleImageView.findViewById(R.id.partner_img_default);
+        CircleImageView partnerCircleImageViewDefault = (CircleImageView) rootViewCircleImageViewDefault.findViewById(R.id.partner_img_default);
 
         return mPartner.getPartnerImg(partnerTextView, partnerCircleImageView, partnerCircleImageViewDefault);
 

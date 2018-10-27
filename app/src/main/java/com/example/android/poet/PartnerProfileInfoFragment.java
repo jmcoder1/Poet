@@ -17,9 +17,7 @@ public class PartnerProfileInfoFragment extends Fragment {
 
     private Uri mCurrentPartnerUri;
 
-    private String mGender;
-    private String mNotes;
-    private String mStatus;
+    private Partner mPartner;
 
     private TextView.OnTouchListener mTouchListener = new TextView.OnTouchListener() {
         @Override
@@ -44,9 +42,9 @@ public class PartnerProfileInfoFragment extends Fragment {
         TextView notesTextView = (TextView) rootView.findViewById(R.id.partner_profile_notes_entry);
         TextView statusTextView = (TextView) rootView.findViewById(R.id.partner_profile_status_entry);
 
-        genderTextView.setText(mGender);
-        notesTextView.setText(mNotes);
-        statusTextView.setText(mStatus);
+        genderTextView.setText(mPartner.getGender());
+        notesTextView.setText(mPartner.getNotes());
+        statusTextView.setText(mPartner.getStatus());
 
         genderTextView.setOnTouchListener(mTouchListener);
         notesTextView.setOnTouchListener(mTouchListener);
@@ -61,16 +59,8 @@ public class PartnerProfileInfoFragment extends Fragment {
         startActivity(intent);
     }
 
-    public void setGender(String gender) {
-        mGender = gender;
-    }
-
-    public void setNotes(String notes) {
-        mNotes = notes;
-    }
-
-    public void setStatus(String status) {
-        mStatus = status;
+    public void setPartner(Partner partner) {
+        mPartner = partner;
     }
 
     public void setCurrentPartnerUri(Uri partnerUri) {

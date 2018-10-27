@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/editor_partner_name_icon"
+        style="@style/IconEditTextStyle"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_icon_person"
+        app:layout_constraintBottom_toBottomOf="@+id/name_et"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/name_et"
+        style="@style/EditTextStyle"
+        android:layout_marginTop="8dp"
+        android:inputType="textCapWords"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editor_partner_name_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent=".8" />
+
+    <ImageView
+        android:id="@+id/gender_icon"
+        style="@style/IconEditTextStyle"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/ic_gender_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editor_partner_name_icon" />
+
+    <Spinner
+        android:id="@+id/spinner_gender"
+        style="@style/SpinnerStyle"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toBottomOf="@+id/gender_icon"
+        app:layout_constraintStart_toEndOf="@+id/gender_icon" />
+
+    <ImageView
+        android:id="@+id/status_icon"
+        style="@style/IconEditTextStyle"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/ic_status_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gender_icon" />
+
+    <Spinner
+        android:id="@+id/spinner_status"
+        style="@style/SpinnerStyle"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toBottomOf="@+id/status_icon"
+        app:layout_constraintStart_toEndOf="@+id/status_icon"/>
+
+    <EditText
+        android:id="@+id/notes_et"
+        style="@style/EditTextStyle"
+        android:inputType="textCapWords"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_status"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="1" />
+
+</android.support.constraint.ConstraintLayout>

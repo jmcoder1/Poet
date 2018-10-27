@@ -158,16 +158,20 @@ public class ProfileActivity extends AppCompatActivity
             int imgColumnIndex = cursor.getColumnIndex(ContactEntry.COLUMN_PERSON_IMG);
 
             String name = cursor.getString(nameColumnIndex);
-            setTitle(name);
-
             String gender = PersonProvider.getGender(cursor, getApplicationContext());
             String status = PersonProvider.getStatus(cursor, getApplicationContext());
             String notes = cursor.getString(notesColumnIndex);
             byte[] imgByte  = cursor.getBlob(imgColumnIndex);
 
+            setTitle(name);
+
             Partner partner = new Partner(name);
-            partner.setImgByte(imgByte);
-            partner.setHasImg(imgByte != null);
+            if(imgByte != null) partner.setImgByte(imgByte);
+            if(imgByte != null) partner.setHasImg(imgByte != null);
+            partner.setName(name);
+            partner.setGender(gender);
+            partner.setStatus(status);
+            partner.setNotes(notes);
 
             FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -179,10 +183,8 @@ public class ProfileActivity extends AppCompatActivity
                     .commit();
 
             PartnerProfileInfoFragment partnerProfileInfoFragment = new PartnerProfileInfoFragment();
-            partnerProfileInfoFragment.setGender(gender);
-            partnerProfileInfoFragment.setNotes(notes);
-            partnerProfileInfoFragment.setStatus(status);
             partnerProfileInfoFragment.setCurrentPartnerUri(mCurrentPartnerUri);
+            partnerProfileInfoFragment.setPartner(partner);
 
             fragmentManager.beginTransaction()
                     .add(R.id.partner_profile_info_container, partnerProfileInfoFragment)
