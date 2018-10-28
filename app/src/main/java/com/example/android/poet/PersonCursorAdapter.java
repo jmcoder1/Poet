@@ -7,6 +7,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,28 +67,36 @@ public class PersonCursorAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         // Find fields to populate in inflated template
         TextView nameTextView = (TextView) view.findViewById(R.id.partner_name);
-        TextView genderTextView = (TextView) view.findViewById(R.id.partner_gender);
         TextView statusTextView = (TextView) view.findViewById(R.id.partner_status);
+
         CircleImageView circleImageView = (CircleImageView) view.findViewById(R.id.partner_profile_img);
+        TextView textViewImage = (TextView) view.findViewById(R.id.partner_main_img_text_view);
 
         String name = cursor.getString(cursor.getColumnIndexOrThrow(ContactEntry.COLUMN_PERSON_NAME));
-        String gender = PersonProvider.getGender(cursor, context);
         String status = PersonProvider.getStatus(cursor, context);
-        byte[] imgByte = cursor.getBlob(cursor.getColumnIndexOrThrow(ContactEntry.COLUMN_PERSON_IMG));
+        int imgColumnIndex = cursor.getColumnIndex(ContactEntry.COLUMN_PERSON_IMG);
+        byte[] imgByte = cursor.getBlob(imgColumnIndex);
+
+
+        Partner partner = new Partner(name);
+        partner.setStatus(status);
 
         if(imgByte != null) {
-            Bitmap imgBitmap = getBitmapFromByte(imgByte);
-            circleImageView.setImageBitmap(imgBitmap);
+            partner.setImgByte(imgByte);
+            circleImageView.setImageBitmap(partner.getImgBitmap());
+            circleImageView.setVisibility(View.VISIBLE);
+            textViewImage.setVisibility(View.INVISIBLE);
+        } else {
+            textViewImage.setVisibility(View.VISIBLE);
+            circleImageView.setVisibility(View.INVISIBLE);
+            String firstLetter = name.substring(0, 1);
+            textViewImage.setText(firstLetter);
         }
 
-        nameTextView.setText(name);
-        genderTextView.setText(gender);
-        statusTextView.setText(status);
+        nameTextView.setText(partner.getName());
+        statusTextView.setText(partner.getStatus());
     }
 
-    private Bitmap getBitmapFromByte(byte[] byteImg){
-        Bitmap bitmap = BitmapFactory.decodeByteArray(byteImg , 0, byteImg .length);
-        return bitmap;
-    }
+
 
 }

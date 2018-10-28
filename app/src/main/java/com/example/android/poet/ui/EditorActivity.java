@@ -36,6 +36,7 @@ public class EditorActivity extends AppCompatActivity
 
     private Uri mCurrentPartnerUri;
     private Partner mPartner;
+    private byte[] mImgByte;
 
     private PartnerEditorInfoFragment partnerEditorInfoFragment;
     private PartnerEditorFragment partnerEditorFragment;
@@ -77,11 +78,9 @@ public class EditorActivity extends AppCompatActivity
      * Get user input from editor and save new partner into database.
      */
     private void savePartner() {
-        if(mPartner == null) mPartner = partnerEditorInfoFragment.getPartnerFromFields();
 
         String name = mPartner.getName();
         String notes = mPartner.getNotes();
-        byte[] imgByte = mPartner.getImgByte();
         int genderEnum = mPartner.getGenderEnum();
         int statusEnum = mPartner.getStatusEnum();
 
@@ -95,8 +94,8 @@ public class EditorActivity extends AppCompatActivity
             return;
         }
 
-        if(imgByte != null) {
-            cv.put(ContactEntry.COLUMN_PERSON_IMG, imgByte);
+        if(mImgByte != null) {
+            cv.put(ContactEntry.COLUMN_PERSON_IMG, mImgByte);
         }
 
         if(mCurrentPartnerUri == null) {
@@ -273,6 +272,7 @@ public class EditorActivity extends AppCompatActivity
     @Override
     public void onDataPass(byte[] imgData) {
         Log.d(LOG_TAG,"onDataPass: called " + imgData);
+        mImgByte = imgData;
         mPartner.setImgByte(imgData);
     }
 }

@@ -81,8 +81,8 @@ public class PartnerEditorFragment extends Fragment{
             Uri imgUri = data.getData();
             if(imgUri != null) {
                 mPartner.setImgBitmap(decodeUri(imgUri, 400));
+                mPartner.setImgByte(mPartner.getImgBitmap());
             }
-            mPartner.setImgByte(mPartner.getImgBitmap());
             passData(mPartner.getImgByte());
         }
     }
@@ -125,7 +125,6 @@ public class PartnerEditorFragment extends Fragment{
         }
         return null;
     }
-
 
     public void setPartner(Partner partner) {
         mPartner = partner;

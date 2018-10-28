@@ -66,15 +66,17 @@ public class Partner {
 
     public void setImgByte(byte[] imgByte) {
         mImgByte = imgByte;
+        mImgBitmap = getBitmapFromByte(imgByte);
     }
 
     public void setImgByte(Bitmap imgBitmap) {
         mImgBitmap = imgBitmap;
-        mImgByte = getByteFromBitmap(imgBitmap);
+        mImgByte = getByteFromBitmap(mImgBitmap);
     }
 
     public void setImgBitmap(Bitmap imgBitmap) {
         mImgBitmap = imgBitmap;
+        mImgByte = getByteFromBitmap(mImgBitmap);
     }
 
     public void setHasChanged(boolean changed) {
