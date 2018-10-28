@@ -177,17 +177,19 @@ public class ProfileActivity extends AppCompatActivity
 
             PartnerProfileFragment partnerProfileFragment = new PartnerProfileFragment();
             partnerProfileFragment.setPartner(partner);
+            partnerProfileFragment.setCurrentPartnerUri(mCurrentPartnerUri);
 
             fragmentManager.beginTransaction()
-                    .add(R.id.partner_profile_img_container, partnerProfileFragment)
+                    .replace(R.id.partner_profile_img_container, partnerProfileFragment)
                     .commit();
+
 
             PartnerProfileInfoFragment partnerProfileInfoFragment = new PartnerProfileInfoFragment();
             partnerProfileInfoFragment.setCurrentPartnerUri(mCurrentPartnerUri);
             partnerProfileInfoFragment.setPartner(partner);
 
             fragmentManager.beginTransaction()
-                    .add(R.id.partner_profile_info_container, partnerProfileInfoFragment)
+                    .replace(R.id.partner_profile_info_container, partnerProfileInfoFragment)
                     .commit();
         }
     }

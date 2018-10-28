@@ -7,6 +7,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.PersistableBundle;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -96,7 +97,4 @@ public class PersonCursorAdapter extends CursorAdapter {
         nameTextView.setText(partner.getName());
         statusTextView.setText(partner.getStatus());
     }
-
-
-
 }

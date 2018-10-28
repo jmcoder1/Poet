@@ -34,31 +34,35 @@ public class Partner {
         return mName;
     }
 
+    public void setName(String name) {
+        mName = name;
+    }
+
     public String getGender() { return mGender; }
-
-    public String getNotes() { return mNotes; }
-
-    public String getStatus() { return mStatus;}
-
-    public int getGenderEnum() { return mGenderEnum; }
-
-    public int getStatusEnum() { return mStatusEnum; }
 
     public void setGender(String gender) {
         mGender = gender;
     }
 
-    public void setStatus(String status) {
-        mStatus = status;
-    }
-
-    public void setGenderEnum(int gender) { mGenderEnum = gender; }
-
-    public void setStatusEnum(int status) { mStatusEnum = status; }
+    public String getNotes() { return mNotes; }
 
     public void setNotes(String notes) {
         mNotes = notes;
     }
+
+    public String getStatus() { return mStatus; }
+
+    public void setStatus(String status) {
+        mStatus = status;
+    }
+
+    public int getGenderEnum() { return mGenderEnum; }
+
+    public int getStatusEnum() { return mStatusEnum; }
+
+    public void setGenderEnum(int gender) { mGenderEnum = gender; }
+
+    public void setStatusEnum(int status) { mStatusEnum = status; }
 
     public void setHasImg(boolean hasImg) {
         mHasImg = hasImg;
@@ -89,10 +93,6 @@ public class Partner {
 
     public Bitmap getImgBitmap() {
         return mImgBitmap;
-    }
-
-    public void setName(String name) {
-        mName = name;
     }
 
     public byte[] getImgByte() {

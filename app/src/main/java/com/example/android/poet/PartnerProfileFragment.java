@@ -1,14 +1,19 @@
 package com.example.android.poet;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.android.poet.ui.EditorActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -16,6 +21,15 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class PartnerProfileFragment extends Fragment {
 
     private Partner mPartner;
+    private Uri mCurrentPartnerUri;
+
+    private TextView.OnTouchListener mTouchListener = new TextView.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            onOpenEdit();
+            return false;
+        }
+    };
 
     public PartnerProfileFragment() {    }
 
@@ -34,11 +48,25 @@ public class PartnerProfileFragment extends Fragment {
         CircleImageView partnerCircleImageView = (CircleImageView) rootViewCircleImageView.findViewById(R.id.partner_img);
         CircleImageView partnerCircleImageViewDefault = (CircleImageView) rootViewCircleImageViewDefault.findViewById(R.id.partner_img_default);
 
-        return mPartner.getPartnerImg(partnerTextView, partnerCircleImageView, partnerCircleImageViewDefault);
+        View finalView = mPartner.getPartnerImg(partnerTextView, partnerCircleImageView, partnerCircleImageViewDefault);
+        finalView.setOnTouchListener(mTouchListener);
+        return finalView;
 
     }
 
     public void setPartner(Partner partner) {
         mPartner = partner;
     }
+
+    public void setCurrentPartnerUri(Uri partnerUri) {
+        mCurrentPartnerUri = partnerUri;
+    }
+
+    private void onOpenEdit() {
+        Intent intent = new Intent(getActivity(), EditorActivity.class);
+        intent.setData(mCurrentPartnerUri);
+        startActivity(intent);
+    }
+
+
 }

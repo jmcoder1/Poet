@@ -16,7 +16,6 @@ import com.example.android.poet.ui.EditorActivity;
 public class PartnerProfileInfoFragment extends Fragment {
 
     private Uri mCurrentPartnerUri;
-
     private Partner mPartner;
 
     private TextView.OnTouchListener mTouchListener = new TextView.OnTouchListener() {
@@ -28,9 +27,7 @@ public class PartnerProfileInfoFragment extends Fragment {
     };
 
 
-    // Mandatory empty constructor
-    public PartnerProfileInfoFragment() {
-    }
+    public PartnerProfileInfoFragment() { }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
