@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -162,6 +163,9 @@ public class EditorActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        ActionBar actionBar = this.getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
         getMenuInflater().inflate(R.menu.menu_editor, menu);
         return true;
     }
@@ -175,7 +179,7 @@ public class EditorActivity extends AppCompatActivity
                 return true;
             case android.R.id.home:
                 if (!mPartner.getHasChanged()) {
-                    NavUtils.navigateUpFromSameTask(EditorActivity.this);
+                    finish();
                     return true;
                 }
 

@@ -50,6 +50,7 @@ public class PartnerProfileFragment extends Fragment {
 
         View finalView = mPartner.getPartnerImg(partnerTextView, partnerCircleImageView, partnerCircleImageViewDefault);
         finalView.setOnTouchListener(mTouchListener);
+        
         return finalView;
 
     }

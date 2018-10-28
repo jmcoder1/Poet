@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -108,6 +109,9 @@ public class ProfileActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        ActionBar actionBar = this.getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
         getMenuInflater().inflate(R.menu.menu_profile, menu);
         return true;
     }
@@ -122,7 +126,7 @@ public class ProfileActivity extends AppCompatActivity
                 showDeleteConfirmationDialog();
                 return true;
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(ProfileActivity.this);
+                finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -182,7 +186,6 @@ public class ProfileActivity extends AppCompatActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.partner_profile_img_container, partnerProfileFragment)
                     .commit();
-
 
             PartnerProfileInfoFragment partnerProfileInfoFragment = new PartnerProfileInfoFragment();
             partnerProfileInfoFragment.setCurrentPartnerUri(mCurrentPartnerUri);

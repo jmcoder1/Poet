@@ -17,6 +17,7 @@ public class SettingsActivity extends AppCompatActivity {
         // Set the action bar back button to look like an up button
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
         }
     }
 
